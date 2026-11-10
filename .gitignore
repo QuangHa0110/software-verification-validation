@@ -1,0 +1,26 @@
+# --- Build output (Maven) ---
+target/
+*.class
+
+# --- IDE ---
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# --- Bí mật: KHÔNG commit API key ---
+.env
+*.key
+experiments/config/*.local.*
+
+# --- Hệ điều hành ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- File tạm ---
+*.log
+*.tmp
+~$*
