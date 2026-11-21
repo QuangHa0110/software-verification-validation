@@ -3,7 +3,7 @@
 **Học phần:** Kiểm chứng và Thẩm định Phần mềm (Software Verification and Validation)
 **Định hướng:** Số 1 – LLM-based Test Generation
 **Học viên:** [Họ và tên] – **Mã học viên:** [……] – **Lớp:** [……]
-**Hạn nộp bài tập lớn:** 30/11/2026
+**Hạn nộp bài tập lớn:** 31/12/2026
 
 ---
 
@@ -49,7 +49,7 @@ Hệ thống có nhiều điều kiện lồng nhau, giá trị biên và xử l
 | P2 | Random Testing – sinh đầu vào ngẫu nhiên, oracle lấy từ đặc tả | Đối chứng |
 | P3 | Direct LLM Generation – gửi mã nguồn và đặc tả cho LLM một lần | Đối chứng |
 | P4 | Coverage-guided LLM Generation (có cải tiến) | Phương pháp đề xuất |
-| (tùy chọn) | EvoSuite – sinh test dựa trên tìm kiếm | Đối chứng bổ sung, nếu tương thích phiên bản Java |
+| Bổ sung | EvoSuite – sinh test dựa trên tìm kiếm | Đối chứng bổ sung, nếu tương thích phiên bản Java |
 
 **Quy trình P4:**
 
@@ -101,15 +101,16 @@ Hệ thống có nhiều điều kiện lồng nhau, giá trị biên và xử l
 
 ## 10. Kế hoạch thực hiện
 
+Nhóm 5 người, chia thành 5 gói việc; chi tiết trong [ke-hoach-thuc-hien.md](ke-hoach-thuc-hien.md).
+
 | Thời gian | Công việc |
 |---|---|
-| 10/11 – 12/11 | Đăng ký đề tài; chốt LLM; bắt đầu nghiên cứu tổng quan (song song đến 20/11) |
-| 11/11 – 15/11 | Xây dựng chương trình đối tượng, đặc tả, bộ test P1; dựng quy trình đo (Maven, JaCoCo, PIT) |
-| 16/11 – 20/11 | Triển khai P2 Random, P3 Direct LLM và vòng lặp coverage-guided của P4 |
-| 21/11 – 23/11 | Bổ sung bộ lọc test và phản hồi mutation; thử EvoSuite (tùy chọn) |
-| 24/11 – 26/11 | Chạy thực nghiệm 10 lần, tổng hợp số liệu, kiểm định thống kê |
-| 27/11 – 29/11 | Viết báo cáo, chuẩn bị demo, đóng gói repo và hướng dẫn tái lập |
-| 30/11 | Nộp bài |
+| 23/11 – 29/11 | Chốt đặc tả (25/11); xây dựng chương trình đối tượng, bộ test P1; dựng quy trình đo (Maven, JaCoCo, PIT); bắt đầu nghiên cứu tổng quan |
+| 30/11 – 06/12 | P2 Random Testing, oracle tham chiếu, P3 Direct LLM, bộ lọc test |
+| 07/12 – 13/12 | Vòng lặp coverage-guided của P4, phản hồi mutation, EvoSuite |
+| 14/12 – 20/12 | Chạy thực nghiệm 10 lần, xem xét mutant tương đương, chốt số liệu (20/12) |
+| 21/12 – 27/12 | Thống kê, viết báo cáo, slide, tập demo |
+| 28/12 – 31/12 | Dự phòng, rà soát, nộp bài |
 
 ## 11. Tài liệu tham khảo sơ bộ
 

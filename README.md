@@ -6,8 +6,9 @@ Bài tập lớn học phần *Kiểm chứng và Thẩm định Phần mềm (S
 
 - **Hệ thống áp dụng:** module giỏ hàng và thanh toán của hệ thống bán hàng trực tuyến (Java)
 - **Phương pháp đề xuất:** sinh test lặp bằng LLM có phản hồi coverage, kết hợp phản hồi mutation
-- **Hạn nộp:** 30/11/2026
+- **Hạn nộp:** 31/12/2026
 - **Đề xuất đăng ký đề tài:** [docs/de-xuat-de-tai-1.md](docs/de-xuat-de-tai-1.md)
+- **Kế hoạch và phân công nhóm:** [docs/ke-hoach-thuc-hien.md](docs/ke-hoach-thuc-hien.md)
 
 ## Câu hỏi nghiên cứu
 
@@ -135,12 +136,14 @@ Ví dụ: `feat: thêm vòng lặp coverage-guided`, `exp: kết quả P3 run-01
 
 ## Kế hoạch
 
-| Thời gian | Công việc |
-|---|---|
-| 10/11 – 12/11 | Đăng ký đề tài, chốt LLM, nghiên cứu tổng quan |
-| 11/11 – 15/11 | Chương trình đối tượng, đặc tả, bộ test P1, quy trình đo |
-| 16/11 – 20/11 | P2, P3 và vòng lặp coverage-guided của P4 |
-| 21/11 – 23/11 | Bộ lọc test, mutation feedback |
-| 24/11 – 26/11 | Chạy thực nghiệm 10 lần, thống kê |
-| 27/11 – 29/11 | Báo cáo, demo, đóng gói |
-| 30/11 | Nộp bài |
+Chi tiết 5 gói việc, checklist và bảng đối chiếu yêu cầu của đề: [docs/ke-hoach-thuc-hien.md](docs/ke-hoach-thuc-hien.md).
+
+| Mốc | Hạn | Nội dung |
+|---|---|---|
+| M1 | 25/11 | Chốt đặc tả và chữ ký hàm |
+| M2 | 29/11 | Chương trình chạy được, đo được P1; có API key |
+| M3 | 06/12 | P2, P3 chạy qua script đo chung |
+| M4 | 13/12 | P4, phản hồi mutation, EvoSuite |
+| M5 | 20/12 | Chạy đủ 10 lần, chốt số liệu |
+| M6 | 27/12 | Báo cáo, slide, tập demo |
+| Nộp | 31/12 | Rà soát, tag `v1.0-final` |
