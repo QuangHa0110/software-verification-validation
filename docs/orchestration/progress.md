@@ -32,7 +32,7 @@ Agy: `agy -p "<prompt>" --model <model> --print-timeout <t>` chạy trong thư m
 | G2 Cài đặt | T02 subject (codex) · T03 reference (agy, `gemini-4-neon-high`) · T05 bộ P1 (codex) | Xong. [ĐÃ CHẠY] P1 181/181 xanh trên subject và reference |
 | G3 Đo lường | T06 measure.py · T07 mutation | Xong. [ĐÃ CHẠY] đủ 5 toán tử đột biến |
 | G4 Phương pháp | T08 P2 · T09 llm_client + bộ lọc · T10 P3 · T11 P4 · T12 P4b · ~~T13 EvoSuite~~ (D-013) | T08, T09, T10 xong. T11/T12 chờ codex |
-| G5 Thực nghiệm | T14 run_experiment + analyze, chạy 10 lần | T14 xong. Đang đo P1, P2 |
+| G5 Thực nghiệm | T14 run_experiment + analyze, chạy 10 lần | T14 xong. P1, P2 đã đo chính thức. Chờ P3/P4/P4b |
 | G6 Báo cáo | T16 tổng quan tài liệu · T15a chương 1–4 · T15b chương 5–6 | T16, T15a xong |
 
 ## Nhật ký
@@ -57,3 +57,6 @@ Agy: `agy -p "<prompt>" --model <model> --print-timeout <t>` chạy trong thư m
 | 23/11 | T14 xong (agy): `run_experiment.py`, `analyze.py`, `tools/svv/stats.py`. [ĐÃ CHẠY] orchestrator: pytest 99 passed; `--dry-run` 81 bước theo thứ tự ghép cặp. Gộp vào `main`. |
 | 23/11 | T15a xong (agy): báo cáo chương 1–4 bản nháp, 3 sơ đồ Mermaid; còn các mốc `[CHỜ]` cho P4 và kết quả. Orchestrator kiểm ngẫu nhiên: phiên bản công cụ và số 235/174/55 khớp repo; số liệu % ở chương 2 truy được về `docs/literature/`. Gộp vào `main`. |
 | 23/11 15:02 | **agy hết quota** model `gemini-4-neon-high` (T11 lần 1 thất bại); T11 lần 2 bằng `claude-opus-5-5-high` bị từ chối quyền (D-022). T11 chờ codex 16:31. Orchestrator bắt đầu đo chính thức P1 (run-01) và P2 (run-01..10) trên nhánh `experiment/run-20261123`. |
+| 23/11 15:20 | **Đo chính thức P1, P2 xong** (orchestrator chạy `run_experiment.py --methods p1-manual,p2-random --runs 1-10 --skip-generation`, exit 0). [ĐÃ CHẠY] P1: 181 test, LINE/BRANCH/METHOD 100%, mutation 119/121 (98,35%). P2 (10 lần): LINE 86,8–94,5%, BRANCH 71,3–81,6%, METHOD 100%, mutation 57,85–70,25%. Gộp vào `main`. |
+| 23/11 15:25 | agy hết quota cả `gemini-3.8-flash-high` (D-023). T17 giao subagent Claude. |
+| 23/11 15:39 | T17 xong (subagent Claude): khóa mutant có `index`, `mutation.alive`, `analyze.py` tính lại score theo CSV. [ĐÃ CHẠY] orchestrator: pytest 108 passed; `mutation_ids.py` tách được hai mutant dòng 24 (index 80, 85). Rà soát đợt 1 (`results/mutation/equivalent-review.md`): 1 mutant tương đương (`PricingService:24`, index 85); `ShippingCalculator:8` index 10 **không** tương đương, là lỗ hổng của P1 (thiếu ca tiền hàng = 0). [ĐÃ CHẠY] `analyze.py` sau rà soát: P1 mutation 99,1667% (119/120). |
