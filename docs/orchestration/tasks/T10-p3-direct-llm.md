@@ -26,6 +26,6 @@
 
 - `python -m pytest tools/tests -q` xanh (dựng prompt, thay biến, ghi `generation.json` với LLM giả lập).
 - `python tools/generate_p3.py --run 1 --dry-run` → in kích thước prompt.
-- **Một lần chạy thật**: `python tools/generate_p3.py --run 1`. Báo cáo đúng như output: số khối sinh ra, số biên dịch được, số qua reference, số giữ lại, các lý do loại, token, thời gian. Có `test-suites/p3-direct-llm/run-01/`, `generation.json`, `results/llm-logs/p3-direct-llm/run-01/calls.jsonl`.
-- `python experiments/scripts/measure.py --suite test-suites/p3-direct-llm/run-01 --method p3-direct-llm --run 1` → báo cáo exit code và coverage đúng như output. Sau đó xóa kết quả đo trong `results/comparison`, `results/coverage`, `results/mutation` (đo chính thức ở T14); **giữ** bộ test, `generation.json` và log LLM của run-01.
-- Chỉ chạy thật **một** lần (`run-01`). Các lần 02–10 làm ở T14.
+- **Không chạy LLM thật** (D-018, `worker-rules.md` mục 4b). Thay vào đó: một test pytest end-to-end dùng LLM giả lập trả về phản hồi mẫu gồm 4 khối (1 đúng, 1 lỗi biên dịch, 1 oracle sai, 1 trùng), chạy Maven thật qua bộ lọc, kiểm tra thư mục `run-XX`, `generation.json` và các tỷ lệ. Đánh dấu `@pytest.mark.maven`.
+- Có tùy chọn `--provider/--model/--effort` để orchestrator ghi đè cấu hình khi chạy thật. Timeout gọi LLM cho P3 lấy từ khóa cấu hình riêng `p3.timeout_s` (đặt 1800, vì prompt dài).
+- Ghi trong báo cáo lệnh chính xác để orchestrator chạy thật `run-01`.

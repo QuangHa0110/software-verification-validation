@@ -1,6 +1,6 @@
 # Kết quả Spike S3 – Gọi LLM thực tế (`llm_client.py`)
 
-**Trạng thái:** CHƯA CHẠY lại – orchestrator sẽ chạy bằng lệnh: `python -m tools.svv.llm_client --smoke --provider codex-cli`
+**Trạng thái:** `agy-cli` ĐÃ CHẠY thành công (23/11, 14:45, xem mục 5). `codex-cli` CHƯA CHẠY lại (codex hết quota đến 16:31 cùng ngày) – lệnh: `python -m tools.svv.llm_client --smoke --provider codex-cli`
 
 > Ghi chú: nếu đặt `PYTHONPATH=tools`, có thể chạy tương đương bằng `python -m svv.llm_client --smoke --provider codex-cli` (hoặc đổi sang `--provider agy-cli` khi cần kiểm thử provider dự phòng).
 
@@ -47,3 +47,13 @@ Sau khi chạy thành công, điền các trường sau từ stdout và dòng m�
 - Phản hồi (khối ` ```java `): _(chờ orchestrator chạy)_
 
 > **Lưu ý khi so sánh chi phí:** Với `codex-cli`, `input_tokens` bao gồm cả phần ngữ cảnh nền (system prompt / hướng dẫn công cụ của codex — khoảng 22 nghìn token ngay cả với prompt rất ngắn, đo ngày 23/11). Cần ghi rõ yếu tố này khi đối chiếu lượng token và chi phí giữa các phương pháp hoặc giữa `codex-cli` với các provider khác.
+
+## 5. Kết quả chạy lại bằng `agy-cli` (orchestrator, 23/11/2026)
+
+- Lệnh: `python -m tools.svv.llm_client --smoke --provider agy-cli --model gemini-3.8-flash-low` → exit 0
+- `provider` / `model` / `effort`: `agy-cli` / `gemini-3.8-flash-low` / `medium` (agy không nhận tham số effort; mức suy luận nằm trong tên model)
+- Token: `input_tokens = 15566`, `cached_input_tokens = 0`, `output_tokens = 64`, `reasoning_output_tokens = 0`
+- `duration_s = 6.08` (theo agy); từ `started_at` đến `ended_at` ≈ 12,3 s; `tool_events = 0`
+- Phản hồi: một khối ```` ```java ```` chứa lớp `MathTest` với `@Test void testAddition() { assertEquals(2, 1 + 1); }`
+- Log: dòng cuối của `results/llm-logs/spike-s3/run-01/calls.jsonl`
+- Nhận xét: giống codex, `input_tokens` của agy gồm phần ngữ cảnh nền (≈ 15,5 nghìn token với prompt rất ngắn).

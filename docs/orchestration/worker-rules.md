@@ -31,6 +31,12 @@
 - Khi đặc tả mơ hồ: chọn cách hiểu hợp lý nhất, ghi câu hỏi và cách đã chọn vào `docs/spec/open-questions.md` (nếu file đó nằm trong phạm vi), và nêu trong báo cáo.
 - Tuân thủ mục 9 "Quy tắc cho AI" của `docs/thiet-ke-ky-thuat.md`.
 
+## 4b. Thực thi lệnh
+
+- Chạy mọi lệnh ở **foreground** và chờ lệnh kết thúc. Không dùng tác vụ nền. Không kết thúc khi còn lệnh đang chạy.
+- **Không** chạy `codex`, `agy` hay gọi LLM thật. Kiểm tra phần gọi LLM bằng LLM giả lập (mock) và `--dry-run`; orchestrator chạy lời gọi thật (D-018).
+- Không xóa file bằng lệnh shell ngoài thư mục `.work/` và `results/` (ví dụ `.gitkeep`): ghi vào báo cáo để orchestrator xóa.
+
 ## 5. Báo cáo cuối (tin nhắn cuối cùng của bạn)
 
 Viết bằng tiếng Việt, đúng các mục sau:
