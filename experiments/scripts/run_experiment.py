@@ -29,12 +29,17 @@ DEFAULT_METHODS = (
     "p4-coverage-guided",
     "p4b-mutation-feedback",
 )
-KNOWN_METHODS = (*DEFAULT_METHODS, "evosuite")
-PAIRED_LLM_METHODS = (
-    "p3-direct-llm",
-    "p4-coverage-guided",
-    "p4b-mutation-feedback",
-)
+# In each chain, insertion order is the generation order within one run.
+LLM_GENERATORS = {
+    "p3-direct-llm": ("generate_p3.py", ()),
+    "p4-coverage-guided": ("generate_p4.py", ()),
+    "p4b-mutation-feedback": ("generate_p4.py", ("--mutation-feedback",)),
+    "p3r-spec-only": ("generate_p3.py", ("--variant", "spec-only")),
+    "p4r-coverage-guided": ("generate_p4.py", ("--variant", "reduced")),
+    "p4br-mutation-feedback": ("generate_p4.py", ("--variant", "reduced", "--mutation-feedback")),
+}
+PAIRED_LLM_METHODS = tuple(LLM_GENERATORS)
+KNOWN_METHODS = ("p1-manual", "p2-random", *PAIRED_LLM_METHODS, "evosuite")
 LLM_QUOTA_RETURN_CODES = (2, 3)
 
 _QUOTA_EXTRA = re.compile(r"LlmQuotaExceeded|quota\s+exceeded", re.I)
@@ -124,24 +129,10 @@ def _generator_spec(
     if method == "p2-random":
         script = root / "tools/generate_p2.py"
         return script, (python_exe, str(script), "--run", str(run)), ""
-    if method == "p3-direct-llm":
-        script = root / "tools/generate_p3.py"
-        cmd = (python_exe, str(script), "--run", str(run), *_llm_override_args(provider, model, effort))
-        return script, cmd, ""
-    if method == "p4-coverage-guided":
-        script = root / "tools/generate_p4.py"
-        cmd = (python_exe, str(script), "--run", str(run), *_llm_override_args(provider, model, effort))
-        return script, cmd, ""
-    if method == "p4b-mutation-feedback":
-        script = root / "tools/generate_p4.py"
-        cmd = (
-            python_exe,
-            str(script),
-            "--run",
-            str(run),
-            "--mutation-feedback",
-            *_llm_override_args(provider, model, effort),
-        )
+    if method in LLM_GENERATORS:
+        filename, flags = LLM_GENERATORS[method]
+        script = root / "tools" / filename
+        cmd = (python_exe, str(script), "--run", str(run), *flags, *_llm_override_args(provider, model, effort))
         return script, cmd, ""
     if method == "evosuite":
         return (
@@ -598,7 +589,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--methods",
         default=None,
-        help="Comma-separated method list (default: p1-manual,p2-random,p3-direct-llm,p4-coverage-guided,p4b-mutation-feedback)",
+        help=f"Comma-separated methods from {', '.join(KNOWN_METHODS)} (default: {','.join(DEFAULT_METHODS)})",
     )
     parser.add_argument(
         "--runs",

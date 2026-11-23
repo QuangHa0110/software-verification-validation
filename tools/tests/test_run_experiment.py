@@ -94,6 +94,19 @@ def test_dry_run_enforces_paired_order_and_skips_evosuite(workspace, capsys):
     assert not (workspace / "results/comparison/run-log.jsonl").exists()
 
 
+def test_reduced_dry_run_pairs_generators_and_measurements(workspace, capsys):
+    chain = ["p3r-spec-only", "p4r-coverage-guided", "p4br-mutation-feedback"]
+    assert run_experiment.main(["--methods", ",".join(reversed(chain)), "--runs", "1-2", "--dry-run"],
+                               root=workspace) == 0
+    lines = capsys.readouterr().out.splitlines()[1:]
+    assert [line.split()[1:4] for line in lines] == [
+        [step, method, run] for run in ("run-01", "run-02") for method in chain
+        for step in ("[GENERATE]", "[MEASURE]")]
+    for line in lines[::2]:
+        assert ("--variant spec-only" if chain[0] in line else "--variant reduced") in line
+        assert ("--mutation-feedback" in line) == (chain[2] in line)
+
+
 def test_execute_plan_commands_overrides_and_log(workspace):
     plan = run_experiment.build_plan(
         ["p2-random", "p3-direct-llm", "p4-coverage-guided", "p4b-mutation-feedback"],

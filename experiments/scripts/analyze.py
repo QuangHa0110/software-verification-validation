@@ -30,6 +30,7 @@ CANONICAL_METHODS = (
     "p4-coverage-guided",
     "p4b-mutation-feedback",
 )
+REDUCED_CHAIN = ("p3r-spec-only", "p4r-coverage-guided", "p4br-mutation-feedback")
 
 METHOD_LABELS = {
     "p1-manual": "P1 Manual",
@@ -37,6 +38,9 @@ METHOD_LABELS = {
     "p3-direct-llm": "P3 Direct LLM",
     "p4-coverage-guided": "P4 Coverage",
     "p4b-mutation-feedback": "P4b Mutation",
+    "p3r-spec-only": "P3r Spec-only",
+    "p4r-coverage-guided": "P4r Coverage",
+    "p4br-mutation-feedback": "P4br Mutation",
     "evosuite": "EvoSuite",
 }
 
@@ -45,6 +49,11 @@ PAIRWISE_COMPARISONS: tuple[tuple[str, str, str], ...] = (
     ("p3-direct-llm", "p2-random", "RQ3"),
     ("p4-coverage-guided", "p2-random", "RQ3"),
     ("p4b-mutation-feedback", "p4-coverage-guided", "P4b vs P4"),
+)
+REDUCED_COMPARISONS = (
+    (REDUCED_CHAIN[1], REDUCED_CHAIN[0], "P4r vs P3r"),
+    (REDUCED_CHAIN[2], REDUCED_CHAIN[1], "P4br vs P4r"),
+    (REDUCED_CHAIN[0], "p3-direct-llm", "P3r vs P3"),
 )
 
 
@@ -136,14 +145,29 @@ def _write_csv(path: Path, fieldnames: Sequence[str], rows: Sequence[dict[str, A
             writer.writerow({k: row.get(k, "") for k in fieldnames})
 
 
-def load_raw_runs(raw_dir: Path) -> dict[str, list[dict[str, Any]]]:
+def load_raw_runs(raw_dir: Path, suites_dir: Path | None = None) -> dict[str, list[dict[str, Any]]]:
     """Load results/comparison/raw/<method>/run-XX.json grouped by method, sorted by run."""
     by_method: dict[str, list[dict[str, Any]]] = {}
     if not raw_dir.is_dir():
         return by_method
+    if suites_dir is None and raw_dir.parent.name == "comparison" and raw_dir.parent.parent.name == "results":
+        suites_dir = raw_dir.parent.parent.parent / "test-suites"
     for json_path in sorted(raw_dir.glob("*/run-*.json")):
         data = json.loads(json_path.read_text(encoding="utf-8"))
         method = str(data["method"])
+        if method in REDUCED_CHAIN[1:] and "iterations" not in data:
+            # measure.py saves the final metrics; the generator owns the iteration trace.
+            label = f"run-{data['run']:02d}"
+            trace = suites_dir / method / label / "generation.json" if suites_dir is not None else None
+            if trace is None or not trace.is_file():
+                print(f"Missing iteration history for {method} {label}. Supply --suites-dir.", file=sys.stderr)
+            else:
+                generation = json.loads(trace.read_text(encoding="utf-8"))
+                if (generation["method"] != method or generation["run"] != data["run"]
+                        or generation["generation_s"] != data["time"]["generation_s"]):
+                    raise ValueError(f"{trace}: generation does not match {json_path}")
+                data["iterations"] = generation["iterations"]
+                data["baseline"] = generation["baseline"]
         by_method.setdefault(method, []).append(data)
     for records in by_method.values():
         records.sort(key=lambda item: int(item["run"]))
@@ -244,8 +268,9 @@ def _equivalence_md(report: Sequence[dict[str, Any]], equivalents: Path, csv_row
 
 
 def ordered_methods(by_method: dict[str, list[dict[str, Any]]]) -> list[str]:
-    extras = sorted(m for m in by_method if m not in CANONICAL_METHODS)
-    return [*CANONICAL_METHODS, *extras]
+    reduced = [m for m in REDUCED_CHAIN if m in by_method]
+    extras = sorted(by_method.keys() - set(CANONICAL_METHODS) - set(reduced))
+    return [*CANONICAL_METHODS, *reduced, *extras]
 
 
 def _extract_metric_series(
@@ -321,7 +346,10 @@ def write_pairwise(
         "| Pair (A vs B) | RQ | Metric | n_A | n_B | Median A | Median B | Mann-Whitney U | p-value | A12 | Magnitude |",
         "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---|",
     ]
-    for method_a, method_b, rq in PAIRWISE_COMPARISONS:
+    comparisons = PAIRWISE_COMPARISONS
+    if any(method in by_method for method in REDUCED_CHAIN):
+        comparisons += REDUCED_COMPARISONS
+    for method_a, method_b, rq in comparisons:
         pair_label = f"{method_a} vs {method_b}"
         recs_a = by_method.get(method_a, [])
         recs_b = by_method.get(method_b, [])
@@ -391,15 +419,24 @@ def _diff(after: float | None, before: float | None) -> float | None:
 def write_coverage_before_after(
     by_method: dict[str, list[dict[str, Any]]],
     out_dir: Path,
+    *,
+    reduced: bool = False,
 ) -> list[dict[str, Any]]:
-    p3_map = {int(r["run"]): r for r in by_method.get("p3-direct-llm", [])}
-    p4_map = {int(r["run"]): r for r in by_method.get("p4-coverage-guided", [])}
-    p4b_map = {int(r["run"]): r for r in by_method.get("p4b-mutation-feedback", [])}
+    chain = REDUCED_CHAIN if reduced else ("p3-direct-llm", "p4-coverage-guided", "p4b-mutation-feedback")
+    p3, p4, p4b = (method.split("-", 1)[0] for method in chain)
+    p3_map, p4_map, p4b_map = ({int(r["run"]): r for r in by_method.get(method, [])} for method in chain)
+    filename = "coverage-before-after-reduced" if reduced else "coverage-before-after"
+    columns = [
+        "run", f"{p3}_statement_pct", f"{p4}_statement_pct", f"delta_{p4}_{p3}_statement_pct",
+        f"{p3}_branch_pct", f"{p4}_branch_pct", f"delta_{p4}_{p3}_branch_pct",
+        f"{p3}_function_pct", f"{p4}_function_pct", f"delta_{p4}_{p3}_function_pct",
+        f"{p3}_mutation_score", f"{p4}_mutation_score", f"{p4b}_mutation_score", f"delta_{p4b}_{p4}_mutation_score",
+    ]
     all_runs = sorted(set(p3_map) | set(p4_map) | set(p4b_map))
 
     csv_rows: list[dict[str, Any]] = []
     md_lines = [
-        "# Paired Before/After Comparison (P3 -> P4 Coverage, P4 -> P4b Mutation)",
+        f"# Paired Before/After Comparison ({p3.upper()} → {p4.upper()} Coverage, {p4.upper()} → {p4b.upper()} Mutation)",
         "",
     ]
     if not all_runs:
@@ -407,7 +444,7 @@ def write_coverage_before_after(
     else:
         md_lines.extend(
             [
-                "| Run | P3 Stmt (%) | P4 Stmt (%) | Δ Stmt (pp) | P3 Branch (%) | P4 Branch (%) | Δ Branch (pp) | P3 Func (%) | P4 Func (%) | Δ Func (pp) | P4 Mut (%) | P4b Mut (%) | Δ Mut (pp) |",
+                f"| Run | {p3.upper()} Stmt (%) | {p4.upper()} Stmt (%) | Δ Stmt (pp) | {p3.upper()} Branch (%) | {p4.upper()} Branch (%) | Δ Branch (pp) | {p3.upper()} Func (%) | {p4.upper()} Func (%) | Δ Func (pp) | {p4.upper()} Mut (%) | {p4b.upper()} Mut (%) | Δ Mut (pp) |",
                 "|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
             ]
         )
@@ -433,24 +470,9 @@ def write_coverage_before_after(
         d_mut = _diff(p4b_mut, p4_mut)
 
         run_label = f"run-{run:02d}"
-        csv_rows.append(
-            {
-                "run": run_label,
-                "p3_statement_pct": _fmt_csv(p3_stmt),
-                "p4_statement_pct": _fmt_csv(p4_stmt),
-                "delta_p4_p3_statement_pct": _fmt_csv(d_stmt),
-                "p3_branch_pct": _fmt_csv(p3_branch),
-                "p4_branch_pct": _fmt_csv(p4_branch),
-                "delta_p4_p3_branch_pct": _fmt_csv(d_branch),
-                "p3_function_pct": _fmt_csv(p3_func),
-                "p4_function_pct": _fmt_csv(p4_func),
-                "delta_p4_p3_function_pct": _fmt_csv(d_func),
-                "p3_mutation_score": _fmt_csv(p3_mut),
-                "p4_mutation_score": _fmt_csv(p4_mut),
-                "p4b_mutation_score": _fmt_csv(p4b_mut),
-                "delta_p4b_p4_mutation_score": _fmt_csv(d_mut),
-            }
-        )
+        values = (p3_stmt, p4_stmt, d_stmt, p3_branch, p4_branch, d_branch, p3_func, p4_func, d_func,
+                  p3_mut, p4_mut, p4b_mut, d_mut)
+        csv_rows.append(dict(zip(columns, [run_label, *map(_fmt_csv, values)], strict=True)))
         md_lines.append(
             f"| `{run_label}` | {_fmt_md(p3_stmt, 2)} | {_fmt_md(p4_stmt, 2)} | {_fmt_md(d_stmt, 2)} "
             f"| {_fmt_md(p3_branch, 2)} | {_fmt_md(p4_branch, 2)} | {_fmt_md(d_branch, 2)} "
@@ -459,26 +481,11 @@ def write_coverage_before_after(
         )
 
     _write_csv(
-        out_dir / "coverage-before-after.csv",
-        [
-            "run",
-            "p3_statement_pct",
-            "p4_statement_pct",
-            "delta_p4_p3_statement_pct",
-            "p3_branch_pct",
-            "p4_branch_pct",
-            "delta_p4_p3_branch_pct",
-            "p3_function_pct",
-            "p4_function_pct",
-            "delta_p4_p3_function_pct",
-            "p3_mutation_score",
-            "p4_mutation_score",
-            "p4b_mutation_score",
-            "delta_p4b_p4_mutation_score",
-        ],
+        out_dir / f"{filename}.csv",
+        columns,
         csv_rows,
     )
-    (out_dir / "coverage-before-after.md").write_text("\n".join(md_lines) + "\n", encoding="utf-8", newline="\n")
+    (out_dir / f"{filename}.md").write_text("\n".join(md_lines) + "\n", encoding="utf-8", newline="\n")
     return csv_rows
 
 
@@ -487,7 +494,7 @@ def write_iterations(
     out_dir: Path,
 ) -> list[dict[str, Any]]:
     csv_rows: list[dict[str, Any]] = []
-    for method in ("p4-coverage-guided", "p4b-mutation-feedback"):
+    for method in ("p4-coverage-guided", "p4b-mutation-feedback", *REDUCED_CHAIN[1:]):
         for rec in by_method.get(method, []):
             run = int(rec["run"])
             for item in rec.get("iterations") or []:
@@ -608,58 +615,56 @@ def _plot_mutation_boxplot(by_method: dict[str, list[dict[str, Any]]], fig_dir: 
     return path
 
 
-def _plot_p4_iterations(by_method: dict[str, list[dict[str, Any]]], fig_dir: Path) -> Path:
-    path = fig_dir / "p4_iterations_coverage.png"
-    records = by_method.get("p4-coverage-guided", [])
+def _plot_p4_iterations(by_method: dict[str, list[dict[str, Any]]], fig_dir: Path,
+                        method: str = "p4-coverage-guided") -> Path:
+    code = method.split("-", 1)[0]
+    mutation = method == REDUCED_CHAIN[2]
+    metric = "Mutation Score" if mutation else "Coverage"
+    suffix = "mutation" if mutation else "coverage"
+    path = fig_dir / f"{code}_iterations_{suffix}.png"
     fig, ax = plt.subplots(figsize=(8, 5))
-
-    branch_by_iter: dict[int, list[float]] = {}
-    stmt_by_iter: dict[int, list[float]] = {}
-    plotted_any = False
-
-    for rec in records:
-        iters = sorted(rec.get("iterations") or [], key=lambda item: int(item["i"]))
-        if not iters:
-            continue
-        plotted_any = True
-        xs = [int(item["i"]) for item in iters]
-        ys_branch = [float(item["branch_pct"]) for item in iters]
-        ys_stmt = [float(item["statement_pct"]) for item in iters]
-        ax.plot(xs, ys_branch, color="#1f77b4", alpha=0.25, linewidth=1.2)
-        ax.plot(xs, ys_stmt, color="#2ca02c", alpha=0.2, linewidth=1.0, linestyle="--")
-        for x, yb, ys in zip(xs, ys_branch, ys_stmt):
-            branch_by_iter.setdefault(x, []).append(yb)
-            stmt_by_iter.setdefault(x, []).append(ys)
-
-    if plotted_any:
-        xs_sorted = sorted(branch_by_iter)
-        mean_branch = [float(np.mean(branch_by_iter[x])) for x in xs_sorted]
-        mean_stmt = [float(np.mean(stmt_by_iter[x])) for x in xs_sorted]
-        ax.plot(
-            xs_sorted,
-            mean_branch,
-            color="#1f77b4",
-            linewidth=2.4,
-            marker="o",
-            label="Mean Branch Coverage (%)",
-        )
-        ax.plot(
-            xs_sorted,
-            mean_stmt,
-            color="#2ca02c",
-            linewidth=2.0,
-            linestyle="--",
-            marker="s",
-            label="Mean Statement/Line Coverage (%)",
-        )
-        ax.set_xticks(xs_sorted)
+    series = [("mutation_score", "Mutation Score", "#9467bd", "-")] if mutation else [
+        ("branch_pct", "Branch Coverage", "#1f77b4", "-"),
+        ("statement_pct", "Statement/Line Coverage", "#2ca02c", "--"),
+    ]
+    records = by_method.get(method, [])
+    parent = REDUCED_CHAIN[1] if mutation else REDUCED_CHAIN[0]
+    parents = {r["run"]: r for r in by_method.get(parent, [])} if method in REDUCED_CHAIN else {}
+    ticks = set()
+    for key, label, color, style in series:
+        by_iteration: dict[int, list[float]] = {}
+        for rec in records:
+            iterations = rec.get("iterations")
+            if iterations is None:
+                continue
+            points = {int(item["i"]): float(item[key]) for item in iterations if item.get(key) is not None}
+            # Generation records its first feedback call as iteration 1.
+            seed = parents.get(rec["run"])
+            if key in rec.get("baseline", {}) and 0 not in points:
+                points[0] = rec["baseline"][key]
+            elif seed and 0 not in points:
+                baseline = (_get_mutation_score(seed) if mutation
+                            else seed["coverage"][key.removesuffix("_pct")]["pct"])
+                if baseline is not None:
+                    points[0] = baseline
+            xs = sorted(points)
+            ax.plot(xs, [points[x] for x in xs], color=color, linestyle=style,
+                    marker=".", alpha=0.25, linewidth=1.2)
+            for x, y in points.items():
+                by_iteration.setdefault(x, []).append(y)
+        if by_iteration:
+            xs = sorted(by_iteration)
+            ticks.update(xs)
+            ax.plot(xs, [np.mean(by_iteration[x]) for x in xs], color=color, linewidth=2.4,
+                    linestyle=style, marker="o", label=f"Mean {label} (%)")
+    if ticks:
+        ax.set_xticks(sorted(ticks))
         ax.legend(loc="lower right")
     else:
-        ax.text(0.5, 0.5, "No P4 iteration data (n = 0)", ha="center", va="center", transform=ax.transAxes)
-
-    ax.set_title("P4 Coverage Progression Across Iterations")
-    ax.set_xlabel("Iteration (index)")
-    ax.set_ylabel("Coverage (%)")
+        ax.text(0.5, 0.5, "No iteration data", ha="center", va="center", transform=ax.transAxes)
+    ax.set_title(f"{METHOD_LABELS[method]} Progression Across Iterations")
+    ax.set_xlabel("Iteration")
+    ax.set_ylabel(f"{metric} (%)")
     ax.set_ylim(0, 105)
     ax.grid(True, linestyle="--", alpha=0.4)
     fig.tight_layout()
@@ -733,6 +738,7 @@ def generate_figures(by_method: dict[str, list[dict[str, Any]]], out_dir: Path) 
         _plot_coverage_boxplot(by_method, fig_dir),
         _plot_mutation_boxplot(by_method, fig_dir),
         _plot_p4_iterations(by_method, fig_dir),
+        *(_plot_p4_iterations(by_method, fig_dir, method) for method in REDUCED_CHAIN[1:] if method in by_method),
         _plot_tests_vs_mutation(by_method, fig_dir),
     ]
 
@@ -743,6 +749,7 @@ def analyze(
     out_dir: Path,
     mutation_dir: Path | None = None,
     equivalents: Path | None = None,
+    suites_dir: Path | None = None,
 ) -> dict[str, Path]:
     """Run full statistical analysis and figure generation from raw_dir into out_dir.
 
@@ -752,7 +759,7 @@ def analyze(
     out_dir.mkdir(parents=True, exist_ok=True)
     mutation_dir = mutation_dir if mutation_dir is not None else raw_dir.parent.parent / "mutation"
     equivalents = equivalents if equivalents is not None else mutation_dir / "equivalent-mutants.csv"
-    by_method = load_raw_runs(raw_dir)
+    by_method = load_raw_runs(raw_dir, suites_dir)
     report = apply_equivalents(by_method, mutation_dir, equivalents)
     csv_rows = len(load_equivalents(equivalents)) if equivalents.is_file() else 0
     write_summary(by_method, out_dir, _equivalence_md(report, equivalents, csv_rows))
@@ -771,6 +778,10 @@ def analyze(
         "iterations_csv": out_dir / "iterations.csv",
         "rq5_correlation_csv": out_dir / "rq5-correlation.csv",
     }
+    if any(method in by_method for method in REDUCED_CHAIN):
+        write_coverage_before_after(by_method, out_dir, reduced=True)
+        outputs["reduced_before_after_csv"] = out_dir / "coverage-before-after-reduced.csv"
+        outputs["reduced_before_after_md"] = out_dir / "coverage-before-after-reduced.md"
     for fig_path in figures:
         outputs[fig_path.stem] = fig_path
     return outputs
@@ -778,6 +789,8 @@ def analyze(
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Analyze experiment raw JSON outputs and generate tables/figures.")
+    parser.add_argument("--suites-dir", type=Path, help="Test suites containing reduced iteration histories "
+                        "(default: test-suites beside results/ for a standard raw directory)")
     parser.add_argument(
         "--raw-dir",
         type=Path,
@@ -813,6 +826,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         out_dir=args.out_dir,
         mutation_dir=args.mutation_dir,
         equivalents=args.equivalents,
+        suites_dir=args.suites_dir,
     )
     for name, path in outputs.items():
         print(f"{name}: {path}")

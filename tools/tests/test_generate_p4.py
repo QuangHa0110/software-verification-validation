@@ -34,18 +34,14 @@ def repo(monkeypatch):
         yield root
 
 
-def seed(root, *, paired=False):
-    rel = Path("test-suites") / p4.P3 / "run-01"
-    suite = root / rel
-    if paired and (ROOT / rel).is_dir():
-        shutil.copytree(ROOT / rel, suite)
-    else:
-        suite.mkdir(parents=True)
-        shutil.copy2(ROOT / "test-suites/smoke/DomainSmokeTest.java", suite)
-        meta = {"method": p4.P3, "run": 1, "generation_s": 7.0,
-                "llm": {"calls": 1, "input_tokens": 600, "output_tokens": 50, "cost_usd": None},
-                "tests": dict.fromkeys(p4.TEST_COUNTS, 5)}
-        (suite / "generation.json").write_text(json.dumps(meta), encoding="utf-8")
+def seed(root, *, method=p4.P3):
+    suite = root / "test-suites" / method / "run-01"
+    suite.mkdir(parents=True)
+    shutil.copy2(ROOT / "test-suites/smoke/DomainSmokeTest.java", suite)
+    meta = {"method": method, "run": 1, "generation_s": 7.0,
+            "llm": {"calls": 1, "input_tokens": 600, "output_tokens": 50, "cost_usd": None},
+            "tests": dict.fromkeys(p4.TEST_COUNTS, 5)}
+    (suite / "generation.json").write_text(json.dumps(meta), encoding="utf-8")
     return suite
 
 
@@ -71,6 +67,37 @@ def observed(branch=25):
 
 def read_record(suite):
     return json.loads((suite / "generation.json").read_text(encoding="utf-8"))
+
+
+def test_reduced_chain_only_sends_targeted_source(repo, monkeypatch):
+    seed(repo, method=p4.P3R)
+    site = {"class": "shop.Sample", "method": "example", "line": 6}
+    source_dir = repo / "subject/src/main/java/shop"
+    markers = [f"// SOURCE_MARKER_{n:02d}" for n in range(1, 12)]
+    (source_dir / "Sample.java").write_text("\n".join(markers), encoding="utf-8")
+    (repo / "experiments/config/check.local.yaml").write_text(
+        "p4: {max_iterations: 1, p4b: {max_iterations: 1}}", encoding="utf-8")
+
+    def measure(suite, *, mutation, **kwargs):
+        result = observed()
+        result.uncovered["branches"] = [{**site, "covered": 1, "missed": 1}]
+        if mutation:
+            result.mutation_score = 75
+            result.live = [{**site, "source": "pit", "operator": "arithmetic", "index": 1,
+                            "mutator": "MathMutator", "status": "SURVIVED", "description": "replace sum"}]
+        return result
+
+    monkeypatch.setattr(p4, "measure_suite", measure)
+    prompts = fake_provider(monkeypatch, ["", ""])
+    for mutation, parent, method in ((False, p4.P3R, p4.P4R), (True, p4.P4R, p4.P4BR)):
+        record = p4.generate(1, root=repo, variant="reduced", mutation_feedback=mutation)
+        assert record["inherited"]["method"] == parent
+        assert read_record(repo / "test-suites" / method / "run-01") == record
+        prompt = prompts[-1]
+        assert [m for m in markers if m in prompt] == (markers[5:6] if mutation else markers[3:8])
+        assert ("replace sum" if mutation else "branches covered=1 missed=1") in prompt
+        assert "case PROVINCE -> 35_000;" not in prompt
+        assert (repo / "docs/spec/api.md").read_text(encoding="utf-8").strip() in prompt
 
 
 @pytest.mark.parametrize("mutation_score", [None, 71.5])
@@ -165,7 +192,7 @@ def test_p4b_limits_use_its_score_and_own_budget(score, iters, tokens, no_gain, 
 
 @pytest.mark.maven
 def test_paired_p4_then_p4b_with_mock_llm_real_maven(repo, monkeypatch, capsys):
-    parent = seed(repo, paired=True)
+    parent = seed(repo)
     (repo / "experiments/config/check.local.yaml").write_text(
         "p4: {max_iterations: 2, p4b: {max_iterations: 1}}", encoding="utf-8")
     covering = method("innerCityBaseFee", "assertEquals(15000L, new ShippingCalculator()"

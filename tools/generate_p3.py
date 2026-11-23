@@ -26,6 +26,8 @@ except ModuleNotFoundError:
     from svv.test_filter import FilterResult, filter_tests, write_suite
 
 METHOD = "p3-direct-llm"
+SPEC_ONLY_METHOD = "p3r-spec-only"
+VARIANTS = {"full": METHOD, "spec-only": SPEC_ONLY_METHOD}
 PURPOSE = "direct"
 CLASS_PREFIX = "P3"
 PROMPT_VERSION = "1.0"
@@ -93,9 +95,12 @@ def _ordered_source_paths(source_dir: Path) -> list[Path]:
     )
 
 
-def build_prompt(*, root: Path = ROOT) -> PromptBundle:
+def build_prompt(*, root: Path = ROOT, variant: str = "full") -> PromptBundle:
     """Assemble the deterministic P3 direct prompt from templates, specs, and subject source."""
-    prompt_dir = root / "prompts/direct"
+    if variant not in VARIANTS:
+        raise ValueError(f"Unknown P3 variant: {variant}")
+    full = variant == "full"
+    prompt_dir = root / "prompts" / ("direct" if full else "direct-spec-only")
     system_path = prompt_dir / "system.md"
     generate_path = prompt_dir / "generate.md"
     spec_dir = root / "docs/spec"
@@ -105,7 +110,10 @@ def build_prompt(*, root: Path = ROOT) -> PromptBundle:
     system_text = _read_lf(system_path).strip()
     generate_text = _read_lf(generate_path).strip()
 
-    missing = [token for token in REQUIRED_PLACEHOLDERS if token not in generate_text]
+    required = REQUIRED_PLACEHOLDERS if full else ("{{API}}", "{{SPEC}}")
+    if not full and any("{{SOURCE}}" in part for part in (system_text, generate_text)):
+        raise ValueError(f"{prompt_dir}: spec-only templates cannot include {{{{SOURCE}}}}")
+    missing = [token for token in required if token not in generate_text]
     if missing:
         raise ValueError(f"{generate_path}: missing required placeholder(s): {', '.join(missing)}")
 
@@ -113,8 +121,8 @@ def build_prompt(*, root: Path = ROOT) -> PromptBundle:
     spec_paths = _ordered_spec_paths(spec_dir)
     if not spec_paths:
         raise ValueError(f"{spec_dir}: no specification markdown files found")
-    source_paths = _ordered_source_paths(source_dir)
-    if not source_paths:
+    source_paths = _ordered_source_paths(source_dir) if full else []
+    if full and not source_paths:
         raise ValueError(f"{source_dir}: no Java source files found")
 
     spec_sections = [
@@ -190,6 +198,7 @@ def _call_llm(
     complete_fn: Callable[..., LlmResult],
     prompt: str,
     *,
+    method: str,
     run: int,
     timeout_s: int | float,
     provider: str | None,
@@ -198,7 +207,7 @@ def _call_llm(
     config_dir: Path | None,
 ) -> LlmResult:
     kwargs: dict[str, object] = {
-        "method": METHOD,
+        "method": method,
         "run": run,
         "purpose": PURPOSE,
         "provider": provider,
@@ -222,6 +231,7 @@ def _call_llm(
 def generate(
     run: int,
     *,
+    variant: str = "full",
     provider: str | None = None,
     model: str | None = None,
     effort: str | None = None,
@@ -242,7 +252,8 @@ def generate(
     if not _is_positive_number(timeout_s):
         raise ValueError("p3.timeout_s must be a positive number")
 
-    bundle = build_prompt(root=root)
+    bundle = build_prompt(root=root, variant=variant)
+    method = VARIANTS[variant]
     call_complete = complete_fn if complete_fn is not None else llm_client.complete
     call_filter = filter_fn if filter_fn is not None else filter_tests
 
@@ -252,6 +263,7 @@ def generate(
     llm_res = _call_llm(
         call_complete,
         bundle.text,
+        method=method,
         run=run,
         timeout_s=timeout_s,
         provider=provider,
@@ -271,11 +283,11 @@ def generate(
     generation_s = perf_counter() - start_clock
     ended = datetime.now(timezone.utc)
 
-    target_dir = out_dir if out_dir is not None else root / "test-suites" / METHOD / f"run-{run:02d}"
+    target_dir = out_dir if out_dir is not None else root / "test-suites" / method / f"run-{run:02d}"
     target_dir.mkdir(parents=True, exist_ok=True)
     for stale in target_dir.glob("*.java"):
         stale.unlink()
-    write_suite(filter_res.kept, method=METHOD, run=run, root=root, output_dir=target_dir)
+    write_suite(filter_res.kept, method=method, run=run, root=root, output_dir=target_dir)
 
     dropped_records = [{"name": item.name, "reason": item.reason} for item in filter_res.dropped]
     filter_summary = {
@@ -298,7 +310,7 @@ def generate(
     }
 
     record = {
-        "method": METHOD,
+        "method": method,
         "run": run,
         "started_at": started.isoformat(),
         "ended_at": ended.isoformat(),
@@ -352,6 +364,7 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", type=int, required=True, help="Run number (1..N)")
+    parser.add_argument("--variant", choices=VARIANTS, default="full")
     parser.add_argument(
         "--dry-run",
         action="store_true",
@@ -373,13 +386,13 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if args.dry_run:
         try:
-            bundle = build_prompt(root=ROOT)
+            bundle = build_prompt(root=ROOT, variant=args.variant)
         except (OSError, ValueError) as exc:
             print(f"Dry-run failed: {exc}", file=sys.stderr)
             return 1
         print(bundle.text, end="")
         print(
-            f"---\n[dry-run] method={METHOD} run={args.run:02d} chars={bundle.chars} "
+            f"---\n[dry-run] method={VARIANTS[args.variant]} run={args.run:02d} chars={bundle.chars} "
             f"specs={len(bundle.spec_files)} sources={len(bundle.source_files)} "
             f"system_sha256={bundle.system_sha256} generate_sha256={bundle.generate_sha256} "
             f"rendered_sha256={bundle.rendered_sha256}"
@@ -389,6 +402,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     try:
         record = generate(
             args.run,
+            variant=args.variant,
             provider=args.provider,
             model=args.model,
             effort=args.effort,
