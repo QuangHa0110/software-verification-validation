@@ -17,7 +17,7 @@ import yaml
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from tools.generate_p3 import METHOD as P3, _llm_timeout_override, _ordered_spec_paths
+from tools.generate_p3 import METHOD as P3, SPEC_ONLY_METHOD as P3R, _llm_timeout_override, _ordered_spec_paths
 from tools.svv import llm_client
 from tools.svv.config import ROOT, load_config
 from tools.svv.custom_mutation import run_custom
@@ -33,6 +33,9 @@ from tools.svv.workdir import workdir
 
 P4 = "p4-coverage-guided"
 P4B = "p4b-mutation-feedback"
+P4R = "p4r-coverage-guided"
+P4BR = "p4br-mutation-feedback"
+CHAINS = {"full": (P3, P4, P4B), "reduced": (P3R, P4R, P4BR)}
 TEST_COUNTS = ("generated", "compiled", "passed_reference", "valid")
 USAGE = ("calls", "input_tokens", "output_tokens", "cached_input_tokens",
          "reasoning_output_tokens", "tool_events", "duration_s")
@@ -61,20 +64,27 @@ def measure_suite(suite, *, root, mutation, settings):
         return measured
 
 
-def render_prompt(root, mutation, existing, measured):
+def render_prompt(root, mutation, existing, measured, *, variant="full"):
+    if variant not in CHAINS:
+        raise ValueError(f"Unknown P4 variant: {variant}")
     directory = "mutation-feedback" if mutation else "coverage-guided"
+    if variant == "reduced":
+        directory += "-reduced"
     template = (root / "prompts" / directory / "generate.md").read_text(encoding="utf-8")
     spec_dir = root / "docs/spec"
     source_dir = root / "subject/src/main/java/shop"
     spec = [spec_dir / "api.md", *_ordered_spec_paths(spec_dir)]
     sections = {
         "SPEC": "\n\n".join(f"### {p.name}\n\n{p.read_text(encoding='utf-8').strip()}" for p in spec),
-        "SOURCE": "\n\n".join(f"### {p.name}\n\n```java\n{p.read_text(encoding='utf-8').strip()}\n```"
-                              for p in sorted(source_dir.glob("*.java"))),
         "TEST_NAMES": "\n".join(block.method_name for block in existing),
         "FEEDBACK": (render_mutants(measured.live, source_dir) if mutation
                      else coverage_feedback(measured.uncovered, source_dir)),
     }
+    if variant == "full":
+        sections["SOURCE"] = "\n\n".join(
+            f"### {p.name}\n\n```java\n{p.read_text(encoding='utf-8').strip()}\n```"
+            for p in sorted(source_dir.glob("*.java"))
+        )
     pattern = r"\{\{([A-Z_]+)\}\}"
     if set(re.findall(pattern, template)) != sections.keys():
         raise ValueError(f"Incorrect placeholders in {directory}/generate.md")
@@ -148,13 +158,16 @@ def _publish(stage, target, scratch, record):
         lock.unlink()
 
 
-def generate(run, *, mutation_feedback=False, demo=False, output=None, dry_run=False,
+def generate(run, *, variant="full", mutation_feedback=False, demo=False, output=None, dry_run=False,
              provider=None, model=None, effort=None, root=ROOT):
     if type(run) is not int or run < 1:
         raise ValueError("run must be a positive integer")
     root = root.resolve()
     mutation = mutation_feedback
-    method, parent = (P4B, P4) if mutation else (P4, P3)
+    if variant not in CHAINS:
+        raise ValueError(f"Unknown P4 variant: {variant}")
+    direct, coverage, mutants = CHAINS[variant]
+    parent, method = (coverage, mutants) if mutation else (direct, coverage)
     label = f"run-{run:02d}"
     parent_dir = root / "test-suites" / parent / label
     inherited = paired_generation(parent_dir, parent, run)
@@ -183,7 +196,7 @@ def generate(run, *, mutation_feedback=False, demo=False, output=None, dry_run=F
         current = measure(suite)
         baseline = current.metrics()
         if dry_run:
-            prompt = render_prompt(root, mutation, existing, current)
+            prompt = render_prompt(root, mutation, existing, current, variant=variant)
             print(prompt, end="\n")
             print(f"[dry-run] method={method} {label} chars={len(prompt)} seed={parent} output={target}")
             return None
@@ -215,7 +228,7 @@ def generate(run, *, mutation_feedback=False, demo=False, output=None, dry_run=F
                 break
             i = len(iterations) + 1
             before = current.metrics()
-            prompt = render_prompt(root, mutation, existing, current)
+            prompt = render_prompt(root, mutation, existing, current, variant=variant)
             with _llm_timeout_override(p4["timeout_s"], config_dir=cfg_dir):
                 response = llm_client.complete(prompt, method=method, run=run,
                                                purpose=f"{'demo-' if demo else ''}{method}-iteration-{i}",
@@ -270,6 +283,7 @@ def generate(run, *, mutation_feedback=False, demo=False, output=None, dry_run=F
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--run", required=True, type=int)
+    parser.add_argument("--variant", choices=CHAINS, default="full")
     parser.add_argument("--mutation-feedback", action="store_true")
     parser.add_argument("--demo", action="store_true", help="Use the demo iteration limit and print progress")
     parser.add_argument("--output", type=Path, help="Destination directory of the final Java files and metadata")
