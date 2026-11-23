@@ -1,0 +1,9 @@
+{"type":"thread.started","thread_id":"thr-1"}
+{"type":"turn.started"}
+{"type":"item.completed","item":{"id":"rsn-1","type":"reasoning","text":"Thinking about test"}}
+{"type":"item.started","item":{"id":"cmd-1","type":"command_execution","command":"dir"}}
+{"type":"item.completed","item":{"id":"cmd-1","type":"command_execution","command":"dir","exit_code":0}}
+{"type":"item.completed","item":{"id":"file-1","type":"file_read","path":"README.md"}}
+{"type":"item.completed","item":{"id":"msg-1","type":"agent_message","text":"```java\n@Test\nvoid onePlusOne() {\n    assertEquals(2, 1 + 1);\n}\n```"}}
+{"type":"item.completed","item":{"id":"msg-2","type":"agent_message","text":"Done."}}
+{"type":"turn.completed","usage":{"input_tokens":22150,"cached_input_tokens":18000,"output_tokens":42,"reasoning_output_tokens":15}}

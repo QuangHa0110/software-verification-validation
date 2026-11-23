@@ -1,0 +1,4 @@
+{"type":"thread.started","thread_id":"thr-quota"}
+{"type":"turn.started"}
+{"type":"error","message":"You've hit your usage limit. Upgrade to Pro or try again at 4:31 PM."}
+{"type":"turn.failed","error":{"message":"You've hit your usage limit. Upgrade to Pro or try again at 4:31 PM."}}

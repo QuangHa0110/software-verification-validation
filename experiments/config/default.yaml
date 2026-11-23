@@ -1,6 +1,10 @@
 runs: 10
 llm:
   provider: codex-cli
+  codex_path: codex  # PATH, or an absolute path to the executable
+  agy_path: agy      # PATH, or an absolute path to the executable
+  scratch_dir: .work/llm-scratch
+  timeout_s: 300
   model: gpt-6.2-astra
   effort: medium
   max_output_tokens: 16000

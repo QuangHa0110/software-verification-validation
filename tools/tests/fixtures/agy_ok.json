@@ -1,0 +1,1 @@
+{"conversation_id":"conv-agy-1","status":"SUCCESS","response":"```java\n@Test\nvoid onePlusOne() {\n    assertEquals(2, 1 + 1);\n}\n```\n","duration_seconds":4.25,"num_turns":1,"usage":{"input_tokens":15525,"output_tokens":38,"thinking_tokens":120,"cache_read_tokens":12000,"total_tokens":15683}}

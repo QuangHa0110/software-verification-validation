@@ -1,0 +1,6 @@
+{"event":"init","conversation_id":"conv-stream-1","init":{"model":"gemini-3.8-flash-low"}}
+{"event":"step_update","step_update":{"step_index":0,"state":"DONE","step_type":"user_input"}}
+{"event":"step_update","step_update":{"step_index":1,"state":"ACTIVE","step_type":"view_file"}}
+{"event":"step_update","step_update":{"step_index":1,"state":"DONE","step_type":"view_file"}}
+{"event":"step_update","step_update":{"step_index":2,"state":"DONE","step_type":"agent_response","text_delta":"OK"}}
+{"event":"result","result":{"conversation_id":"conv-stream-1","status":"SUCCESS","response":"Streamed response","duration_seconds":6.5,"num_turns":1,"usage":{"input_tokens":20000,"output_tokens":50,"thinking_tokens":80,"cache_read_tokens":14000,"total_tokens":20130}}}

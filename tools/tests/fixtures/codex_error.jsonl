@@ -1,0 +1,3 @@
+{"type":"thread.started","thread_id":"thr-err"}
+{"type":"turn.started"}
+{"type":"turn.failed","error":{"message":"Backend connection reset"}}
