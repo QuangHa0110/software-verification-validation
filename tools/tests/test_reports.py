@@ -42,7 +42,7 @@ def test_pit_statuses_operators_and_score():
             "relational": {"source": "pit", "total": 1, "killed": 1},
             "arithmetic": {"source": "pit", "total": 2, "killed": 0},
             "conditional": {"source": "custom", "total": 0, "killed": 0},
-            "boolean_constant": {"source": "custom", "total": 0, "killed": 0},
+            "boolean_constant": {"source": ["pit", "custom"], "total": 0, "killed": 0},
             "statement_deletion": {"source": "pit", "total": 2, "killed": 2},
             "other": {"source": "pit", "total": 1, "killed": 0},
         },
@@ -63,3 +63,37 @@ def test_merge_scores_individual_mutants_from_both_sources():
     assert result["by_operator"]["boolean_constant"]["killed"] == 0
     assert result["status_counts"]["COMPILE_ERROR"] == 1
     assert merge_mutations([], custom[:1], FIXTURES / "equivalent.csv")["score"] == 0
+
+
+def test_pit_boolean_return_mutators_map_to_boolean_constant():
+    pit = [
+        {"class": "shop.Cart", "method": "isEmpty", "line": 42,
+         "mutator": "org.pitest.mutationtest.engine.gregor.mutators.returns.BooleanTrueReturnValsMutator",
+         "description": "replaced boolean return with true for shop/Cart::isEmpty", "status": "KILLED"},
+        {"class": "shop.Cart", "method": "isEmpty", "line": 42,
+         "mutator": "org.pitest.mutationtest.engine.gregor.mutators.returns.BooleanFalseReturnValsMutator",
+         "description": "replaced boolean return with false for shop/Cart::isEmpty", "status": "SURVIVED"},
+        {"class": "shop.Cart", "method": "isEmpty", "line": 43,
+         "mutator": "TRUE_RETURNS", "description": "short name true", "status": "KILLED"},
+        {"class": "shop.Cart", "method": "isEmpty", "line": 44,
+         "mutator": "FALSE_RETURNS", "description": "short name false", "status": "NO_COVERAGE"},
+    ]
+    pit_only = merge_mutations(pit)
+    assert pit_only["by_operator"]["boolean_constant"] == {"source": "pit", "total": 4, "killed": 2}
+    assert "other" not in pit_only["by_operator"]
+
+    custom = [{"class": "shop.Cart", "method": "check", "line": 50,
+               "mutator": "boolean_constant", "description": "true -> false", "status": "KILLED"}]
+    merged = merge_mutations(pit, custom)
+    assert merged["by_operator"]["boolean_constant"] == {"source": ["pit", "custom"], "total": 5, "killed": 3}
+
+    empty = merge_mutations([])
+    assert empty["by_operator"]["boolean_constant"] == {"source": ["pit", "custom"], "total": 0, "killed": 0}
+
+
+def test_default_config_includes_boolean_return_pit_mutators():
+    from tools.svv.config import load_config
+
+    mutators = load_config()["measure"]["pit_mutators"]
+    assert "TRUE_RETURNS" in mutators
+    assert "FALSE_RETURNS" in mutators

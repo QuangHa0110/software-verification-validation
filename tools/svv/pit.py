@@ -17,10 +17,14 @@ PIT_OPERATORS = {
     "VOID_METHOD_CALLS": "statement_deletion",
     "MemberVariableMutator": "statement_deletion",
     "EXPERIMENTAL_MEMBER_VARIABLE": "statement_deletion",
+    "BooleanTrueReturnValsMutator": "boolean_constant",
+    "TRUE_RETURNS": "boolean_constant",
+    "BooleanFalseReturnValsMutator": "boolean_constant",
+    "FALSE_RETURNS": "boolean_constant",
 }
 OPERATOR_SOURCES = {
     "relational": "pit", "arithmetic": "pit", "conditional": "custom",
-    "boolean_constant": "custom", "statement_deletion": "pit",
+    "boolean_constant": ["pit", "custom"], "statement_deletion": "pit",
 }
 IDENTITY = ("class", "method", "line", "mutator", "description")
 DETECTED = {"KILLED", "TIMED_OUT", "MEMORY_ERROR"}
@@ -59,7 +63,7 @@ def merge_mutations(pit: Iterable[Mapping], custom: Iterable[Mapping] = (),
             for row in csv.DictReader(stream):
                 excluded.add((row["source"], *(row[key] for key in IDENTITY)))
 
-    by_operator = {key: {"source": source, "total": 0, "killed": 0}
+    by_operator = {key: {"source": list(source) if isinstance(source, list) else source, "total": 0, "killed": 0}
                    for key, source in OPERATOR_SOURCES.items()}
     sources = {}
     counts = Counter()
