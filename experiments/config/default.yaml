@@ -13,6 +13,8 @@ llm:
 random:
   seed_base: 1000
   num_tests: 100
+p3:
+  timeout_s: 1800
 p4:
   max_iterations: 5
   target_branch_coverage: 95
