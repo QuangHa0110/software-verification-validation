@@ -1,4 +1,4 @@
-"""Exact greedy selection by measuring the combined suite, including overlapping hits."""
+"""Greedy selection using combined coverage measurements or per-test mutant kills."""
 
 from dataclasses import dataclass, field
 from heapq import heappop, heappush
@@ -14,6 +14,7 @@ class Measurement:
     mutation_score: float | None = None
     killed: set = field(default_factory=set)
     live: list = field(default_factory=list)
+    kills_by_class: dict = field(default_factory=dict)
 
     def metrics(self):
         result = {"statement_pct": self.coverage["statement"]["pct"],
@@ -58,3 +59,31 @@ def select_greedy(candidates, current: Measurement, evaluate):
         if contribution > 0:
             heappush(pending, (-contribution, index, len(selected), measurement))
     return selected, current
+
+
+def kills_by_test_class(pit, custom, killed):
+    """Index only scored kills. Both JUnit Platform IDs and Surefire names start with shop.Class."""
+    matrix = {}
+    for source, records in (("pit", pit), ("custom", custom)):
+        for row in records:
+            key = mutant_key(source, row)
+            if key in killed:
+                for name in row["killing_tests"]:
+                    package, cls, _ = name.split(".", 2)
+                    matrix.setdefault(f"{package}.{cls}", set()).add(key)
+    return matrix
+
+
+def select_by_kills(candidates, baseline_kills, kills_by_class):
+    """Choose the largest marginal kill set. max keeps the earliest item on ties."""
+    covered = set(baseline_kills)
+    remaining = [(item, kills_by_class.get(f"shop.{item.class_name}", set())) for item in candidates]
+    selected = []
+    while remaining:
+        best = max(range(len(remaining)), key=lambda i: len(remaining[i][1] - covered))
+        candidate, kills = remaining.pop(best)
+        if kills <= covered:
+            break
+        selected.append(candidate)
+        covered.update(kills)
+    return selected

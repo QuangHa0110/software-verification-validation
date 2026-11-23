@@ -183,6 +183,7 @@
       "properties": {
         "i": {"$ref": "#/$defs/count"},
         "kept_tests": {"$ref": "#/$defs/count"},
+        "measure_runs": {"$ref": "#/$defs/count", "description": "Suite measurements during selection and final verification, excluding the seed and filtering."},
         "generated": {"$ref": "#/$defs/count"},
         "valid": {"$ref": "#/$defs/count"},
         "dropped_by_reason": {"type": "object", "additionalProperties": {"$ref": "#/$defs/count"}},

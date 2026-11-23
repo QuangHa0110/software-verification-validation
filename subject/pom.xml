@@ -13,6 +13,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <pit.mutators>DEFAULTS</pit.mutators>
         <pit.timeoutFactor>3</pit.timeoutFactor>
+        <pit.fullMutationMatrix>false</pit.fullMutationMatrix>
     </properties>
 
     <dependencies>
@@ -75,6 +76,7 @@
                     <failWhenNoMutations>false</failWhenNoMutations>
                     <mutators>${pit.mutators}</mutators>
                     <timeoutFactor>${pit.timeoutFactor}</timeoutFactor>
+                    <fullMutationMatrix>${pit.fullMutationMatrix}</fullMutationMatrix>
                 </configuration>
                 <dependencies>
                     <dependency>
