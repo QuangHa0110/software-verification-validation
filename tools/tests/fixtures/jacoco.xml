@@ -1,0 +1,28 @@
+<report name="fixture">
+  <package name="shop">
+    <class name="shop/Cart" sourcefilename="Cart.java">
+      <method name="second" line="20"/>
+      <method name="first" line="5"/>
+    </class>
+    <class name="shop/Cart$Item" sourcefilename="Cart.java">
+      <method name="value" line="30"/>
+    </class>
+    <sourcefile name="Cart.java">
+      <line nr="5" mi="0" ci="2" mb="0" cb="0"/>
+      <line nr="7" mi="1" ci="2" mb="1" cb="1"/>
+      <line nr="20" mi="3" ci="0" mb="2" cb="0"/>
+      <line nr="31" mi="2" ci="0" mb="0" cb="0"/>
+    </sourcefile>
+    <counter type="LINE" covered="2" missed="2"/>
+    <counter type="BRANCH" covered="1" missed="3"/>
+    <counter type="METHOD" covered="1" missed="2"/>
+  </package>
+  <package name="shop/test">
+    <class name="shop/test/Noise" sourcefilename="Noise.java"><method name="noise" line="1"/></class>
+    <sourcefile name="Noise.java"><line nr="1" mi="2" ci="0" mb="2" cb="0"/></sourcefile>
+    <counter type="LINE" covered="0" missed="1"/>
+    <counter type="BRANCH" covered="0" missed="2"/>
+    <counter type="METHOD" covered="0" missed="1"/>
+  </package>
+  <counter type="LINE" covered="2" missed="3"/>
+</report>
