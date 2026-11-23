@@ -260,16 +260,16 @@ def _run_tests(project, timeout):
                 except ProcessLookupError:
                     pass
             process.communicate()
-            return "TIMED_OUT"
+            return "TIMED_OUT", []
     report = parse_surefire(project / "target/surefire-reports")
     if report["failures"] or report["errors"]:
-        return "KILLED"
+        return "KILLED", report["failed_tests"]
     if process.returncode or report["tests"] <= report["skipped"]:
         raise ValueError(f"Missing successful mutant test execution\n{output}")
-    return "SURVIVED"
+    return "SURVIVED", []
 
 
-def run_custom(baseline, suite, baseline_seconds, settings, root=ROOT):
+def run_custom(baseline, suite, baseline_seconds, settings, root=ROOT, *, full_matrix=False):
     xml = baseline / "target/site/jacoco/jacoco.xml"
     uncovered = {(src.attrib["name"], int(line.attrib["nr"]))
                  for src in ET.parse(xml).findall(".//package[@name='shop']/sourcefile")
@@ -286,10 +286,13 @@ def run_custom(baseline, suite, baseline_seconds, settings, root=ROOT):
                     raise ValueError(f"Mutant build failed\n{build.stdout}\n{build.stderr}")
                 return {**mutant.record(), "status": "COMPILE_ERROR", "diagnostic": build.stdout}
             if (path.name, mutant.line) in uncovered:
-                status = "NO_COVERAGE"
+                status, killers = "NO_COVERAGE", []
             else:
-                status = _run_tests(project, timeout)
-            return {**mutant.record(), "status": status}
+                status, killers = _run_tests(project, timeout)
+            row = {**mutant.record(), "status": status}
+            if full_matrix:
+                row["killing_tests"] = killers
+            return row
 
     with ThreadPoolExecutor(max_workers=settings["custom_workers"]) as pool:
         return list(pool.map(evaluate, enumerate_mutants(baseline)))

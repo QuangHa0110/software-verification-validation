@@ -15,11 +15,14 @@ def method(name, body):
 
 
 @pytest.fixture
-def repo(monkeypatch):
+def repo(monkeypatch, request):
     # Keep even the nested Maven projects and PIT command lines short on Windows.
     with p4._stage_dir(ROOT, "t4-") as root:
         for subdir in ("docs/spec", "prompts", "subject", "reference", "experiments/config"):
-            shutil.copytree(ROOT / subdir, root / subdir, ignore=shutil.ignore_patterns("target", "*.local.yaml"))
+            ignore = ["target", "*.local.yaml"]
+            if getattr(request, "param", None) == "mini" and subdir in ("subject", "reference"):
+                ignore.append("src")
+            shutil.copytree(ROOT / subdir, root / subdir, ignore=shutil.ignore_patterns(*ignore))
         eq = Path("results/mutation/equivalent-mutants.csv")
         (root / eq.parent).mkdir(parents=True)
         shutil.copy2(ROOT / eq, root / eq)
@@ -34,10 +37,10 @@ def repo(monkeypatch):
         yield root
 
 
-def seed(root, *, method=p4.P3):
+def seed(root, *, method=p4.P3, test_file=None):
     suite = root / "test-suites" / method / "run-01"
     suite.mkdir(parents=True)
-    shutil.copy2(ROOT / "test-suites/smoke/DomainSmokeTest.java", suite)
+    shutil.copy2(test_file or ROOT / "test-suites/smoke/DomainSmokeTest.java", suite)
     meta = {"method": method, "run": 1, "generation_s": 7.0,
             "llm": {"calls": 1, "input_tokens": 600, "output_tokens": 50, "cost_usd": None},
             "tests": dict.fromkeys(p4.TEST_COUNTS, 5)}
@@ -130,7 +133,7 @@ def test_weak_chain_uses_full_feedback_and_weak_profile(repo, monkeypatch):
 def test_iteration_schema(mutation_score):
     measurement = observed()
     measurement.mutation_score = mutation_score
-    iteration = {"i": 1, **measurement.metrics(), "kept_tests": 1, "tokens": 24,
+    iteration = {"i": 1, **measurement.metrics(), "kept_tests": 1, "measure_runs": 2, "tokens": 24,
                  "generated": 2, "valid": 1, "dropped_by_reason": {"duplicate": 1}}
     schema_path = ROOT / "experiments/schema/run-result.schema.json"
     schema = json.loads(schema_path.read_text(encoding="utf-8"))
@@ -214,6 +217,55 @@ def test_p4b_limits_use_its_score_and_own_budget(score, iters, tokens, no_gain, 
     limits = p4.load_config(ROOT / "experiments/config")["p4"]["p4b"]
     assert p4.stopping_reason(limits, {"branch_pct": 100, "mutation_score": score}, mutation=True,
                               iterations=iters, tokens=tokens, no_gain=no_gain) == expected
+
+
+@pytest.mark.maven
+@pytest.mark.parametrize("repo", ["mini"], indirect=True)
+def test_three_candidates_one_matrix_and_one_final_measurement(repo, monkeypatch):
+    for program in ("subject", "reference"):
+        src = repo / program / "src/main/java/shop"
+        src.mkdir(parents=True)
+        (src / "Mini.java").write_text(
+            "package shop;\nclass Mini {\n"
+            "  static int seed(int x) { return x - 1; }\n"
+            "  static int sum(int x) { return x + 1; }\n"
+            "  static boolean both(boolean a, boolean b) { return a && b; }\n"
+            "  static int other() { return 7; }\n}\n", encoding="utf-8")
+    seed_file = repo / "SeedTest.java"
+    seed_file.write_text("package shop;\nimport org.junit.jupiter.api.Test;\n"
+                         "import static org.junit.jupiter.api.Assertions.*;\n"
+                         "class SeedTest { @Test void seed() { assertEquals(2, Mini.seed(3)); } }",
+                         encoding="utf-8")
+    seed(repo, method=p4.P4, test_file=seed_file)
+    (repo / "experiments/config/check.local.yaml").write_text(
+        "measure: {pit_mutators: [MATH]}\np4: {p4b: {max_iterations: 1}}", encoding="utf-8")
+    fake_provider(monkeypatch, ["\n".join([
+        method("killsTwo", "assertEquals(4, Mini.sum(3)); assertFalse(Mini.both(true, false));"),
+        method("overlaps", "assertEquals(6, Mini.sum(5));"),
+        method("onlyCoverage", "assertEquals(7, Mini.other());"),
+    ])])
+    runs = []
+    measure = p4.measure_suite
+
+    def record_measure(suite, **kwargs):
+        result = measure(suite, **kwargs)
+        runs.append((kwargs["full_matrix"], result))
+        return result
+
+    monkeypatch.setattr(p4, "measure_suite", record_measure)
+    record = p4.generate(1, root=repo, mutation_feedback=True)
+    assert [matrix for matrix, _ in runs] == [False, True, False]
+    baseline, matrix, final = [result for _, result in runs]
+    first = matrix.kills_by_class["shop.P4b_001Test"]
+    overlap = matrix.kills_by_class["shop.P4b_002Test"]
+    assert {key[0] for key in first - baseline.killed} == {"pit", "custom"}
+    assert len(first - baseline.killed) == 2 and len(overlap) == 1 and overlap < first
+    assert matrix.kills_by_class.get("shop.P4b_003Test", set()) <= baseline.killed
+    assert record["suite_files"] == ["P4b_001Test.java", "SeedTest.java"]
+    iteration, = record["iterations"]
+    assert (iteration["valid"], iteration["kept_tests"], iteration["measure_runs"]) == (3, 1, 2)
+    assert iteration["mutation_score"] == final.mutation_score == 100
+    assert iteration["statement_pct"] == final.metrics()["statement_pct"] < matrix.metrics()["statement_pct"]
 
 
 @pytest.mark.maven
