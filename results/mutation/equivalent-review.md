@@ -16,3 +16,14 @@ Mutant tương đương bị loại khỏi mẫu số cho **mọi** phương ph�
 ## Đợt sau
 
 Sau khi có P3, P4, P4b: rà soát các mutant còn sống ở **mọi** phương pháp nhưng chưa xét ở đây, ưu tiên mutant còn sống ở tất cả các lần chạy.
+
+## Đợt 2 – toàn bộ mutant còn sống của mọi phương pháp đã đo (24/11/2026)
+
+Nguồn [ĐÃ CHẠY]: `tools/mutation_ids.py` trên P2 run-01..10 (66 mutant khác nhau còn sống ở ít nhất một lần), và trường `mutation.alive` của P3, P4, P4b run-01..10, P3r/P4r/P4br run-01..06, P3w/P4w run-01 (13 mutant khác nhau còn sống ở ít nhất một lần, gồm mutant index 85 đã biết).
+
+Kết luận: **không có mutant tương đương mới.** Lý do: ngoại trừ `PricingService:24` index 85 (đã ghi ở đợt 1), **mọi** mutant còn sống ở các phương pháp trên đều đã bị diệt bởi ít nhất một bộ test khác:
+
+- P1 run-01 diệt mọi mutant trừ index 85 và `ShippingCalculator:8` index 10 (đợt 1).
+- `ShippingCalculator:8` index 10 bị diệt ở cả 10 lần chạy P3 (kiểm tra `mutation.alive` của P3 run-01..10: 0/10 lần còn sống).
+
+Một mutant đã bị một test hợp lệ (xanh trên chương trình gốc và trên `reference/`) diệt thì có đầu vào phân biệt được nó với chương trình gốc, nên không tương đương. Vì vậy `equivalent-mutants.csv` giữ đúng một dòng. Các mutant còn sống ở P2 và P3w là **lỗ hổng của bộ test** (thiếu ca biên, thiếu kiểm tra trạng thái sau thao tác), không phải mutant tương đương.
