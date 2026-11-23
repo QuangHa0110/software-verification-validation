@@ -47,6 +47,7 @@ class LlmResult:
     tool_events: int = 0
     duration_s: float = 0.0
     cost_usd: float | None = None
+    prompt_via_file: bool = False
 
 
 _QUOTA = re.compile(
@@ -264,6 +265,10 @@ def _parse_agy(stdout: str, stderr: str, returncode: int | None, result: LlmResu
         if returncode is None:
             raise LlmError("agy timed out before finishing the call")
         raise LlmError(f"agy exit {returncode}, invalid JSON output: {detail}")
+    # JSON output reports turns, so use multi-turn counts as a proxy for tool use.
+    turns = payload.get("num_turns")
+    if isinstance(turns, int) and turns > 1:
+        result.tool_events = turns
     _apply_agy_payload(payload, stderr, returncode, result)
 
 
@@ -322,43 +327,26 @@ def _agy_cli_command(executable: str, prompt: str, model: str, timeout_s: int) -
 def _agy(prompt: str, config: dict, result: LlmResult) -> None:
     executable = _resolve_executable(config.get("agy_path", "agy"))
     timeout_s = int(config["timeout_s"])
-    command = _agy_cli_command(executable, prompt, result.model, timeout_s)
-    cmdline_len = len(subprocess.list2cmdline(command))
-    use_stream = cmdline_len > WINDOWS_CMD_LIMIT
-    if use_stream and not config.get("agy_stream_long_prompts", True):
-        _check_windows_cmd_limit(command)
-
+    inline_max = config.get("agy_inline_max_chars", 8000)
+    if type(inline_max) is not int or inline_max < 0:
+        raise ValueError("llm.agy_inline_max_chars must be a non-negative integer")
+    result.prompt_via_file = len(prompt) > inline_max
     with _scratch_dir(config, "agy-") as cwd:
-        if use_stream:
-            model_args = ["--model", result.model] if result.model else []
-            stream_cmd = [
-                executable, *model_args,
-                "--input-format", "stream-json", "--output-format", "stream-json",
-                "--print-timeout", f"{timeout_s}s",
-            ]
-            stdin_payload = json.dumps(
-                {"event": "user", "message": {"content": prompt}},
-                ensure_ascii=False,
-            ) + "\n"
-            try:
-                proc = subprocess.run(
-                    stream_cmd, input=stdin_payload, cwd=cwd, capture_output=True, text=True,
-                    encoding="utf-8", errors="replace", shell=False, timeout=timeout_s + 15,
-                )
-            except subprocess.TimeoutExpired as exc:
-                _parse_agy_stream(_as_text(exc.stdout), _as_text(exc.stderr), None, result)
-            else:
-                _parse_agy_stream(proc.stdout, proc.stderr, proc.returncode, result)
+        if result.prompt_via_file:
+            (cwd / "prompt.md").write_text(prompt, encoding="utf-8", newline="")
+            prompt = ("Read prompt.md in the current directory and follow its instructions exactly. "
+                      "Use no tools except to read that file.")
+        command = _agy_cli_command(executable, prompt, result.model, timeout_s)
+        _check_windows_cmd_limit(command)
+        try:
+            proc = subprocess.run(
+                command, cwd=cwd, capture_output=True, text=True,
+                encoding="utf-8", errors="replace", shell=False, timeout=timeout_s + 15,
+            )
+        except subprocess.TimeoutExpired as exc:
+            _parse_agy(_as_text(exc.stdout), _as_text(exc.stderr), None, result)
         else:
-            try:
-                proc = subprocess.run(
-                    command, cwd=cwd, capture_output=True, text=True,
-                    encoding="utf-8", errors="replace", shell=False, timeout=timeout_s + 15,
-                )
-            except subprocess.TimeoutExpired as exc:
-                _parse_agy(_as_text(exc.stdout), _as_text(exc.stderr), None, result)
-            else:
-                _parse_agy(proc.stdout, proc.stderr, proc.returncode, result)
+            _parse_agy(proc.stdout, proc.stderr, proc.returncode, result)
 
 
 def _anthropic_key() -> str:
