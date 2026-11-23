@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 import shutil
 import sys
+from time import perf_counter
 import xml.etree.ElementTree as ET
 
 import yaml
@@ -14,9 +15,10 @@ from jsonschema import Draft202012Validator, ValidationError
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 from svv.config import load_config
+from svv.custom_mutation import run_custom
 from svv.jacoco import parse_jacoco
 from svv.maven import run_maven
-from svv.pit import parse_pit
+from svv.pit import merge_mutations, read_pit_mutants
 from svv.surefire import parse_surefire
 from svv.workdir import workdir
 
@@ -142,7 +144,15 @@ def measure(args):
             if pit.returncode:
                 raise ValueError(f"PIT exit {pit.returncode}\n{pit.stdout}\n{pit.stderr}")
             mutation = work / "target/pit-reports"
-            result["mutation"] = parse_pit(mutation / "mutations.xml", results / "mutation/equivalent-mutants.csv")
+            custom = []
+            if settings["custom_mutation"]:
+                started = perf_counter()
+                custom = run_custom(work, args.suite, test.elapsed_s, settings, root=ROOT)
+                (mutation / "custom-mutations.json").write_text(
+                    json.dumps(custom, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+                result["time"]["execution_s"] += perf_counter() - started
+            result["mutation"] = merge_mutations(read_pit_mutants(mutation / "mutations.xml"), custom,
+                                                 results / "mutation/equivalent-mutants.csv")
             result["time"]["execution_s"] += pit.elapsed_s
 
         schema = json.loads((ROOT / "experiments/schema/run-result.schema.json").read_text(encoding="utf-8"))
