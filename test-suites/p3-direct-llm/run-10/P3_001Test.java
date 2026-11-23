@@ -1,0 +1,33 @@
+package shop;
+
+import org.junit.jupiter.api.*;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.params.*;
+import org.junit.jupiter.params.provider.*;
+import java.time.*;
+import java.util.*;
+
+public class P3_001Test {
+
+    @Test
+    void enumValuesFollowDeclarationOrderAndReturnIndependentArrays() {
+        Region[] regions = Region.values();
+        CouponType[] types = CouponType.values();
+        OrderStatus[] statuses = OrderStatus.values();
+
+        assertArrayEquals(new Region[]{
+            Region.INNER_CITY, Region.SUBURB, Region.PROVINCE, Region.REMOTE
+        }, regions);
+        assertArrayEquals(new CouponType[]{CouponType.PERCENT, CouponType.FIXED}, types);
+        assertArrayEquals(new OrderStatus[]{
+            OrderStatus.PENDING, OrderStatus.PAID, OrderStatus.SHIPPED, OrderStatus.CANCELLED
+        }, statuses);
+
+        regions[0] = null;
+        types[0] = null;
+        statuses[0] = null;
+        assertEquals(Region.INNER_CITY, Region.values()[0]);
+        assertEquals(CouponType.PERCENT, CouponType.values()[0]);
+        assertEquals(OrderStatus.PENDING, OrderStatus.values()[0]);
+    }
+}

@@ -1,0 +1,102 @@
+{
+  "method": "p4b-mutation-feedback",
+  "run": 9,
+  "started_at": "2026-11-23T16:35:06.339552+00:00",
+  "ended_at": "2026-11-23T16:36:36.120140+00:00",
+  "stop_reason": "target_mutation_score",
+  "generation_s": 295.0534901000001,
+  "llm": {
+    "calls": 1,
+    "input_tokens": 40092,
+    "output_tokens": 9099,
+    "cached_input_tokens": 15232,
+    "reasoning_output_tokens": 0,
+    "tool_events": 0,
+    "duration_s": 191.28968600000007,
+    "total_tokens": 49191,
+    "cost_usd": null,
+    "provider": "codex-cli",
+    "model": "gpt-6.2-astra",
+    "effort": "medium"
+  },
+  "inherited": {
+    "method": "p4-coverage-guided",
+    "run": 9,
+    "generation_s": 205.2722079999994,
+    "llm": {
+      "calls": 1,
+      "input_tokens": 40092,
+      "output_tokens": 9099,
+      "cached_input_tokens": 15232,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 191.28968600000007,
+      "total_tokens": 49191,
+      "cost_usd": null,
+      "provider": "codex-cli",
+      "model": "gpt-6.2-astra",
+      "effort": "medium"
+    }
+  },
+  "incremental": {
+    "generation_s": 89.78128210000068,
+    "llm": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cached_input_tokens": 0,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 0,
+      "total_tokens": 0,
+      "cost_usd": 0,
+      "provider": "",
+      "model": "",
+      "effort": ""
+    },
+    "dropped_by_selection": []
+  },
+  "baseline": {
+    "statement_pct": 100.0,
+    "branch_pct": 100.0,
+    "mutation_score": 100.0
+  },
+  "final": {
+    "statement_pct": 100.0,
+    "branch_pct": 100.0,
+    "mutation_score": 100.0
+  },
+  "iterations": [],
+  "tests": {
+    "generated": 23,
+    "compiled": 23,
+    "passed_reference": 23,
+    "valid": 23,
+    "dropped": []
+  },
+  "suite_files": [
+    "P3_001Test.java",
+    "P3_002Test.java",
+    "P3_003Test.java",
+    "P3_004Test.java",
+    "P3_005Test.java",
+    "P3_006Test.java",
+    "P3_007Test.java",
+    "P3_008Test.java",
+    "P3_009Test.java",
+    "P3_010Test.java",
+    "P3_011Test.java",
+    "P3_012Test.java",
+    "P3_013Test.java",
+    "P3_014Test.java",
+    "P3_015Test.java",
+    "P3_016Test.java",
+    "P3_017Test.java",
+    "P3_018Test.java",
+    "P3_019Test.java",
+    "P3_020Test.java",
+    "P3_021Test.java",
+    "P3_022Test.java",
+    "P3_023Test.java"
+  ]
+}
