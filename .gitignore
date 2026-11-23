@@ -24,3 +24,10 @@ desktop.ini
 *.log
 *.tmp
 ~$*
+
+.work/
+.m2repo/
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
