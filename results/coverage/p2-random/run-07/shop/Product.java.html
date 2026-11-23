@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Product.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">subject</a> &gt; <a href="index.source.html" class="el_package">shop</a> &gt; <span class="el_source">Product.java</span></div><h1>Product.java</h1><pre class="source lang-java linenums">package shop;
+
+public final class Product {
+    private final String id;
+    private final String name;
+    private final long price;
+    private final int weightGrams;
+    private int stock;
+
+<span class="fc" id="L10">    public Product(String id, String name, long price, int weightGrams, int stock) {</span>
+<span class="fc bfc" id="L11" title="All 4 branches covered.">        if (id == null || id.trim().isEmpty()) {</span>
+<span class="fc" id="L12">            throw new IllegalArgumentException(&quot;Missing product ID&quot;);</span>
+        }
+<span class="pc bpc" id="L14" title="1 of 4 branches missed.">        if (name == null || name.trim().isEmpty()) {</span>
+<span class="fc" id="L15">            throw new IllegalArgumentException(&quot;Missing product name&quot;);</span>
+        }
+<span class="pc bpc" id="L17" title="3 of 6 branches missed.">        if (price &lt;= 0 || weightGrams &lt;= 0 || stock &lt; 0) {</span>
+<span class="nc" id="L18">            throw new IllegalArgumentException(&quot;Invalid price, weight or stock&quot;);</span>
+        }
+<span class="fc" id="L20">        this.id = id;</span>
+<span class="fc" id="L21">        this.name = name;</span>
+<span class="fc" id="L22">        this.price = price;</span>
+<span class="fc" id="L23">        this.weightGrams = weightGrams;</span>
+<span class="fc" id="L24">        this.stock = stock;</span>
+<span class="fc" id="L25">    }</span>
+
+    public String getId() {
+<span class="fc" id="L28">        return id;</span>
+    }
+
+    public String getName() {
+<span class="fc" id="L32">        return name;</span>
+    }
+
+    public long getPrice() {
+<span class="fc" id="L36">        return price;</span>
+    }
+
+    public int getWeightGrams() {
+<span class="fc" id="L40">        return weightGrams;</span>
+    }
+
+    public int getStock() {
+<span class="fc" id="L44">        return stock;</span>
+    }
+
+    public void reduceStock(int q) {
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (q &lt;= 0) {</span>
+<span class="fc" id="L49">            throw new IllegalArgumentException(&quot;Quantity must be positive&quot;);</span>
+        }
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (q &gt; stock) {</span>
+<span class="fc" id="L52">            throw new InsufficientStockException(id);</span>
+        }
+<span class="fc" id="L54">        stock -= q;</span>
+<span class="fc" id="L55">    }</span>
+
+    public void restoreStock(int q) {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (q &lt;= 0) {</span>
+<span class="fc" id="L59">            throw new IllegalArgumentException(&quot;Quantity must be positive&quot;);</span>
+        }
+<span class="fc" id="L61">        stock += q;</span>
+<span class="fc" id="L62">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

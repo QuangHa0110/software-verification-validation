@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OrderService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">subject</a> &gt; <a href="index.source.html" class="el_package">shop</a> &gt; <span class="el_source">OrderService.java</span></div><h1>OrderService.java</h1><pre class="source lang-java linenums">package shop;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+public class OrderService {
+    private final PricingService pricingService;
+    private final ShippingCalculator shippingCalculator;
+
+    public OrderService() {
+<span class="fc" id="L11">        this(new PricingService(), new ShippingCalculator());</span>
+<span class="fc" id="L12">    }</span>
+
+<span class="fc" id="L14">    public OrderService(PricingService pricingService, ShippingCalculator shippingCalculator) {</span>
+<span class="fc bfc" id="L15" title="All 4 branches covered.">        if (pricingService == null || shippingCalculator == null) {</span>
+<span class="fc" id="L16">            throw new IllegalArgumentException(&quot;Both pricing and shipping services are required&quot;);</span>
+        }
+<span class="fc" id="L18">        this.pricingService = pricingService;</span>
+<span class="fc" id="L19">        this.shippingCalculator = shippingCalculator;</span>
+<span class="fc" id="L20">    }</span>
+
+    public Order placeOrder(String orderId, Cart cart, Coupon coupon, Region region, LocalDateTime now) {
+<span class="pc bpc" id="L23" title="1 of 8 branches missed.">        if (orderId == null || orderId.trim().isEmpty() || region == null || now == null) {</span>
+<span class="fc" id="L24">            throw new IllegalArgumentException(&quot;Missing order ID, region or time&quot;);</span>
+        }
+<span class="pc bpc" id="L26" title="1 of 4 branches missed.">        if (cart == null || cart.isEmpty()) {</span>
+<span class="fc" id="L27">            throw new IllegalStateException(&quot;Order requires a nonempty cart&quot;);</span>
+        }
+<span class="fc" id="L29">        List&lt;CartItem&gt; items = cart.getItems();</span>
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (CartItem item : items) {</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">            if (item.getQuantity() &gt; item.getProduct().getStock()) {</span>
+<span class="nc" id="L32">                throw new InsufficientStockException(item.getProduct().getId());</span>
+            }
+<span class="fc" id="L34">        }</span>
+<span class="fc" id="L35">        long subtotal = cart.getSubtotal();</span>
+<span class="fc" id="L36">        long discount = pricingService.calculateDiscount(subtotal, coupon, now.toLocalDate());</span>
+<span class="fc" id="L37">        long goods = subtotal - discount;</span>
+<span class="fc" id="L38">        long shipping = shippingCalculator.calculate(region, cart.getTotalWeightGrams(), goods);</span>
+<span class="fc" id="L39">        Order order = new Order(orderId, items, subtotal, discount, shipping, goods + shipping, now, region);</span>
+
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        for (CartItem item : items) {</span>
+<span class="fc" id="L42">            item.getProduct().reduceStock(item.getQuantity());</span>
+<span class="fc" id="L43">        }</span>
+<span class="fc" id="L44">        return order;</span>
+    }
+
+    public void pay(Order order) {
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (order == null) {</span>
+<span class="fc" id="L49">            throw new IllegalArgumentException(&quot;Missing order&quot;);</span>
+        }
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (order.getStatus() != OrderStatus.PENDING) {</span>
+<span class="fc" id="L52">            throw new IllegalStateException(&quot;Order must be pending before payment&quot;);</span>
+        }
+<span class="fc" id="L54">        order.setStatus(OrderStatus.PAID);</span>
+<span class="fc" id="L55">    }</span>
+
+    public void ship(Order order) {
+<span class="fc bfc" id="L58" title="All 2 branches covered.">        if (order == null) {</span>
+<span class="fc" id="L59">            throw new IllegalArgumentException(&quot;Missing order&quot;);</span>
+        }
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (order.getStatus() != OrderStatus.PAID) {</span>
+<span class="fc" id="L62">            throw new IllegalStateException(&quot;Order must be paid before shipping&quot;);</span>
+        }
+<span class="fc" id="L64">        order.setStatus(OrderStatus.SHIPPED);</span>
+<span class="fc" id="L65">    }</span>
+
+    public long cancelOrder(Order order, LocalDateTime now) {
+<span class="pc bpc" id="L68" title="1 of 4 branches missed.">        if (order == null || now == null) {</span>
+<span class="fc" id="L69">            throw new IllegalArgumentException(&quot;Missing order or cancellation time&quot;);</span>
+        }
+<span class="fc" id="L71">        OrderStatus status = order.getStatus();</span>
+<span class="pc bpc" id="L72" title="1 of 4 branches missed.">        if (status == OrderStatus.SHIPPED || status == OrderStatus.CANCELLED) {</span>
+<span class="fc" id="L73">            throw new IllegalStateException(&quot;Cannot cancel a &quot; + status + &quot; order&quot;);</span>
+        }
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (now.isBefore(order.getCreatedAt())) {</span>
+<span class="fc" id="L76">            throw new IllegalArgumentException(&quot;Cancellation precedes order&quot;);</span>
+        }
+<span class="fc" id="L78">        long refund = 0;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        if (status == OrderStatus.PAID) {</span>
+<span class="pc bpc" id="L80" title="1 of 2 branches missed.">            if (now.isAfter(order.getCreatedAt().plusHours(24))) {</span>
+<span class="fc" id="L81">                refund = (order.getSubtotal() - order.getDiscount()) * 80 / 100;</span>
+            } else {
+<span class="nc" id="L83">                refund = order.getTotal();</span>
+            }
+        }
+<span class="fc bfc" id="L86" title="All 2 branches covered.">        for (CartItem item : order.getItems()) {</span>
+<span class="fc" id="L87">            item.getProduct().restoreStock(item.getQuantity());</span>
+<span class="fc" id="L88">        }</span>
+<span class="fc" id="L89">        order.setStatus(OrderStatus.CANCELLED);</span>
+<span class="fc" id="L90">        return refund;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

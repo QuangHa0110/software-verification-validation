@@ -1,0 +1,342 @@
+{
+  "method": "p2-random",
+  "run": 6,
+  "tests": {
+    "generated": 100,
+    "compiled": 100,
+    "valid": 100,
+    "passed": 100,
+    "failed": 0,
+    "skipped": 0,
+    "dropped": [],
+    "compile_rate": 1.0
+  },
+  "coverage": {
+    "statement": {
+      "covered": 216,
+      "total": 235,
+      "pct": 91.91489361702128
+    },
+    "branch": {
+      "covered": 137,
+      "total": 174,
+      "pct": 78.73563218390805
+    },
+    "function": {
+      "covered": 55,
+      "total": 55,
+      "pct": 100.0
+    }
+  },
+  "uncovered": {
+    "lines": [
+      {
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 20
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 33
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 34
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 36
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 38
+      },
+      {
+        "class": "shop.Coupon",
+        "method": "<init>",
+        "line": 18
+      },
+      {
+        "class": "shop.Coupon",
+        "method": "<init>",
+        "line": 21
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 19
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 22
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 27
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 32
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 35
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 38
+      },
+      {
+        "class": "shop.Order",
+        "method": "setStatus",
+        "line": 89
+      },
+      {
+        "class": "shop.ShippingCalculator",
+        "method": "calculate",
+        "line": 18
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "placeOrder",
+        "line": 27
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "placeOrder",
+        "line": 32
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "cancelOrder",
+        "line": 73
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "cancelOrder",
+        "line": 81
+      }
+    ],
+    "branches": [
+      {
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 19,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 24,
+        "missed": 1,
+        "covered": 3
+      },
+      {
+        "class": "shop.Product",
+        "method": "<init>",
+        "line": 17,
+        "missed": 2,
+        "covered": 4
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 30,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 33,
+        "missed": 2,
+        "covered": 0
+      },
+      {
+        "class": "shop.Coupon",
+        "method": "<init>",
+        "line": 17,
+        "missed": 3,
+        "covered": 5
+      },
+      {
+        "class": "shop.Coupon",
+        "method": "<init>",
+        "line": 20,
+        "missed": 3,
+        "covered": 3
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 18,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 21,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 26,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 31,
+        "missed": 3,
+        "covered": 3
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 34,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 37,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.Order",
+        "method": "setStatus",
+        "line": 88,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.ShippingCalculator",
+        "method": "calculate",
+        "line": 8,
+        "missed": 2,
+        "covered": 4
+      },
+      {
+        "class": "shop.ShippingCalculator",
+        "method": "calculate",
+        "line": 17,
+        "missed": 1,
+        "covered": 3
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "<init>",
+        "line": 15,
+        "missed": 1,
+        "covered": 3
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "placeOrder",
+        "line": 26,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "placeOrder",
+        "line": 31,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "cancelOrder",
+        "line": 68,
+        "missed": 1,
+        "covered": 3
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "cancelOrder",
+        "line": 72,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "cancelOrder",
+        "line": 80,
+        "missed": 1,
+        "covered": 1
+      }
+    ]
+  },
+  "mutation": {
+    "total": 121,
+    "killed": 82,
+    "survived": 35,
+    "no_coverage": 4,
+    "timed_out": 0,
+    "equivalent": 0,
+    "score": 67.76859504132231,
+    "by_operator": {
+      "relational": {
+        "source": "pit",
+        "total": 28,
+        "killed": 7
+      },
+      "arithmetic": {
+        "source": "pit",
+        "total": 19,
+        "killed": 16
+      },
+      "conditional": {
+        "source": "custom",
+        "total": 31,
+        "killed": 17
+      },
+      "boolean_constant": {
+        "source": "pit",
+        "total": 2,
+        "killed": 2
+      },
+      "statement_deletion": {
+        "source": [
+          "pit",
+          "custom"
+        ],
+        "total": 41,
+        "killed": 40
+      }
+    },
+    "status_counts": {
+      "KILLED": 82,
+      "SURVIVED": 35,
+      "NO_COVERAGE": 4
+    }
+  },
+  "time": {
+    "generation_s": 0.1593786999983422,
+    "execution_s": 89.7742429999962
+  },
+  "llm": {
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost_usd": 0.0,
+    "model": "",
+    "effort": ""
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "method": "p1-manual",
+  "run": 1,
+  "tests": {
+    "generated": 181,
+    "compiled": 181,
+    "valid": 181,
+    "passed": 181,
+    "failed": 0,
+    "skipped": 0,
+    "dropped": [],
+    "compile_rate": 1.0
+  },
+  "coverage": {
+    "statement": {
+      "covered": 235,
+      "total": 235,
+      "pct": 100.0
+    },
+    "branch": {
+      "covered": 174,
+      "total": 174,
+      "pct": 100.0
+    },
+    "function": {
+      "covered": 55,
+      "total": 55,
+      "pct": 100.0
+    }
+  },
+  "uncovered": {
+    "lines": [],
+    "branches": []
+  },
+  "mutation": {
+    "total": 121,
+    "killed": 119,
+    "survived": 2,
+    "no_coverage": 0,
+    "timed_out": 0,
+    "equivalent": 0,
+    "score": 98.34710743801652,
+    "by_operator": {
+      "relational": {
+        "source": "pit",
+        "total": 28,
+        "killed": 26
+      },
+      "arithmetic": {
+        "source": "pit",
+        "total": 19,
+        "killed": 19
+      },
+      "conditional": {
+        "source": "custom",
+        "total": 31,
+        "killed": 31
+      },
+      "boolean_constant": {
+        "source": "pit",
+        "total": 2,
+        "killed": 2
+      },
+      "statement_deletion": {
+        "source": [
+          "pit",
+          "custom"
+        ],
+        "total": 41,
+        "killed": 41
+      }
+    },
+    "status_counts": {
+      "KILLED": 119,
+      "SURVIVED": 2
+    }
+  },
+  "time": {
+    "generation_s": 0.0,
+    "execution_s": 95.57422700000097
+  },
+  "llm": {
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost_usd": 0.0,
+    "model": "",
+    "effort": ""
+  }
+}
