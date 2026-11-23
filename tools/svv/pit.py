@@ -38,7 +38,7 @@ def _identity(row: Mapping) -> tuple[str, ...]:
     return tuple(str(row[key]) for key in IDENTITY)
 
 
-def read_pit_mutants(path: Path) -> Iterator[dict]:
+def read_pit_mutants(path: Path, *, full_matrix: bool = False) -> Iterator[dict]:
     """Yield individual mutants, retaining the full mutator name for CSV matching.
 
     index is the bytecode instruction index from <indexes> (";"-joined when PIT
@@ -53,6 +53,11 @@ def read_pit_mutants(path: Path) -> Iterator[dict]:
         row = {key: node.findtext(tag) for key, tag in fields.items()}
         if None in row.values():
             raise ValueError(f"Incomplete mutation in {path}: {row}")
+        if full_matrix:
+            killers = node.findtext("killingTests")
+            if killers is None or (node.attrib["status"] == "KILLED" and not killers):
+                raise ValueError(f"Missing PIT killingTests in matrix report {path}")
+            row["killing_tests"] = killers.split("|") if killers else []
         index = ";".join((item.text or "").strip() for item in node.findall("indexes/index"))
         blocks = ";".join((item.text or "").strip() for item in node.findall("blocks/block"))
         rows.append({**row, "line": int(row["line"]), "index": index, "blocks": blocks,

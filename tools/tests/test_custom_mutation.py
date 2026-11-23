@@ -172,13 +172,13 @@ def test_run_custom_handles_compile_error_no_coverage_and_test_statuses(workspac
         text = (project / "src/main/java/shop/Mini.java").read_text(encoding="utf-8")
         if "if (a || b) return x;" in text:
             executed_lines.append(6)
-            return "KILLED"
+            return "KILLED", ["shop.MiniTest.a", "shop.OtherTest.b"]
         if "if (a && b) return y;" in text:
             executed_lines.append(7)
-            return "TIMED_OUT"
+            return "TIMED_OUT", []
         if "x = a;" not in text:
             executed_lines.append(8)
-            return "SURVIVED"
+            return "SURVIVED", []
         raise AssertionError(f"Unexpected mutant executed:\n{text}")
 
     monkeypatch.setattr(custom_mutation, "run_maven", fake_maven)
@@ -187,7 +187,7 @@ def test_run_custom_handles_compile_error_no_coverage_and_test_statuses(workspac
     rows = run_custom(
         baseline, suite, 2.5,
         {"timeout_factor": 3, "custom_timeout_constant_s": 10, "custom_workers": 2},
-        root=workspace,
+        root=workspace, full_matrix=True,
     )
     assert [(r["line"], r["operator"], r["status"]) for r in rows] == [
         (4, "boolean_constant", "COMPILE_ERROR"),
@@ -197,6 +197,7 @@ def test_run_custom_handles_compile_error_no_coverage_and_test_statuses(workspac
         (8, "statement_deletion", "SURVIVED"),
     ]
     assert "COMPILATION ERROR" in rows[0]["diagnostic"]
+    assert rows[2]["killing_tests"] == ["shop.MiniTest.a", "shop.OtherTest.b"]
     assert sorted(executed_lines) == [6, 7, 8]
     assert not list((workspace / ".work").iterdir())
 
@@ -228,13 +229,15 @@ def test_run_tests_classifies_killed_survived_and_timeout(workspace, monkeypatch
     (reports / "TEST-shop.ATest.xml").write_text('<testsuite tests="2" failures="0" errors="0" skipped="0"/>',
                                                  encoding="utf-8")
     monkeypatch.setattr(custom_mutation.subprocess, "Popen", lambda *a, **kw: FakeProcess(0))
-    assert custom_mutation._run_tests(workspace, 5) == "SURVIVED"
+    assert custom_mutation._run_tests(workspace, 5) == ("SURVIVED", [])
 
     # KILLED
-    (reports / "TEST-shop.ATest.xml").write_text('<testsuite tests="2" failures="1" errors="0" skipped="0"/>',
-                                                 encoding="utf-8")
+    (reports / "TEST-shop.ATest.xml").write_text(
+        '<testsuite tests="2" failures="1" errors="1" skipped="0">'
+        '<testcase classname="shop.ATest" name="a"><failure/></testcase>'
+        '<testcase classname="shop.ATest" name="b"><error/></testcase></testsuite>', encoding="utf-8")
     monkeypatch.setattr(custom_mutation.subprocess, "Popen", lambda *a, **kw: FakeProcess(1))
-    assert custom_mutation._run_tests(workspace, 5) == "KILLED"
+    assert custom_mutation._run_tests(workspace, 5) == ("KILLED", ["shop.ATest.a", "shop.ATest.b"])
 
     # TIMED_OUT
     killed_pids = []
@@ -242,7 +245,7 @@ def test_run_tests_classifies_killed_survived_and_timeout(workspace, monkeypatch
     monkeypatch.setattr(custom_mutation.subprocess, "run", lambda cmd, **kw: killed_pids.append(cmd))
     if hasattr(custom_mutation.os, "killpg"):
         monkeypatch.setattr(custom_mutation.os, "killpg", lambda pid, sig: killed_pids.append(pid))
-    assert custom_mutation._run_tests(workspace, 5) == "TIMED_OUT"
+    assert custom_mutation._run_tests(workspace, 5) == ("TIMED_OUT", [])
     assert killed_pids
 
 

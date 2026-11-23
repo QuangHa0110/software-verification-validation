@@ -28,7 +28,7 @@ from tools.svv.feedback import coverage_feedback, mutation_feedback as render_mu
 from tools.svv.jacoco import parse_jacoco
 from tools.svv.maven import run_maven
 from tools.svv.pit import merge_mutations, read_pit_mutants
-from tools.svv.selection import Measurement, select_greedy
+from tools.svv.selection import Measurement, kills_by_test_class, select_by_kills, select_greedy
 from tools.svv.surefire import parse_surefire
 from tools.svv.test_blocks import extract_blocks
 from tools.svv.test_filter import _stage_dir, filter_tests, write_suite
@@ -46,7 +46,7 @@ USAGE = ("calls", "input_tokens", "output_tokens", "cached_input_tokens",
          "reasoning_output_tokens", "tool_events", "duration_s")
 
 
-def measure_suite(suite, *, root, mutation, settings):
+def measure_suite(suite, *, root, mutation, settings, full_matrix=False):
     """Measure a clean, isolated copy. No intermediate candidate report is published."""
     with workdir(suite, root=root) as project:
         test = run_maven(project, ["test"])
@@ -56,16 +56,20 @@ def measure_suite(suite, *, root, mutation, settings):
             raise ValueError(f"Maven test exit {test.returncode}: {report}\n{test.stdout}\n{test.stderr}")
         measured = Measurement(**parse_jacoco(project / "target/site/jacoco/jacoco.xml"))
         if mutation:
-            pit = run_maven(project, [f"-Dpit.mutators={','.join(settings['pit_mutators'])}",
-                                      f"-Dpit.timeoutFactor={settings['timeout_factor']}",
-                                      "org.pitest:pitest-maven:mutationCoverage"])
+            options = [f"-Dpit.mutators={','.join(settings['pit_mutators'])}",
+                       f"-Dpit.timeoutFactor={settings['timeout_factor']}"]
+            if full_matrix:
+                options.append("-Dpit.fullMutationMatrix=true")
+            pit = run_maven(project, [*options, "org.pitest:pitest-maven:mutationCoverage"])
             if pit.returncode:
                 raise ValueError(f"PIT exit {pit.returncode}\n{pit.stdout}\n{pit.stderr}")
-            rows = list(read_pit_mutants(project / "target/pit-reports/mutations.xml"))
-            custom = run_custom(project, suite, test.elapsed_s, settings, root=root)
+            rows = list(read_pit_mutants(project / "target/pit-reports/mutations.xml", full_matrix=full_matrix))
+            custom = run_custom(project, suite, test.elapsed_s, settings, root=root, full_matrix=full_matrix)
             equivalents = root / "results/mutation/equivalent-mutants.csv"
             measured.killed, measured.live = mutation_outcomes(rows, custom, equivalents)
             measured.mutation_score = merge_mutations(rows, custom, equivalents)["score"]
+            if full_matrix:
+                measured.kills_by_class = kills_by_test_class(rows, custom, measured.killed)
         return measured
 
 
@@ -188,8 +192,12 @@ def generate(run, *, variant="full", mutation_feedback=False, demo=False, output
     if target.is_relative_to(parent_dir) or parent_dir.is_relative_to(target):
         raise ValueError(f"Output overlaps paired input: {target}")
 
-    def measure(suite):
-        return measure_suite(suite, root=root, mutation=mutation, settings=config["measure"])
+    measure_runs = 0
+
+    def measure(suite, *, full_matrix=False):
+        nonlocal measure_runs
+        measure_runs += 1
+        return measure_suite(suite, root=root, mutation=mutation, settings=config["measure"], full_matrix=full_matrix)
 
     start = perf_counter()
     started_at = datetime.now(timezone.utc).isoformat()
@@ -208,14 +216,14 @@ def generate(run, *, variant="full", mutation_feedback=False, demo=False, output
             print(f"[dry-run] method={method} {label} chars={len(prompt)} seed={parent} output={target}")
             return None
 
-        def evaluate(items):
+        def evaluate(items, *, full_matrix=False):
             # Fresh Maven project per trial. The staged suite contains only permanent winners.
             paths = [suite / f"{item.class_name}.java" for item in items]
             if any(path.exists() for path in paths):
                 raise ValueError("Candidate class name collides with a retained test")
             try:
                 write_suite(items, method=method, run=run, output_dir=suite)
-                return measure(suite)
+                return measure(suite, full_matrix=full_matrix)
             finally:
                 for path in paths:
                     path.unlink(missing_ok=True)
@@ -245,8 +253,21 @@ def generate(run, *, variant="full", mutation_feedback=False, demo=False, output
             filtered = filter_tests(candidates, existing=existing, class_prefix="P4b" if mutation else "P4",
                                     start_index=next_index, root=root)
             next_index += len(candidates)
-            selected, current = select_greedy(filtered.kept, current, evaluate)
+            measure_runs = 0
+            if mutation:
+                selected = []
+                if filtered.kept:
+                    matrix = evaluate(filtered.kept, full_matrix=True)
+                    attributed = set().union(*matrix.kills_by_class.values())
+                    unattributed = matrix.killed - current.killed - attributed
+                    if unattributed:
+                        raise ValueError(f"Newly detected mutants without a killing test: {sorted(unattributed)}")
+                    selected = select_by_kills(filtered.kept, current.killed, matrix.kills_by_class)
+            else:
+                selected, current = select_greedy(filtered.kept, current, evaluate)
             write_suite(selected, method=method, run=run, output_dir=suite)
+            if mutation:
+                current = measure(suite)
             existing.extend(item.block for item in selected)
             for key in TEST_COUNTS:
                 tests[key] += getattr(filtered, key)
@@ -259,7 +280,7 @@ def generate(run, *, variant="full", mutation_feedback=False, demo=False, output
                 selection_drops.extend({"i": i, "name": item.block.method_name, "reason": reason}
                                        for item in filtered.kept if item.class_name not in kept_classes)
             after = current.metrics()
-            iterations.append({"i": i, **after, "kept_tests": len(selected),
+            iterations.append({"i": i, **after, "kept_tests": len(selected), "measure_runs": measure_runs,
                                "tokens": response.input_tokens + response.output_tokens,
                                "generated": filtered.generated, "valid": filtered.valid,
                                "dropped_by_reason": dict(drops)})
