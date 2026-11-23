@@ -17,7 +17,10 @@ import yaml
 if __package__ in (None, ""):
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from tools.generate_p3 import METHOD as P3, SPEC_ONLY_METHOD as P3R, _llm_timeout_override, _ordered_spec_paths
+from tools.generate_p3 import (
+    METHOD as P3, SPEC_ONLY_METHOD as P3R, WEAK_METHOD as P3W,
+    _generation_llm, _llm_timeout_override, _ordered_spec_paths,
+)
 from tools.svv import llm_client
 from tools.svv.config import ROOT, load_config
 from tools.svv.custom_mutation import run_custom
@@ -35,7 +38,9 @@ P4 = "p4-coverage-guided"
 P4B = "p4b-mutation-feedback"
 P4R = "p4r-coverage-guided"
 P4BR = "p4br-mutation-feedback"
-CHAINS = {"full": (P3, P4, P4B), "reduced": (P3R, P4R, P4BR)}
+P4W = "p4w-coverage-guided"
+P4BW = "p4bw-mutation-feedback"
+CHAINS = {"full": (P3, P4, P4B), "reduced": (P3R, P4R, P4BR), "weak-llm": (P3W, P4W, P4BW)}
 TEST_COUNTS = ("generated", "compiled", "passed_reference", "valid")
 USAGE = ("calls", "input_tokens", "output_tokens", "cached_input_tokens",
          "reasoning_output_tokens", "tool_events", "duration_s")
@@ -80,7 +85,7 @@ def render_prompt(root, mutation, existing, measured, *, variant="full"):
         "FEEDBACK": (render_mutants(measured.live, source_dir) if mutation
                      else coverage_feedback(measured.uncovered, source_dir)),
     }
-    if variant == "full":
+    if variant != "reduced":
         sections["SOURCE"] = "\n\n".join(
             f"### {p.name}\n\n```java\n{p.read_text(encoding='utf-8').strip()}\n```"
             for p in sorted(source_dir.glob("*.java"))
@@ -173,6 +178,8 @@ def generate(run, *, variant="full", mutation_feedback=False, demo=False, output
     inherited = paired_generation(parent_dir, parent, run)
     cfg_dir = root / "experiments/config"
     config = load_config(cfg_dir)
+    llm = _generation_llm(config, "p4", variant, provider=provider, model=model, effort=effort)
+    timeout_s = llm.pop("timeout_s")
     p4 = config["p4"]
     settings = dict(p4["p4b"] if mutation else p4)
     if demo:
@@ -229,10 +236,10 @@ def generate(run, *, variant="full", mutation_feedback=False, demo=False, output
             i = len(iterations) + 1
             before = current.metrics()
             prompt = render_prompt(root, mutation, existing, current, variant=variant)
-            with _llm_timeout_override(p4["timeout_s"], config_dir=cfg_dir):
+            with _llm_timeout_override(timeout_s, config_dir=cfg_dir):
                 response = llm_client.complete(prompt, method=method, run=run,
                                                purpose=f"{'demo-' if demo else ''}{method}-iteration-{i}",
-                                               provider=provider, model=model, effort=effort)
+                                               **llm)
             incremental = _combined_usage(incremental, {**vars(response), "calls": 1})
             candidates = extract_blocks(response.text)
             filtered = filter_tests(candidates, existing=existing, class_prefix="P4b" if mutation else "P4",

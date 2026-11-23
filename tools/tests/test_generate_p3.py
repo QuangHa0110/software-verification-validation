@@ -123,6 +123,27 @@ def test_dry_run_prints_prompt_and_char_count_without_calling_llm(monkeypatch, c
     assert f"generate_sha256={bundle.generate_sha256}" in out
 
 
+def test_weak_generation_uses_full_prompt_and_configured_profile(workspace):
+    (workspace / "default.yaml").write_text(
+        "p3: {timeout_s: 42}\nllm_weak: {provider: agy-cli, model: fixture-model, effort: low, timeout_s: 61}",
+        encoding="utf-8",
+    )
+    full = generate_p3.build_prompt()
+    assert generate_p3.build_prompt(variant="weak-llm") == full
+
+    def mock_complete(prompt, *, timeout_s, provider, model, effort, **kwargs):
+        assert prompt == full.text
+        assert (provider, model, effort, timeout_s) == ("agy-cli", "fixture-model", "low", 61)
+        return LlmResult(provider, model, effort)
+
+    out = workspace / "suite"
+    record = generate_p3.generate(1, variant="weak-llm", config_dir=workspace, out_dir=out,
+                                  complete_fn=mock_complete)
+    assert record["method"] == "p3w-weak-llm"
+    assert record["llm"]["model"] == "fixture-model"
+    assert record["prompt"]["rendered_sha256"] == full.rendered_sha256
+
+
 @pytest.mark.parametrize("bad_run", [0, -1, True])
 def test_generate_rejects_invalid_run(bad_run):
     with pytest.raises(ValueError, match="run"):

@@ -94,16 +94,19 @@ def test_dry_run_enforces_paired_order_and_skips_evosuite(workspace, capsys):
     assert not (workspace / "results/comparison/run-log.jsonl").exists()
 
 
-def test_reduced_dry_run_pairs_generators_and_measurements(workspace, capsys):
-    chain = ["p3r-spec-only", "p4r-coverage-guided", "p4br-mutation-feedback"]
+@pytest.mark.parametrize("chain, variants", [
+    (["p3r-spec-only", "p4r-coverage-guided", "p4br-mutation-feedback"], ["spec-only", "reduced", "reduced"]),
+    (["p3w-weak-llm", "p4w-coverage-guided", "p4bw-mutation-feedback"], ["weak-llm"] * 3),
+])
+def test_variant_dry_run_pairs_generators_and_measurements(workspace, capsys, chain, variants):
     assert run_experiment.main(["--methods", ",".join(reversed(chain)), "--runs", "1-2", "--dry-run"],
                                root=workspace) == 0
     lines = capsys.readouterr().out.splitlines()[1:]
     assert [line.split()[1:4] for line in lines] == [
         [step, method, run] for run in ("run-01", "run-02") for method in chain
         for step in ("[GENERATE]", "[MEASURE]")]
-    for line in lines[::2]:
-        assert ("--variant spec-only" if chain[0] in line else "--variant reduced") in line
+    for line, variant in zip(lines[::2], variants * 2, strict=True):
+        assert f"--variant {variant}" in line
         assert ("--mutation-feedback" in line) == (chain[2] in line)
 
 

@@ -100,6 +100,32 @@ def test_reduced_chain_only_sends_targeted_source(repo, monkeypatch):
         assert (repo / "docs/spec/api.md").read_text(encoding="utf-8").strip() in prompt
 
 
+def test_weak_chain_uses_full_feedback_and_weak_profile(repo, monkeypatch):
+    seed(repo, method=p4.P3W)
+    (repo / "experiments/config/check.local.yaml").write_text(
+        "llm_weak: {model: fixture-model, timeout_s: 61}\np4: {max_iterations: 1, p4b: {max_iterations: 1}}",
+        encoding="utf-8")
+    measured = observed()
+    measured.mutation_score = 75
+    monkeypatch.setattr(p4, "measure_suite", lambda *args, **kwargs: measured)
+    prompts = []
+
+    def fake_agy(prompt, config, result):
+        assert (result.provider, result.model, result.effort) == ("agy-cli", "fixture-model", "low")
+        assert config["timeout_s"] == 61
+        prompts.append(prompt)
+
+    monkeypatch.setattr(p4.llm_client, "_agy", fake_agy)
+    for mutation, parent, method in ((False, p4.P3W, p4.P4W), (True, p4.P4W, p4.P4BW)):
+        seed_dir = repo / "test-suites" / parent / "run-01"
+        full_prompt = p4.render_prompt(repo, mutation, p4.suite_blocks(seed_dir), measured)
+        record = p4.generate(1, root=repo, variant="weak-llm", mutation_feedback=mutation)
+        assert prompts.pop() == full_prompt
+        assert record["inherited"]["method"] == parent
+        assert record["llm"]["model"] == "fixture-model"
+        assert read_record(repo / "test-suites" / method / "run-01") == record
+
+
 @pytest.mark.parametrize("mutation_score", [None, 71.5])
 def test_iteration_schema(mutation_score):
     measurement = observed()

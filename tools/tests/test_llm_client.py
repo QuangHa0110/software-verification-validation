@@ -195,58 +195,53 @@ def test_parse_agy_single_line_and_quota_and_stream():
     assert sres.tool_events == 1
 
 
-def test_complete_agy_short_and_long_prompt_and_windows_limit(tmp_path, monkeypatch):
-    ok_raw = (FIXTURES / "agy_ok.json").read_text(encoding="utf-8")
-    stream_raw = (FIXTURES / "agy_stream_ok.jsonl").read_text(encoding="utf-8")
+@pytest.mark.parametrize("threshold, prompt, via_file", [
+    (None, "X" * 8000, False),
+    (None, "X" * 8001, True),
+    (12, "-short", False),
+    (12, "Tiếng Việt\r\n" + "長" * WINDOWS_CMD_LIMIT + "\n", True),
+    (12, "a" * 13, True),
+])
+def test_complete_agy_prompt_transport(tmp_path, monkeypatch, threshold, prompt, via_file):
+    options = {} if threshold is None else {"agy_inline_max_chars": threshold}
     monkeypatch.setattr(llm_client, "ROOT", tmp_path)
-    monkeypatch.setattr(
-        llm_client,
-        "load_config",
-        lambda: _base_config(provider="agy-cli", model="gemini-3.8-flash-low", effort="low", timeout_s=90),
-    )
-
-    calls = []
+    monkeypatch.setattr(llm_client, "load_config", lambda: _base_config(
+        provider="agy-cli", model="gemini-3.8-flash-low", effort="low", timeout_s=90, **options))
+    monkeypatch.setattr(llm_client, "_resolve_executable", lambda path: path)
+    directories = []
 
     def fake_run(cmd, **kwargs):
-        calls.append((cmd, kwargs))
-        cwd = Path(kwargs["cwd"]).resolve()
-        assert cwd.is_dir() and not list(cwd.iterdir())
-        if "--input-format" in cmd:
-            return subprocess.CompletedProcess(cmd, 0, stdout=stream_raw, stderr="")
-        return subprocess.CompletedProcess(cmd, 0, stdout=ok_raw, stderr="")
+        cwd = kwargs["cwd"]
+        directories.append(cwd)
+        assert cwd.parent == tmp_path / ".work/llm-scratch"
+        assert "input" not in kwargs and kwargs["shell"] is False
+        assert cmd[-6:] == ["--model", "gemini-3.8-flash-low", "--output-format", "json", "--print-timeout", "90s"]
+        if via_file:
+            assert [p.name for p in cwd.iterdir()] == ["prompt.md"]
+            assert (cwd / "prompt.md").read_bytes() == prompt.encode("utf-8")
+            assert cmd[1] == "-p" and len(cmd[2]) < 200
+            assert "prompt.md" in cmd[2] and "no tools except" in cmd[2].lower()
+            assert prompt not in cmd
+        else:
+            assert not list(cwd.iterdir())
+            assert cmd[1:-6] == ([f"-p={prompt}"] if prompt.startswith("-") else ["-p", prompt])
+        payload = json.loads((FIXTURES / "agy_ok.json").read_text(encoding="utf-8"))
+        payload["num_turns"] = 3 if via_file else 1
+        return subprocess.CompletedProcess(cmd, 0, stdout=json.dumps(payload), stderr="")
 
     monkeypatch.setattr(llm_client.subprocess, "run", fake_run)
+    result = complete(prompt, method="spike-s3", run=1, purpose="transport")
+    assert len(directories) == 1 and not directories[0].exists()
+    log = tmp_path / "results/llm-logs/spike-s3/run-01/calls.jsonl"
+    record = json.loads(log.read_text(encoding="utf-8"))
+    assert record["prompt"] == prompt and record["prompt_via_file"] is via_file
+    assert record["tool_events"] == result.tool_events == (3 if via_file else 0)
+    assert result.reasoning_output_tokens == 120 and result.cached_input_tokens == 12000
 
-    # Short prompt uses -p <prompt> --model <model> --output-format json --print-timeout <timeout>s
-    res_short = complete("Write 1+1 test", method="spike-s3", run=1, purpose="agy-short")
-    short_cmd, _ = calls[0]
-    assert "-p" in short_cmd and "Write 1+1 test" in short_cmd
-    assert "--model" in short_cmd and "gemini-3.8-flash-low" in short_cmd
-    assert "--output-format" in short_cmd and "json" in short_cmd
-    assert "--print-timeout" in short_cmd and "90s" in short_cmd
-    assert res_short.reasoning_output_tokens == 120
-    assert res_short.cached_input_tokens == 12000
 
-    # Long prompt (> 32767 chars) switches to stream-json via stdin
-    long_prompt = "X" * (WINDOWS_CMD_LIMIT + 500)
-    res_long = complete(long_prompt, method="spike-s3", run=1, purpose="agy-long")
-    long_cmd, long_kwargs = calls[1]
-    assert "--input-format" in long_cmd and "stream-json" in long_cmd
-    sent = json.loads(long_kwargs["input"].strip())
-    assert sent == {"event": "user", "message": {"content": long_prompt}}
-    assert res_long.text == "Streamed response"
-
-    # Explicit Windows cmdline length check raises clear error mentioning 32767
+def test_windows_command_limit_guard():
     with pytest.raises(LlmError, match=str(WINDOWS_CMD_LIMIT)):
-        _check_windows_cmd_limit(["agy", "-p", long_prompt])
-
-    monkeypatch.setattr(
-        llm_client,
-        "load_config",
-        lambda: _base_config(provider="agy-cli", model="gemini-3.8-flash-low", agy_stream_long_prompts=False),
-    )
-    with pytest.raises(LlmError, match=str(WINDOWS_CMD_LIMIT)):
-        complete(long_prompt, method="spike-s3", run=1, purpose="agy-limit-err")
+        _check_windows_cmd_limit(["agy", "-p", "x" * WINDOWS_CMD_LIMIT])
 
 
 def test_complete_anthropic_mock_reads_dotenv_and_redacts_key(tmp_path, monkeypatch):
