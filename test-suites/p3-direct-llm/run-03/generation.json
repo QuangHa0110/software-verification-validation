@@ -1,0 +1,73 @@
+{
+  "method": "p3-direct-llm",
+  "run": 3,
+  "started_at": "2026-11-23T15:06:24.636218+00:00",
+  "ended_at": "2026-11-23T15:10:07.022804+00:00",
+  "generation_s": 222.38638880000008,
+  "llm": {
+    "provider": "codex-cli",
+    "calls": 1,
+    "input_tokens": 40080,
+    "cached_input_tokens": 15232,
+    "output_tokens": 9735,
+    "reasoning_output_tokens": 0,
+    "tool_events": 0,
+    "duration_s": 206.95743230000016,
+    "cost_usd": null,
+    "model": "gpt-6.2-astra",
+    "effort": "medium"
+  },
+  "prompt": {
+    "version": "1.0",
+    "system_sha256": "4d7e9d04f8552f7d31be1326404edc1ff16c79b95a8a01c55d026a39c97d8c0e",
+    "generate_sha256": "c9e268b1cc0caf4e6dfb53b07577777a61a3d230692b7f811da4658feba160dc",
+    "template_sha256": "eca87bc863efc2f128b7372e1052d0edf3316a6ba45e90c3d2372a33ef6d134c",
+    "rendered_sha256": "ec617d13bf5577de872eea936511e30ee16fd179447181c6354479c7d0e523a0",
+    "chars": 59804,
+    "spec_files": [
+      "docs/spec/api.md",
+      "docs/spec/README.md",
+      "docs/spec/domain.md",
+      "docs/spec/cart.md",
+      "docs/spec/pricing.md",
+      "docs/spec/shipping.md",
+      "docs/spec/order.md",
+      "docs/spec/branches.md"
+    ],
+    "source_files": [
+      "subject/src/main/java/shop/Cart.java",
+      "subject/src/main/java/shop/CartItem.java",
+      "subject/src/main/java/shop/Coupon.java",
+      "subject/src/main/java/shop/CouponExpiredException.java",
+      "subject/src/main/java/shop/CouponNotApplicableException.java",
+      "subject/src/main/java/shop/CouponType.java",
+      "subject/src/main/java/shop/InsufficientStockException.java",
+      "subject/src/main/java/shop/Order.java",
+      "subject/src/main/java/shop/OrderService.java",
+      "subject/src/main/java/shop/OrderStatus.java",
+      "subject/src/main/java/shop/PricingService.java",
+      "subject/src/main/java/shop/Product.java",
+      "subject/src/main/java/shop/Region.java",
+      "subject/src/main/java/shop/ShippingCalculator.java"
+    ]
+  },
+  "filter": {
+    "generated": 27,
+    "compiled": 27,
+    "passed_reference": 27,
+    "valid": 27,
+    "compile_rate": 1.0,
+    "oracle_correct_rate": 1.0,
+    "dropped": []
+  },
+  "tests": {
+    "generated": 27,
+    "compiled": 27,
+    "passed_reference": 27,
+    "valid": 27,
+    "compile_rate": 1.0,
+    "oracle_rate": 1.0,
+    "dropped": []
+  },
+  "iterations": []
+}

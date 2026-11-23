@@ -9,3 +9,42 @@
 {"timestamp": "2026-11-23T08:20:32.503617+00:00", "method": "p2-random", "run": 8, "step": "measure", "status": "ok", "duration_s": 89.621, "returncode": 0, "message": ""}
 {"timestamp": "2026-11-23T08:22:03.538340+00:00", "method": "p2-random", "run": 9, "step": "measure", "status": "ok", "duration_s": 91.0349, "returncode": 0, "message": ""}
 {"timestamp": "2026-11-23T08:23:35.961322+00:00", "method": "p2-random", "run": 10, "step": "measure", "status": "ok", "duration_s": 92.4226, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:04:25.662678+00:00", "method": "p3-direct-llm", "run": 2, "step": "generate", "status": "ok", "duration_s": 224.7962, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:06:24.509126+00:00", "method": "p3-direct-llm", "run": 2, "step": "measure", "status": "ok", "duration_s": 118.8446, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:10:07.061636+00:00", "method": "p3-direct-llm", "run": 3, "step": "generate", "status": "ok", "duration_s": 222.5521, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:11:49.477096+00:00", "method": "p3-direct-llm", "run": 3, "step": "measure", "status": "ok", "duration_s": 102.4144, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:15:21.777578+00:00", "method": "p3-direct-llm", "run": 4, "step": "generate", "status": "ok", "duration_s": 212.2999, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:16:57.164814+00:00", "method": "p3-direct-llm", "run": 4, "step": "measure", "status": "ok", "duration_s": 95.3874, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:20:36.465535+00:00", "method": "p3-direct-llm", "run": 5, "step": "generate", "status": "ok", "duration_s": 219.2996, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:22:36.714132+00:00", "method": "p3-direct-llm", "run": 5, "step": "measure", "status": "ok", "duration_s": 120.248, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:26:20.134707+00:00", "method": "p3-direct-llm", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:26:20.134707+00:00", "method": "p3-direct-llm", "run": 1, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:26:20.134707+00:00", "method": "p4-coverage-guided", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:27:58.090993+00:00", "method": "p4-coverage-guided", "run": 1, "step": "measure", "status": "ok", "duration_s": 97.9554, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:27:58.090993+00:00", "method": "p4b-mutation-feedback", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:29:33.701784+00:00", "method": "p4b-mutation-feedback", "run": 1, "step": "measure", "status": "ok", "duration_s": 95.593, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:29:33.702785+00:00", "method": "p3-direct-llm", "run": 2, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:29:33.702785+00:00", "method": "p3-direct-llm", "run": 2, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:29:38.589017+00:00", "method": "p4-coverage-guided", "run": 2, "step": "generate", "status": "ok", "duration_s": 4.8857, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:31:11.558466+00:00", "method": "p4-coverage-guided", "run": 2, "step": "measure", "status": "ok", "duration_s": 92.9691, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:32:43.575667+00:00", "method": "p4b-mutation-feedback", "run": 2, "step": "generate", "status": "ok", "duration_s": 92.0166, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:34:12.039969+00:00", "method": "p4b-mutation-feedback", "run": 2, "step": "measure", "status": "ok", "duration_s": 88.4641, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:34:12.040972+00:00", "method": "p3-direct-llm", "run": 3, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:34:12.040972+00:00", "method": "p3-direct-llm", "run": 3, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:34:16.968977+00:00", "method": "p4-coverage-guided", "run": 3, "step": "generate", "status": "ok", "duration_s": 4.9279, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:35:48.188680+00:00", "method": "p4-coverage-guided", "run": 3, "step": "measure", "status": "ok", "duration_s": 91.2189, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:37:22.459473+00:00", "method": "p4b-mutation-feedback", "run": 3, "step": "generate", "status": "ok", "duration_s": 94.2702, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:38:55.822585+00:00", "method": "p4b-mutation-feedback", "run": 3, "step": "measure", "status": "ok", "duration_s": 93.3628, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:38:55.822585+00:00", "method": "p3-direct-llm", "run": 4, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:38:55.823590+00:00", "method": "p3-direct-llm", "run": 4, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:39:00.762960+00:00", "method": "p4-coverage-guided", "run": 4, "step": "generate", "status": "ok", "duration_s": 4.9391, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:40:32.200535+00:00", "method": "p4-coverage-guided", "run": 4, "step": "measure", "status": "ok", "duration_s": 91.4378, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:42:02.546651+00:00", "method": "p4b-mutation-feedback", "run": 4, "step": "generate", "status": "ok", "duration_s": 90.3454, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:43:35.036224+00:00", "method": "p4b-mutation-feedback", "run": 4, "step": "measure", "status": "ok", "duration_s": 92.4889, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:43:35.036224+00:00", "method": "p3-direct-llm", "run": 5, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:43:35.036224+00:00", "method": "p3-direct-llm", "run": 5, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:43:39.894776+00:00", "method": "p4-coverage-guided", "run": 5, "step": "generate", "status": "ok", "duration_s": 4.8571, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:45:09.803754+00:00", "method": "p4-coverage-guided", "run": 5, "step": "measure", "status": "ok", "duration_s": 89.9084, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:46:38.492139+00:00", "method": "p4b-mutation-feedback", "run": 5, "step": "generate", "status": "ok", "duration_s": 88.6878, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:48:09.300005+00:00", "method": "p4b-mutation-feedback", "run": 5, "step": "measure", "status": "ok", "duration_s": 90.8076, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:48:15.809170+00:00", "method": "p3-direct-llm", "run": 6, "step": "generate", "status": "quota_exceeded", "duration_s": 6.5087, "returncode": 2, "message": "Quota exceeded: Codex quota or usage limit: \"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 10:56 PM.\"\n{\"message\": \"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 10:56 PM.\"}"}
