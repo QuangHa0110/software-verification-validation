@@ -1,35 +1,63 @@
 package shop;
 
 public final class Product {
+    private final String id;
+    private final String name;
+    private final long price;
+    private final int weightGrams;
+    private int stock;
+
     public Product(String id, String name, long price, int weightGrams, int stock) {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        if (id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("Missing product ID");
+        }
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Missing product name");
+        }
+        if (price <= 0 || weightGrams <= 0 || stock < 0) {
+            throw new IllegalArgumentException("Invalid price, weight or stock");
+        }
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.weightGrams = weightGrams;
+        this.stock = stock;
     }
 
     public String getId() {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        return id;
     }
 
     public String getName() {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        return name;
     }
 
     public long getPrice() {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        return price;
     }
 
     public int getWeightGrams() {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        return weightGrams;
     }
 
     public int getStock() {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        return stock;
     }
 
     public void reduceStock(int q) {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        if (q <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+        if (q > stock) {
+            throw new InsufficientStockException(id);
+        }
+        stock -= q;
     }
 
     public void restoreStock(int q) {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        if (q <= 0) {
+            throw new IllegalArgumentException("Quantity must be positive");
+        }
+        stock += q;
     }
 }
