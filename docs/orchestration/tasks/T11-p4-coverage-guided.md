@@ -29,6 +29,7 @@
 ## Kiểm tra (chạy thật, ghi output vào báo cáo)
 
 - `python -m pytest tools/tests -q` xanh (feedback từ fixture JaCoCo/PIT; selection với dữ liệu giả; vòng lặp với LLM giả lập và điều kiện dừng).
-- `python tools/generate_p4.py --run 1 --demo` trên bộ P3 run-01 có sẵn: báo cáo coverage từng vòng **đúng như output**; coverage không giảm qua các vòng.
-- `python tools/generate_p4.py --run 1` (P4 đầy đủ) rồi `python tools/generate_p4.py --run 1 --mutation-feedback` (P4b). Báo cáo `iterations`, lý do dừng, token, thời gian, đúng như output.
-- Xóa kết quả đo trong `results/comparison`, `results/coverage`, `results/mutation`; **giữ** bộ test, `generation.json`, log LLM của run-01.
+- **Không chạy LLM thật** (D-018, `worker-rules.md` mục 4b). Thay vào đó: test pytest end-to-end với LLM giả lập trên bộ P3 có sẵn (`test-suites/p3-direct-llm/run-01/` nếu đã có, nếu chưa thì dùng một bộ nhỏ cố ý thiếu nhánh lấy từ `test-suites/smoke/`), chạy Maven thật: (a) P4 2 vòng, LLM giả lập trả một test phủ thêm nhánh và một test vô ích → test vô ích bị loại, `iterations` có 2 dòng, coverage không giảm; (b) P4b 1 vòng, LLM giả lập trả một test diệt thêm mutant → được giữ. Đánh dấu `@pytest.mark.maven`.
+- Có tùy chọn `--provider/--model/--effort` để orchestrator ghi đè cấu hình khi chạy thật; timeout mỗi lời gọi lấy từ `p4.timeout_s` (đặt 1800).
+- Cấu hình (D-020): đặt `p4.target_branch_coverage: 100`, `p4.token_budget: 400000`; thêm `p4b.max_iterations: 3`, `p4b.token_budget: 300000`, `p4b.target_mutation_score: 100`, `p4b.stop_if_no_gain_iterations: 2`. `token_budget` tính bằng `input_tokens + output_tokens` của các lời gọi trong lần chạy đó.
+- Ghi trong báo cáo lệnh chính xác để orchestrator chạy thật `--demo`, P4 và P4b cho `run-01`.
