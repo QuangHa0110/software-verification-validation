@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Shop experiment run",
+  "type": "object",
+  "properties": {
+    "method": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_-]*$"},
+    "run": {"type": "integer", "minimum": 1},
+    "tests": {"$ref": "#/$defs/tests"},
+    "coverage": {
+      "type": "object",
+      "properties": {
+        "statement": {"$ref": "#/$defs/counter"},
+        "branch": {"$ref": "#/$defs/counter"},
+        "function": {"$ref": "#/$defs/counter"}
+      },
+      "required": ["statement", "branch", "function"],
+      "additionalProperties": false
+    },
+    "uncovered": {
+      "type": "object",
+      "properties": {
+        "lines": {"type": "array", "items": {"$ref": "#/$defs/line"}},
+        "branches": {"type": "array", "items": {"$ref": "#/$defs/branch"}}
+      },
+      "required": ["lines", "branches"],
+      "additionalProperties": false
+    },
+    "mutation": {
+      "description": "Null when mutation analysis was not run.",
+      "oneOf": [{"$ref": "#/$defs/mutation"},{"type": "null"}]
+    },
+    "time": {
+      "type": "object",
+      "properties": {"generation_s": {"type": "number", "minimum": 0}, "execution_s": {"type": "number", "minimum": 0}},
+      "required": ["generation_s", "execution_s"],
+      "additionalProperties": false
+    },
+    "llm": {"$ref": "#/$defs/llm"},
+    "iterations": {"type": "array", "items": {"$ref": "#/$defs/iteration"}}
+  },
+  "required": ["method", "run", "tests", "coverage", "uncovered", "mutation", "time", "llm"],
+  "additionalProperties": false,
+  "if": {"properties": {"method": {"enum": ["p4-coverage-guided", "p4b-mutation-feedback"]}}},
+  "then": {"required": ["iterations"]},
+  "else": {"not": {"required": ["iterations"]}},
+  "$defs": {
+    "count": {"type": "integer", "minimum": 0},
+    "pct": {"type": "number", "minimum": 0, "maximum": 100},
+    "tests": {
+      "type": "object",
+      "properties": {
+        "generated": {"$ref": "#/$defs/count"},
+        "compiled": {"$ref": "#/$defs/count"},
+        "valid": {"$ref": "#/$defs/count"},
+        "passed": {"$ref": "#/$defs/count"},
+        "failed": {"$ref": "#/$defs/count"},
+        "passed_reference": {"$ref": "#/$defs/count"},
+        "skipped": {"$ref": "#/$defs/count"},
+        "compile_rate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "oracle_rate": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "dropped": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "reason": {"enum": ["compile_error", "fails_on_reference", "fails_on_subject_only", "duplicate"]}
+            },
+            "required": ["name", "reason"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["generated", "compiled", "valid", "passed", "failed", "dropped"],
+      "additionalProperties": false
+    },
+    "counter": {
+      "type": "object",
+      "properties": {
+        "covered": {"$ref": "#/$defs/count"},
+        "total": {"$ref": "#/$defs/count"},
+        "pct": {"$ref": "#/$defs/pct"}
+      },
+      "required": ["covered", "total", "pct"],
+      "additionalProperties": false
+    },
+    "line": {
+      "type": "object",
+      "properties": {
+        "class": {"type": "string", "minLength": 1},
+        "method": {"type": "string"},
+        "line": {"type": "integer", "minimum": 1}
+      },
+      "required": ["class", "method", "line"],
+      "additionalProperties": false
+    },
+    "branch": {
+      "type": "object",
+      "properties": {
+        "class": {"type": "string", "minLength": 1},
+        "method": {"type": "string"},
+        "line": {"type": "integer", "minimum": 1},
+        "missed": {"$ref": "#/$defs/count"},
+        "covered": {"$ref": "#/$defs/count"}
+      },
+      "required": ["class", "method", "line", "missed", "covered"],
+      "additionalProperties": false
+    },
+    "mutation": {
+      "type": "object",
+      "properties": {
+        "total": {"$ref": "#/$defs/count"},
+        "killed": {"$ref": "#/$defs/count"},
+        "survived": {"$ref": "#/$defs/count"},
+        "no_coverage": {"$ref": "#/$defs/count"},
+        "timed_out": {"$ref": "#/$defs/count"},
+        "equivalent": {"$ref": "#/$defs/count"},
+        "score": {"$ref": "#/$defs/pct"},
+        "by_operator": {
+          "type": "object",
+          "properties": {
+            "relational": {"$ref": "#/$defs/operator"},
+            "arithmetic": {"$ref": "#/$defs/operator"},
+            "conditional": {"$ref": "#/$defs/operator"},
+            "boolean_constant": {"$ref": "#/$defs/operator"},
+            "statement_deletion": {"$ref": "#/$defs/operator"},
+            "other": {"$ref": "#/$defs/operator"}
+          },
+          "required": ["relational", "arithmetic", "conditional", "boolean_constant", "statement_deletion"],
+          "additionalProperties": false
+        },
+        "status_counts": {"type": "object", "additionalProperties": {"$ref": "#/$defs/count"}}
+      },
+      "required": ["total", "killed", "survived", "no_coverage", "timed_out", "equivalent", "score", "by_operator"],
+      "additionalProperties": false
+    },
+    "operator": {
+      "type": "object",
+      "properties": {
+        "total": {"$ref": "#/$defs/count"},
+        "killed": {"$ref": "#/$defs/count"},
+        "source": {"enum": ["pit", "custom",["pit", "custom"]]}
+      },
+      "required": ["total", "killed", "source"],
+      "additionalProperties": false
+    },
+    "llm": {
+      "type": "object",
+      "properties": {
+        "calls": {"$ref": "#/$defs/count"},
+        "input_tokens": {"$ref": "#/$defs/count"},
+        "output_tokens": {"$ref": "#/$defs/count"},
+        "cost_usd": {"type": ["number", "null"], "minimum": 0},
+        "model": {"type": "string"},
+        "effort": {"type": "string"}
+      },
+      "required": ["calls", "input_tokens", "output_tokens", "cost_usd", "model", "effort"],
+      "additionalProperties": false
+    },
+    "iteration": {
+      "type": "object",
+      "properties": {
+        "i": {"$ref": "#/$defs/count"},
+        "kept_tests": {"$ref": "#/$defs/count"},
+        "tokens": {"$ref": "#/$defs/count"},
+        "statement_pct": {"$ref": "#/$defs/pct"},
+        "branch_pct": {"$ref": "#/$defs/pct"}
+      },
+      "required": ["i", "kept_tests", "tokens", "statement_pct", "branch_pct"],
+      "additionalProperties": false
+    }
+  }
+}

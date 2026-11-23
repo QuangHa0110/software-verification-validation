@@ -1,0 +1,32 @@
+<mutations>
+  <mutation status="KILLED">
+    <mutatedClass>shop.Cart</mutatedClass><mutatedMethod>add</mutatedMethod><lineNumber>5</lineNumber>
+    <mutator>org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator</mutator>
+    <description>change boundary</description>
+  </mutation>
+  <mutation status="SURVIVED">
+    <mutatedClass>shop.Cart</mutatedClass><mutatedMethod>add</mutatedMethod><lineNumber>7</lineNumber>
+    <mutator>org.pitest.mutationtest.engine.gregor.mutators.MathMutator</mutator>
+    <description>replace sum</description>
+  </mutation>
+  <mutation status="NO_COVERAGE">
+    <mutatedClass>shop.Cart</mutatedClass><mutatedMethod>add</mutatedMethod><lineNumber>7</lineNumber>
+    <mutator>org.pitest.mutationtest.engine.gregor.mutators.MathMutator</mutator>
+    <description>replace product</description>
+  </mutation>
+  <mutation status="TIMED_OUT">
+    <mutatedClass>shop.Cart</mutatedClass><mutatedMethod>add</mutatedMethod><lineNumber>10</lineNumber>
+    <mutator>org.pitest.mutationtest.engine.gregor.mutators.VoidMethodCallMutator</mutator>
+    <description>remove call</description>
+  </mutation>
+  <mutation status="MEMORY_ERROR">
+    <mutatedClass>shop.Cart</mutatedClass><mutatedMethod>add</mutatedMethod><lineNumber>11</lineNumber>
+    <mutator>org.pitest.mutationtest.engine.gregor.mutators.experimental.MemberVariableMutator</mutator>
+    <description>remove field write</description>
+  </mutation>
+  <mutation status="RUN_ERROR">
+    <mutatedClass>shop.Cart</mutatedClass><mutatedMethod>add</mutatedMethod><lineNumber>12</lineNumber>
+    <mutator>org.pitest.mutationtest.engine.gregor.mutators.InlineConstantMutator</mutator>
+    <description>replace literal</description>
+  </mutation>
+</mutations>

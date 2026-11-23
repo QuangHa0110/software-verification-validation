@@ -1,0 +1,5 @@
+<testsuite name="shop.OneTest" tests="3" failures="1" errors="0" skipped="1">
+  <testcase classname="shop.OneTest" name="passes"/>
+  <testcase classname="shop.OneTest" name="bad[1]"><failure>mismatch</failure></testcase>
+  <testcase classname="shop.OneTest" name="disabled"><skipped/></testcase>
+</testsuite>

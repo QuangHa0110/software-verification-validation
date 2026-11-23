@@ -1,0 +1,21 @@
+runs: 10
+llm:
+  provider: codex-cli
+  model: gpt-6.2-astra
+  effort: medium
+  max_output_tokens: 16000
+  price_per_mtok_input: null
+  price_per_mtok_output: null
+random:
+  seed_base: 1000
+  num_tests: 100
+p4:
+  max_iterations: 5
+  target_branch_coverage: 95
+  token_budget: 200000
+  stop_if_no_gain_iterations: 2
+  demo_max_iterations: 2
+measure:
+  mutation: true
+  timeout_factor: 3
+  pit_mutators: [CONDITIONALS_BOUNDARY, MATH, VOID_METHOD_CALLS, EXPERIMENTAL_MEMBER_VARIABLE]

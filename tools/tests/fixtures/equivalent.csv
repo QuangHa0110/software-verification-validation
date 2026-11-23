@@ -1,0 +1,3 @@
+source,class,method,line,mutator,description,reason
+pit,shop.Cart,add,7,org.pitest.mutationtest.engine.gregor.mutators.MathMutator,replace sum,fixture identity
+custom,shop.Cart,add,9,boolean_constant,change literal,fixture identity
