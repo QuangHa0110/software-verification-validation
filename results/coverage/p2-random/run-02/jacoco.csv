@@ -1,0 +1,15 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+subject,shop,OrderService,87,169,20,26,17,38,13,16,0,6
+subject,shop,PricingService,2,69,3,13,1,15,3,7,0,2
+subject,shop,Product,10,96,6,14,2,26,6,12,0,8
+subject,shop,CouponType,0,15,0,0,0,2,0,1,0,1
+subject,shop,OrderStatus,0,27,0,0,0,2,0,1,0,1
+subject,shop,Coupon,0,83,1,17,0,20,1,15,0,7
+subject,shop,CouponNotApplicableException,0,4,0,0,0,2,0,1,0,1
+subject,shop,ShippingCalculator,7,56,4,16,2,14,4,9,0,2
+subject,shop,CouponExpiredException,0,4,0,0,0,2,0,1,0,1
+subject,shop,CartItem,0,32,1,3,0,9,1,5,0,4
+subject,shop,Cart,11,166,2,20,2,37,2,18,0,9
+subject,shop,InsufficientStockException,0,4,0,0,0,2,0,1,0,1
+subject,shop,Order,35,123,13,15,7,33,13,12,0,11
+subject,shop,Region,0,27,0,0,0,2,0,1,0,1

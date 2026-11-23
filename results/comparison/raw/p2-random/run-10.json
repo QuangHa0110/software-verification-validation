@@ -1,0 +1,380 @@
+{
+  "method": "p2-random",
+  "run": 10,
+  "tests": {
+    "generated": 100,
+    "compiled": 100,
+    "valid": 100,
+    "passed": 100,
+    "failed": 0,
+    "skipped": 0,
+    "dropped": [],
+    "compile_rate": 1.0
+  },
+  "coverage": {
+    "statement": {
+      "covered": 214,
+      "total": 235,
+      "pct": 91.06382978723404
+    },
+    "branch": {
+      "covered": 131,
+      "total": 174,
+      "pct": 75.28735632183908
+    },
+    "function": {
+      "covered": 55,
+      "total": 55,
+      "pct": 100.0
+    }
+  },
+  "uncovered": {
+    "lines": [
+      {
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 20
+      },
+      {
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 27
+      },
+      {
+        "class": "shop.Product",
+        "method": "<init>",
+        "line": 18
+      },
+      {
+        "class": "shop.Product",
+        "method": "reduceStock",
+        "line": 49
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 33
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 34
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 36
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 38
+      },
+      {
+        "class": "shop.Cart",
+        "method": "putItem",
+        "line": 42
+      },
+      {
+        "class": "shop.Cart",
+        "method": "removeItem",
+        "line": 54
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 19
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 22
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 27
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 32
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 35
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 38
+      },
+      {
+        "class": "shop.Order",
+        "method": "setStatus",
+        "line": 89
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "<init>",
+        "line": 16
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "placeOrder",
+        "line": 24
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "placeOrder",
+        "line": 32
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "cancelOrder",
+        "line": 83
+      }
+    ],
+    "branches": [
+      {
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 19,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 24,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.Product",
+        "method": "<init>",
+        "line": 11,
+        "missed": 1,
+        "covered": 3
+      },
+      {
+        "class": "shop.Product",
+        "method": "<init>",
+        "line": 14,
+        "missed": 1,
+        "covered": 3
+      },
+      {
+        "class": "shop.Product",
+        "method": "<init>",
+        "line": 17,
+        "missed": 3,
+        "covered": 3
+      },
+      {
+        "class": "shop.Product",
+        "method": "reduceStock",
+        "line": 48,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 30,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.Cart",
+        "method": "updateQuantity",
+        "line": 33,
+        "missed": 2,
+        "covered": 0
+      },
+      {
+        "class": "shop.Cart",
+        "method": "putItem",
+        "line": 41,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.Cart",
+        "method": "removeItem",
+        "line": 51,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.Coupon",
+        "method": "<init>",
+        "line": 14,
+        "missed": 1,
+        "covered": 3
+      },
+      {
+        "class": "shop.Coupon",
+        "method": "<init>",
+        "line": 17,
+        "missed": 2,
+        "covered": 6
+      },
+      {
+        "class": "shop.Coupon",
+        "method": "<init>",
+        "line": 20,
+        "missed": 2,
+        "covered": 4
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 18,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 21,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 26,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 31,
+        "missed": 3,
+        "covered": 3
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 34,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 37,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.Order",
+        "method": "setStatus",
+        "line": 88,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.ShippingCalculator",
+        "method": "calculate",
+        "line": 8,
+        "missed": 2,
+        "covered": 4
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "<init>",
+        "line": 15,
+        "missed": 2,
+        "covered": 2
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "placeOrder",
+        "line": 23,
+        "missed": 4,
+        "covered": 4
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "placeOrder",
+        "line": 26,
+        "missed": 1,
+        "covered": 3
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "placeOrder",
+        "line": 31,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "cancelOrder",
+        "line": 80,
+        "missed": 1,
+        "covered": 1
+      }
+    ]
+  },
+  "mutation": {
+    "total": 121,
+    "killed": 75,
+    "survived": 44,
+    "no_coverage": 2,
+    "timed_out": 0,
+    "equivalent": 0,
+    "score": 61.98347107438016,
+    "by_operator": {
+      "relational": {
+        "source": "pit",
+        "total": 28,
+        "killed": 3
+      },
+      "arithmetic": {
+        "source": "pit",
+        "total": 19,
+        "killed": 18
+      },
+      "conditional": {
+        "source": "custom",
+        "total": 31,
+        "killed": 13
+      },
+      "boolean_constant": {
+        "source": "pit",
+        "total": 2,
+        "killed": 2
+      },
+      "statement_deletion": {
+        "source": [
+          "pit",
+          "custom"
+        ],
+        "total": 41,
+        "killed": 39
+      }
+    },
+    "status_counts": {
+      "KILLED": 75,
+      "SURVIVED": 44,
+      "NO_COVERAGE": 2
+    }
+  },
+  "time": {
+    "generation_s": 0.13247969999792986,
+    "execution_s": 92.11295340000288
+  },
+  "llm": {
+    "calls": 0,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "cost_usd": 0.0,
+    "model": "",
+    "effort": ""
+  }
+}

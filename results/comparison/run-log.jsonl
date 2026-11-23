@@ -1,0 +1,11 @@
+{"timestamp": "2026-11-23T08:08:26.693320+00:00", "method": "p1-manual", "run": 1, "step": "measure", "status": "ok", "duration_s": 95.9983, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T08:09:56.274137+00:00", "method": "p2-random", "run": 1, "step": "measure", "status": "ok", "duration_s": 89.5795, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T08:11:25.157671+00:00", "method": "p2-random", "run": 2, "step": "measure", "status": "ok", "duration_s": 88.8834, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T08:12:57.676191+00:00", "method": "p2-random", "run": 3, "step": "measure", "status": "ok", "duration_s": 92.5187, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T08:14:29.512643+00:00", "method": "p2-random", "run": 4, "step": "measure", "status": "ok", "duration_s": 91.8278, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T08:16:02.213797+00:00", "method": "p2-random", "run": 5, "step": "measure", "status": "ok", "duration_s": 92.7, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T08:17:32.725572+00:00", "method": "p2-random", "run": 6, "step": "measure", "status": "ok", "duration_s": 90.5113, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T08:19:02.881337+00:00", "method": "p2-random", "run": 7, "step": "measure", "status": "ok", "duration_s": 90.1557, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T08:20:32.503617+00:00", "method": "p2-random", "run": 8, "step": "measure", "status": "ok", "duration_s": 89.621, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T08:22:03.538340+00:00", "method": "p2-random", "run": 9, "step": "measure", "status": "ok", "duration_s": 91.0349, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T08:23:35.961322+00:00", "method": "p2-random", "run": 10, "step": "measure", "status": "ok", "duration_s": 92.4226, "returncode": 0, "message": ""}
