@@ -129,9 +129,30 @@
           "required": ["relational", "arithmetic", "conditional", "boolean_constant", "statement_deletion"],
           "additionalProperties": false
         },
-        "status_counts": {"type": "object", "additionalProperties": {"$ref": "#/$defs/count"}}
+        "status_counts": {"type": "object", "additionalProperties": {"$ref": "#/$defs/count"}},
+        "alive": {
+          "description": "Undetected mutants with their full key, so analyze.py can rescore with the current equivalent-mutants.csv. Absent in runs measured before T17.",
+          "type": "array",
+          "items": {"$ref": "#/$defs/alive_mutant"}
+        }
       },
       "required": ["total", "killed", "survived", "no_coverage", "timed_out", "equivalent", "score", "by_operator"],
+      "additionalProperties": false
+    },
+    "alive_mutant": {
+      "type": "object",
+      "properties": {
+        "source": {"enum": ["pit", "custom"]},
+        "class": {"type": "string", "minLength": 1},
+        "method": {"type": "string"},
+        "line": {"type": "integer", "minimum": 0},
+        "mutator": {"type": "string", "minLength": 1},
+        "index": {"type": "string"},
+        "description": {"type": "string"},
+        "status": {"type": "string", "minLength": 1},
+        "operator": {"enum": ["relational", "arithmetic", "conditional", "boolean_constant", "statement_deletion", "other"]}
+      },
+      "required": ["source", "class", "method", "line", "mutator", "index", "description", "status", "operator"],
       "additionalProperties": false
     },
     "operator": {

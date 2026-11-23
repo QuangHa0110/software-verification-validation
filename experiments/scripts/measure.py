@@ -18,7 +18,7 @@ from svv.config import load_config
 from svv.custom_mutation import run_custom
 from svv.jacoco import parse_jacoco
 from svv.maven import run_maven
-from svv.pit import merge_mutations, read_pit_mutants
+from svv.pit import alive_mutants, merge_mutations, read_pit_mutants
 from svv.surefire import parse_surefire
 from svv.workdir import workdir
 
@@ -151,8 +151,10 @@ def measure(args):
                 (mutation / "custom-mutations.json").write_text(
                     json.dumps(custom, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
                 result["time"]["execution_s"] += perf_counter() - started
-            result["mutation"] = merge_mutations(read_pit_mutants(mutation / "mutations.xml"), custom,
-                                                 results / "mutation/equivalent-mutants.csv")
+            pit_mutants = list(read_pit_mutants(mutation / "mutations.xml"))
+            result["mutation"] = {**merge_mutations(pit_mutants, custom,
+                                                    results / "mutation/equivalent-mutants.csv"),
+                                  "alive": alive_mutants(pit_mutants, custom)}
             result["time"]["execution_s"] += pit.elapsed_s
 
         schema = json.loads((ROOT / "experiments/schema/run-result.schema.json").read_text(encoding="utf-8"))

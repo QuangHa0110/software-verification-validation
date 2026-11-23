@@ -325,6 +325,10 @@ def test_measure_merges_pit_and_custom_mutants_and_writes_json(workspace, monkey
     assert mut["by_operator"]["statement_deletion"] == {"source": ["pit", "custom"], "total": 3, "killed": 2}
     assert mut["by_operator"]["conditional"] == {"source": "custom", "total": 1, "killed": 1}
     assert mut["by_operator"]["boolean_constant"] == {"source": "custom", "total": 1, "killed": 0}
+    assert [(a["source"], a["line"], a["index"], a["status"]) for a in mut["alive"]] == [
+        ("pit", 7, "", "SURVIVED"), ("pit", 7, "", "NO_COVERAGE"), ("pit", 12, "", "RUN_ERROR"),
+        ("custom", 11, "src/main/java/shop/Cart.java:11:5:statement_deletion", "SURVIVED"),
+    ]
 
 
 def test_cli_list_outputs_operator_counts(capsys):

@@ -20,6 +20,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from tools.svv.pit import alive_mutants, load_equivalents, merge_mutations, read_suite_results, rescore
 from tools.svv.stats import compare_samples, describe, spearman_correlation
 
 CANONICAL_METHODS = (
@@ -149,6 +150,99 @@ def load_raw_runs(raw_dir: Path) -> dict[str, list[dict[str, Any]]]:
     return by_method
 
 
+def _backfill_alive(rec: dict[str, Any], mutation_dir: Path) -> tuple[list[dict[str, Any]] | None, str]:
+    """Rebuild mutation.alive in memory from saved PIT/custom reports of a run measured before T17."""
+    run_dir = mutation_dir / str(rec["method"]) / f"run-{int(rec['run']):02d}"
+    if not (run_dir / "mutations.xml").is_file():
+        return None, f"no alive list and no `{run_dir.name}/mutations.xml`"
+    pit, custom = read_suite_results(run_dir)
+    measured = merge_mutations(pit, custom)
+    stored = rec["mutation"]
+    if measured["total"] != stored["total"] or (
+        "status_counts" in stored and measured["status_counts"] != stored["status_counts"]
+    ):
+        return None, "saved reports do not match stored counts"
+    return alive_mutants(pit, custom), "backfilled from saved reports"
+
+
+def apply_equivalents(
+    by_method: dict[str, list[dict[str, Any]]],
+    mutation_dir: Path,
+    equivalents: Path,
+) -> list[dict[str, Any]]:
+    """Recompute every mutation score with the current equivalent-mutants.csv, in memory.
+
+    Runs whose JSON lacks mutation.alive (measured before T17) are backfilled from
+    results/mutation/<method>/run-XX/mutations.xml and custom-mutations.json; the raw
+    JSON files are not rewritten. Runs that cannot be rescored keep their stored score.
+    """
+    rows = load_equivalents(equivalents) if equivalents.is_file() else []
+    report: list[dict[str, Any]] = []
+    for method in ordered_methods(by_method):
+        for rec in by_method.get(method, []):
+            stored = rec.get("mutation")
+            if not isinstance(stored, dict):
+                continue
+            if "alive" in stored:
+                alive, origin = stored["alive"], "stored alive list"
+            else:
+                alive, origin = _backfill_alive(rec, mutation_dir)
+            entry = {
+                "method": method,
+                "run": int(rec["run"]),
+                "total": stored["total"],
+                "stored_equivalent": stored["equivalent"],
+                "stored_score": stored["score"],
+                "origin": origin,
+                "rescored": alive is not None,
+            }
+            if alive is not None:
+                rec["mutation"] = rescore({**stored, "alive": alive}, rows)
+            entry["equivalent"] = rec["mutation"]["equivalent"]
+            entry["score"] = rec["mutation"]["score"]
+            report.append(entry)
+    return report
+
+
+def _equivalence_md(report: Sequence[dict[str, Any]], equivalents: Path, csv_rows: int) -> list[str]:
+    try:
+        shown = equivalents.resolve().relative_to(ROOT).as_posix()
+    except ValueError:
+        shown = equivalents.as_posix()
+    lines = [
+        "",
+        "## Equivalent mutants excluded",
+        "",
+        "Mutation scores in this report are recomputed from the undetected mutants of each run with the current "
+        f"`{shown}` ({csv_rows} rows): `score = killed / (total - equivalent) * 100`. "
+        "Runs that cannot be recomputed keep the score stored in their JSON.",
+        "",
+    ]
+    if not report:
+        lines.append("No runs with mutation data (`n = 0`).")
+        return lines
+    rescored = [row for row in report if row["rescored"]]
+    lines.append(
+        f"Equivalent mutants excluded in total: {sum(row['equivalent'] for row in rescored)} "
+        f"across {len(rescored)} recomputed runs (of {len(report)} runs with mutation data)."
+    )
+    lines.extend(
+        [
+            "",
+            "| Method | Run | Total | Equivalent excluded | Stored equivalent | Stored score (%) | Score used (%) | Source |",
+            "|---|---|---:|---:|---:|---:|---:|---|",
+        ]
+    )
+    for row in report:
+        excluded = row["equivalent"] if row["rescored"] else "not recomputed"
+        lines.append(
+            f"| `{row['method']}` | `run-{row['run']:02d}` | {row['total']} | {excluded} "
+            f"| {row['stored_equivalent']} | {_fmt_md(float(row['stored_score']))} "
+            f"| {_fmt_md(float(row['score']))} | {row['origin']} |"
+        )
+    return lines
+
+
 def ordered_methods(by_method: dict[str, list[dict[str, Any]]]) -> list[str]:
     extras = sorted(m for m in by_method if m not in CANONICAL_METHODS)
     return [*CANONICAL_METHODS, *extras]
@@ -164,6 +258,7 @@ def _extract_metric_series(
 def write_summary(
     by_method: dict[str, list[dict[str, Any]]],
     out_dir: Path,
+    equivalence: Sequence[str] = (),
 ) -> list[dict[str, Any]]:
     methods = ordered_methods(by_method)
     csv_rows: list[dict[str, Any]] = []
@@ -171,7 +266,8 @@ def write_summary(
         "# Experiment Summary Statistics",
         "",
         "Descriptive statistics computed strictly from `results/comparison/raw/**/run-*.json`. "
-        "Missing data are reported as `n = 0`.",
+        "Missing data are reported as `n = 0`. Mutation scores are recomputed with the current "
+        "equivalent-mutant list (see the last section).",
         "",
         "| Method | Metric | Unit | n | Mean | Std (ddof=1) | Median | IQR | Min | Max |",
         "|---|---|---|---:|---:|---:|---:|---:|---:|---:|",
@@ -205,6 +301,7 @@ def write_summary(
         ["method", "metric", "unit", "n", "mean", "std", "median", "iqr", "min", "max"],
         csv_rows,
     )
+    md_lines.extend(equivalence)
     (out_dir / "summary.md").write_text("\n".join(md_lines) + "\n", encoding="utf-8", newline="\n")
     return csv_rows
 
@@ -640,11 +737,25 @@ def generate_figures(by_method: dict[str, list[dict[str, Any]]], out_dir: Path) 
     ]
 
 
-def analyze(*, raw_dir: Path, out_dir: Path) -> dict[str, Path]:
-    """Run full statistical analysis and figure generation from raw_dir into out_dir."""
+def analyze(
+    *,
+    raw_dir: Path,
+    out_dir: Path,
+    mutation_dir: Path | None = None,
+    equivalents: Path | None = None,
+) -> dict[str, Path]:
+    """Run full statistical analysis and figure generation from raw_dir into out_dir.
+
+    mutation_dir defaults to results/mutation beside results/comparison/raw, and
+    equivalents to mutation_dir/equivalent-mutants.csv.
+    """
     out_dir.mkdir(parents=True, exist_ok=True)
+    mutation_dir = mutation_dir if mutation_dir is not None else raw_dir.parent.parent / "mutation"
+    equivalents = equivalents if equivalents is not None else mutation_dir / "equivalent-mutants.csv"
     by_method = load_raw_runs(raw_dir)
-    write_summary(by_method, out_dir)
+    report = apply_equivalents(by_method, mutation_dir, equivalents)
+    csv_rows = len(load_equivalents(equivalents)) if equivalents.is_file() else 0
+    write_summary(by_method, out_dir, _equivalence_md(report, equivalents, csv_rows))
     write_pairwise(by_method, out_dir)
     write_coverage_before_after(by_method, out_dir)
     write_iterations(by_method, out_dir)
@@ -679,12 +790,30 @@ def build_parser() -> argparse.ArgumentParser:
         default=ROOT / "results/comparison",
         help="Output directory for CSV, Markdown, and figures/",
     )
+    parser.add_argument(
+        "--mutation-dir",
+        type=Path,
+        default=None,
+        help="Saved mutation reports <method>/run-XX/ used to backfill runs without mutation.alive "
+        "(default: the mutation directory beside the comparison directory of --raw-dir)",
+    )
+    parser.add_argument(
+        "--equivalents",
+        type=Path,
+        default=None,
+        help="Equivalent mutant CSV (default: <mutation-dir>/equivalent-mutants.csv)",
+    )
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    outputs = analyze(raw_dir=args.raw_dir, out_dir=args.out_dir)
+    outputs = analyze(
+        raw_dir=args.raw_dir,
+        out_dir=args.out_dir,
+        mutation_dir=args.mutation_dir,
+        equivalents=args.equivalents,
+    )
     for name, path in outputs.items():
         print(f"{name}: {path}")
     return 0
