@@ -183,6 +183,10 @@
       "properties": {
         "i": {"$ref": "#/$defs/count"},
         "kept_tests": {"$ref": "#/$defs/count"},
+        "generated": {"$ref": "#/$defs/count"},
+        "valid": {"$ref": "#/$defs/count"},
+        "dropped_by_reason": {"type": "object", "additionalProperties": {"$ref": "#/$defs/count"}},
+        "mutation_score": {"$ref": "#/$defs/pct"},
         "tokens": {"$ref": "#/$defs/count"},
         "statement_pct": {"$ref": "#/$defs/pct"},
         "branch_pct": {"$ref": "#/$defs/pct"}

@@ -1,6 +1,6 @@
 # Kết quả Spike S3 – Gọi LLM thực tế (`llm_client.py`)
 
-**Trạng thái:** `agy-cli` ĐÃ CHẠY thành công (23/11, 14:45, xem mục 5). `codex-cli` CHƯA CHẠY lại (codex hết quota đến 16:31 cùng ngày) – lệnh: `python -m tools.svv.llm_client --smoke --provider codex-cli`
+**Trạng thái:** ĐÃ CHẠY thành công với cả hai provider: `agy-cli` (23/11, 14:45, mục 5) và `codex-cli` (23/11, 21:53, mục 6). Lệnh: `python -m tools.svv.llm_client --smoke --provider codex-cli`
 
 > Ghi chú: nếu đặt `PYTHONPATH=tools`, có thể chạy tương đương bằng `python -m svv.llm_client --smoke --provider codex-cli` (hoặc đổi sang `--provider agy-cli` khi cần kiểm thử provider dự phòng).
 
@@ -57,3 +57,13 @@ Sau khi chạy thành công, điền các trường sau từ stdout và dòng m�
 - Phản hồi: một khối ```` ```java ```` chứa lớp `MathTest` với `@Test void testAddition() { assertEquals(2, 1 + 1); }`
 - Log: dòng cuối của `results/llm-logs/spike-s3/run-01/calls.jsonl`
 - Nhận xét: giống codex, `input_tokens` của agy gồm phần ngữ cảnh nền (≈ 15,5 nghìn token với prompt rất ngắn).
+
+## 6. Kết quả chạy lại bằng `codex-cli` (orchestrator, 23/11/2026, 21:53)
+
+- Lệnh: `python -m tools.svv.llm_client --smoke --provider codex-cli` → exit 0
+- `provider` / `model` / `effort`: `codex-cli` / `gpt-6.2-astra` / `medium`
+- Token: `input_tokens = 22587`, `cached_input_tokens = 15232`, `output_tokens = 41`, `reasoning_output_tokens = 0`
+- `duration_s = 16.76`; `tool_events = 0`
+- Phản hồi: một khối ```` ```java ```` chứa `@org.junit.jupiter.api.Test void onePlusOneEqualsTwo() { ...assertEquals(2, 1 + 1); }`, đúng định dạng một phương thức mỗi khối
+- Log: dòng cuối của `results/llm-logs/spike-s3/run-01/calls.jsonl`
+- Kết luận S3: cấu hình mặc định (`codex-cli`, `gpt-6.2-astra`, effort `medium`) dùng được cho thực nghiệm. Token đầu vào gồm ≈ 22,5 nghìn token nền của codex, trong đó phần lớn được cache.
