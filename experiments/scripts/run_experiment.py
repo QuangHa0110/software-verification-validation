@@ -37,6 +37,9 @@ LLM_GENERATORS = {
     "p3r-spec-only": ("generate_p3.py", ("--variant", "spec-only")),
     "p4r-coverage-guided": ("generate_p4.py", ("--variant", "reduced")),
     "p4br-mutation-feedback": ("generate_p4.py", ("--variant", "reduced", "--mutation-feedback")),
+    "p3w-weak-llm": ("generate_p3.py", ("--variant", "weak-llm")),
+    "p4w-coverage-guided": ("generate_p4.py", ("--variant", "weak-llm")),
+    "p4bw-mutation-feedback": ("generate_p4.py", ("--variant", "weak-llm", "--mutation-feedback")),
 }
 PAIRED_LLM_METHODS = tuple(LLM_GENERATORS)
 KNOWN_METHODS = ("p1-manual", "p2-random", *PAIRED_LLM_METHODS, "evosuite")

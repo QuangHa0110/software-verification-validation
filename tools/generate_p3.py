@@ -27,7 +27,8 @@ except ModuleNotFoundError:
 
 METHOD = "p3-direct-llm"
 SPEC_ONLY_METHOD = "p3r-spec-only"
-VARIANTS = {"full": METHOD, "spec-only": SPEC_ONLY_METHOD}
+WEAK_METHOD = "p3w-weak-llm"
+VARIANTS = {"full": METHOD, "spec-only": SPEC_ONLY_METHOD, "weak-llm": WEAK_METHOD}
 PURPOSE = "direct"
 CLASS_PREFIX = "P3"
 PROMPT_VERSION = "1.0"
@@ -99,7 +100,7 @@ def build_prompt(*, root: Path = ROOT, variant: str = "full") -> PromptBundle:
     """Assemble the deterministic P3 direct prompt from templates, specs, and subject source."""
     if variant not in VARIANTS:
         raise ValueError(f"Unknown P3 variant: {variant}")
-    full = variant == "full"
+    full = variant != "spec-only"
     prompt_dir = root / "prompts" / ("direct" if full else "direct-spec-only")
     system_path = prompt_dir / "system.md"
     generate_path = prompt_dir / "generate.md"
@@ -165,6 +166,22 @@ def build_prompt(*, root: Path = ROOT, variant: str = "full") -> PromptBundle:
         spec_files=spec_rel,
         source_files=source_rel,
     )
+
+
+def _generation_llm(config, stage, variant, *, provider, model, effort):
+    if variant == "weak-llm":
+        llm = config["llm_weak"]
+        provider = provider or llm["provider"]
+        model = model or llm["model"]
+        effort = effort or llm["effort"]
+        timeout_s = llm["timeout_s"]
+        timeout_section = "llm_weak"
+    else:
+        timeout_s = (config.get(stage) or {}).get("timeout_s", config["llm"]["timeout_s"])
+        timeout_section = stage
+    if not _is_positive_number(timeout_s):
+        raise ValueError(f"{timeout_section}.timeout_s must be a positive number")
+    return {"provider": provider, "model": model, "effort": effort, "timeout_s": timeout_s}
 
 
 @contextmanager
@@ -247,10 +264,7 @@ def generate(
 
     cfg_dir = config_dir if config_dir is not None else root / "experiments/config"
     config = load_config(cfg_dir)
-    p3_cfg = config.get("p3") or {}
-    timeout_s = p3_cfg.get("timeout_s", config["llm"]["timeout_s"])
-    if not _is_positive_number(timeout_s):
-        raise ValueError("p3.timeout_s must be a positive number")
+    llm = _generation_llm(config, "p3", variant, provider=provider, model=model, effort=effort)
 
     bundle = build_prompt(root=root, variant=variant)
     method = VARIANTS[variant]
@@ -265,11 +279,8 @@ def generate(
         bundle.text,
         method=method,
         run=run,
-        timeout_s=timeout_s,
-        provider=provider,
-        model=model,
-        effort=effort,
-        config_dir=config_dir,
+        config_dir=cfg_dir,
+        **llm,
     )
 
     blocks = extract_blocks(llm_res.text)
@@ -385,15 +396,20 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     if args.dry_run:
+        profile_info = ""
         try:
             bundle = build_prompt(root=ROOT, variant=args.variant)
-        except (OSError, ValueError) as exc:
+            if args.variant == "weak-llm":
+                llm = _generation_llm(load_config(ROOT / "experiments/config"), "p3", args.variant,
+                                      provider=args.provider, model=args.model, effort=args.effort)
+                profile_info = f"provider={llm['provider']} model={llm['model']} "
+        except (KeyError, OSError, ValueError) as exc:
             print(f"Dry-run failed: {exc}", file=sys.stderr)
             return 1
         print(bundle.text, end="")
         print(
             f"---\n[dry-run] method={VARIANTS[args.variant]} run={args.run:02d} chars={bundle.chars} "
-            f"specs={len(bundle.spec_files)} sources={len(bundle.source_files)} "
+            f"{profile_info}specs={len(bundle.spec_files)} sources={len(bundle.source_files)} "
             f"system_sha256={bundle.system_sha256} generate_sha256={bundle.generate_sha256} "
             f"rendered_sha256={bundle.rendered_sha256}"
         )

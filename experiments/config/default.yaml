@@ -3,6 +3,7 @@ llm:
   provider: codex-cli
   codex_path: codex  # PATH, or an absolute path to the executable
   agy_path: agy      # PATH, or an absolute path to the executable
+  agy_inline_max_chars: 8000
   scratch_dir: .work/llm-scratch
   timeout_s: 300
   model: gpt-6.2-astra
@@ -10,6 +11,11 @@ llm:
   max_output_tokens: 16000
   price_per_mtok_input: null
   price_per_mtok_output: null
+llm_weak:
+  provider: agy-cli
+  model: gemini-3.8-flash-low
+  effort: low
+  timeout_s: 1800
 random:
   seed_base: 1000
   num_tests: 100
