@@ -31,8 +31,8 @@ Agy: `agy -p "<prompt>" --model <model> --print-timeout <t>` chạy trong thư m
 | G1 Nền móng | T00 môi trường/pom/S1/S2 · T01 đặc tả + khung | Xong, tag `m1-spec-frozen`. [ĐÃ CHẠY] `mvn -B -q -f subject/pom.xml compile` exit 0 trên `main` |
 | G2 Cài đặt | T02 subject (codex) · T03 reference (agy, `gemini-4-neon-high`) · T05 bộ P1 (codex) | Xong. [ĐÃ CHẠY] P1 181/181 xanh trên subject và reference |
 | G3 Đo lường | T06 measure.py · T07 mutation | Xong. [ĐÃ CHẠY] đủ 5 toán tử đột biến |
-| G4 Phương pháp | T08 P2 · T09 llm_client + bộ lọc · T10 P3 · T11 P4 · T12 P4b · ~~T13 EvoSuite~~ (D-013) | T08, T09, T10 xong. T11/T12 chờ codex |
-| G5 Thực nghiệm | T14 run_experiment + analyze, chạy 10 lần | T14 xong. P1, P2 đã đo chính thức. Chờ P3/P4/P4b |
+| G4 Phương pháp | T08 P2 · T09 llm_client + bộ lọc · T10 P3 · T11 P4 · T12 P4b · ~~T13 EvoSuite~~ (D-013) | T08–T12 xong. T18 (bóc tách ngữ cảnh hạn chế, D-024) đang làm |
+| G5 Thực nghiệm | T14 run_experiment + analyze, chạy 10 lần | P1, P2 ×10, P3/P4/P4b run-01..05 đã đo; đang chạy run-06..10 |
 | G6 Báo cáo | T16 tổng quan tài liệu · T15a chương 1–4 · T15b chương 5–6 | T16, T15a xong |
 
 ## Nhật ký
@@ -60,3 +60,9 @@ Agy: `agy -p "<prompt>" --model <model> --print-timeout <t>` chạy trong thư m
 | 23/11 15:20 | **Đo chính thức P1, P2 xong** (orchestrator chạy `run_experiment.py --methods p1-manual,p2-random --runs 1-10 --skip-generation`, exit 0). [ĐÃ CHẠY] P1: 181 test, LINE/BRANCH/METHOD 100%, mutation 119/121 (98,35%). P2 (10 lần): LINE 86,8–94,5%, BRANCH 71,3–81,6%, METHOD 100%, mutation 57,85–70,25%. Gộp vào `main`. |
 | 23/11 15:25 | agy hết quota cả `gemini-3.8-flash-high` (D-023). T17 giao subagent Claude. |
 | 23/11 15:39 | T17 xong (subagent Claude): khóa mutant có `index`, `mutation.alive`, `analyze.py` tính lại score theo CSV. [ĐÃ CHẠY] orchestrator: pytest 108 passed; `mutation_ids.py` tách được hai mutant dòng 24 (index 80, 85). Rà soát đợt 1 (`results/mutation/equivalent-review.md`): 1 mutant tương đương (`PricingService:24`, index 85); `ShippingCalculator:8` index 10 **không** tương đương, là lỗ hổng của P1 (thiếu ca tiền hàng = 0). [ĐÃ CHẠY] `analyze.py` sau rà soát: P1 mutation 99,1667% (119/120). |
+| 23/11 (chiều) | Máy người dùng tắt từ ≈ 16:10 đến 21:50; tiếp tục lúc 21:52. |
+| 23/11 21:53 | [ĐÃ CHẠY] S3 qua `codex-cli`: exit 0, 22.587 token vào (15.232 cache), 41 ra, 16,8 s, `tool_events=0`. |
+| 23/11 22:00 | T11 + T11d xong (codex `xhigh`, `low`): `generate_p4.py`, `feedback.py`, `selection.py`, prompt coverage-guided và mutation-feedback; schema `iterations`. [ĐÃ CHẠY] orchestrator: pytest 128 passed. Gộp vào `main`. |
+| 23/11 22:05 | [ĐÃ CHẠY] P3 run-01..05 thật: mỗi lần 27–30 test, 100% biên dịch và 100% oracle đúng; LINE 235/235, BRANCH 174/174, METHOD 55/55; killed 120/121 (còn lại đúng mutant tương đương). ≈ 40k token vào + 9,7–9,9k ra, 212–250 s mỗi lần. P4 run-01..05 và P4b run-01..05: **0 vòng** (đã đạt ngưỡng). → **Hiệu ứng trần** xác nhận, quyết định D-024 (thêm thí nghiệm ngữ cảnh hạn chế, T18). |
+| 23/11 22:26 | Codex hết quota lần 2 (mở lại 22:56) khi T18 đang chạy và thực nghiệm chính tới P3 run-06; `run_experiment.py` dừng sạch, in lệnh chạy tiếp [ĐÃ CHẠY]. agy báo 503 (hết capacity máy chủ) cho việc cập nhật báo cáo, hoãn. Commit P3/P4/P4b run-01..05 trên `experiment/run-20261123`. |
+| 23/11 22:57 | Tiếp tục: T18b (codex `medium`) và thực nghiệm chính từ run-06. |
