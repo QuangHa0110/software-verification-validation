@@ -289,7 +289,7 @@ Nếu S2 xác nhận thiếu, `tools/mutate_custom.py` tạo mutant ở mức m�
 File `results/mutation/equivalent-mutants.csv`, do G1 xem xét thủ công sau khi chạy xong:
 
 ```
-source,class,method,line,mutator,description,reason
+source,class,method,line,mutator,index,description,reason
 ```
 
 Mutant đánh dấu tương đương bị loại khỏi mẫu số cho **mọi** phương pháp, để các phương pháp so sánh được với nhau.

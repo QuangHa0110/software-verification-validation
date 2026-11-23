@@ -1,1 +1,2 @@
 source,class,method,line,mutator,index,description,reason
+pit,shop.PricingService,calculateDiscount,24,org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator,85,changed conditional boundary,"discount > max thành discount >= max: khi discount == max cả hai nhánh đều trả giá trị bằng max, không có đầu vào nào phân biệt được"
