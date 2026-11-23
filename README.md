@@ -36,18 +36,22 @@ Bài tập lớn học phần *Kiểm chứng và Thẩm định Phần mềm (S
 software-verification-validation/
 ├── docs/
 │   ├── de-xuat-de-tai-1.md     # Đề xuất đăng ký đề tài
-│   ├── spec/                   # Đặc tả chức năng, đầu vào/đầu ra (căn cứ cho oracle)
+│   ├── spec/                   # Đặc tả chức năng, đầu vào/đầu ra (căn cứ cho oracle), chốt ở M1
+│   ├── orchestration/          # Quy trình phát triển bằng AI: quyết định, tiến độ, brief giao việc
 │   ├── literature/             # Ghi chú các công trình nghiên cứu liên quan
 │   └── report/                 # Báo cáo khoa học (6 chương)
 ├── subject/                    # Chương trình đối tượng kiểm thử (Maven project)
 │   └── src/
 │       ├── main/java/          # Mã nguồn module giỏ hàng & thanh toán
-│       └── test/java/          # Bộ test đang được chạy (copy từ test-suites/ khi thực nghiệm)
+│       └── test/java/          # Luôn để trống; bộ test chạy qua measure.py hoặc profile Maven `suite`
+├── reference/                  # Chương trình tham chiếu, viết độc lập từ đặc tả (chuẩn để kiểm tra oracle)
 ├── test-suites/                # Bộ test của từng phương pháp, lưu riêng để so sánh
+│   ├── smoke/                  # Test khói của người cài đặt (không phải phương pháp thực nghiệm)
 │   ├── p1-manual/
 │   ├── p2-random/
 │   ├── p3-direct-llm/          # Mỗi lần chạy một thư mục con: run-01/, run-02/, ...
-│   └── p4-coverage-guided/
+│   ├── p4-coverage-guided/
+│   └── p4b-mutation-feedback/  # P4 cộng phản hồi mutation (thí nghiệm bóc tách)
 ├── tools/                      # Công cụ: sinh test ngẫu nhiên, gọi LLM, vòng lặp coverage-guided
 ├── prompts/                    # Bộ prompt (sản phẩm bắt buộc)
 │   ├── direct/
@@ -55,7 +59,8 @@ software-verification-validation/
 │   └── mutation-feedback/
 ├── experiments/
 │   ├── config/                 # Cấu hình: model, nhiệt độ, số vòng lặp, ngân sách token, seed
-│   └── scripts/                # Script chạy và tái lập toàn bộ thực nghiệm
+│   ├── scripts/                # Script chạy và tái lập toàn bộ thực nghiệm
+│   └── spikes/                 # Thử nghiệm kỹ thuật S1–S3 và kết quả
 └── results/
     ├── coverage/               # Báo cáo JaCoCo theo phương pháp / lần chạy
     ├── mutation/               # Báo cáo PIT, danh sách mutant tương đương
@@ -77,12 +82,18 @@ Thư mục rỗng được giữ trong git bằng file `.gitkeep`; xóa file nà
 
 ## Cài đặt và chạy
 
-> Phần này sẽ được cập nhật khi `subject/pom.xml` và các script trong `experiments/scripts/` hoàn thiện.
+> Phần này sẽ được cập nhật khi các script trong `experiments/scripts/` hoàn thiện. Tiến độ phát triển và các quyết định kỹ thuật: [docs/orchestration/progress.md](docs/orchestration/progress.md), [docs/orchestration/decisions.md](docs/orchestration/decisions.md).
 
-API key của LLM đặt trong file `.env` ở thư mục gốc (đã nằm trong `.gitignore`, **không commit**):
+Môi trường đã dùng: JDK 17, Maven 3.9, Python 3.12 với các gói trong `requirements.txt`:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+LLM mặc định của thực nghiệm là Codex CLI (`llm.provider: codex-cli` trong `experiments/config/default.yaml`), dùng phiên đăng nhập sẵn có của `codex`. Nếu đổi sang provider `anthropic`, đặt khóa trong file `.env` ở thư mục gốc (đã nằm trong `.gitignore`, **không commit**):
 
 ```
-LLM_API_KEY=...
+ANTHROPIC_API_KEY=...
 ```
 
 Chạy test và đo coverage của chương trình đối tượng:
