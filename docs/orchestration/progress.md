@@ -31,9 +31,9 @@ Agy: `agy -p "<prompt>" --model <model> --print-timeout <t>` chạy trong thư m
 | G1 Nền móng | T00 môi trường/pom/S1/S2 · T01 đặc tả + khung | Xong, tag `m1-spec-frozen`. [ĐÃ CHẠY] `mvn -B -q -f subject/pom.xml compile` exit 0 trên `main` |
 | G2 Cài đặt | T02 subject (codex) · T03 reference (agy, `gemini-4-neon-high`) · T05 bộ P1 (codex) | Xong. [ĐÃ CHẠY] P1 181/181 xanh trên subject và reference |
 | G3 Đo lường | T06 measure.py · T07 mutation | Xong. [ĐÃ CHẠY] đủ 5 toán tử đột biến |
-| G4 Phương pháp | T08 P2 · T09 llm_client + bộ lọc · T10 P3 · T11 P4 · T12 P4b · ~~T13 EvoSuite~~ (D-013) | T08, T09 xong. T10 (agy), T14 (agy) đang làm |
-| G5 Thực nghiệm | T14 run_experiment + analyze, chạy 10 lần | Chưa bắt đầu |
-| G6 Báo cáo | T16 tổng quan tài liệu · T15 báo cáo | T16 xong |
+| G4 Phương pháp | T08 P2 · T09 llm_client + bộ lọc · T10 P3 · T11 P4 · T12 P4b · ~~T13 EvoSuite~~ (D-013) | T08, T09, T10 xong. T11/T12 chờ codex |
+| G5 Thực nghiệm | T14 run_experiment + analyze, chạy 10 lần | T14 xong. Đang đo P1, P2 |
+| G6 Báo cáo | T16 tổng quan tài liệu · T15a chương 1–4 · T15b chương 5–6 | T16, T15a xong |
 
 ## Nhật ký
 
@@ -53,3 +53,7 @@ Agy: `agy -p "<prompt>" --model <model> --print-timeout <t>` chạy trong thư m
 | 23/11 | T16 xong (agy): 17 công trình, DOI cho từng mục, phát hiện đề xuất ghi sai CoverUp (thực tế FSE 2025, tên mới) và tiêu đề ChatTester. Orchestrator kiểm chéo bằng hiểu biết một số mục (TestPilot, ChatTester, MuTAP, CodaMosa): khớp; các mục khác dựa trên nguồn worker ghi. Gộp vào `main`. |
 | 23/11 | T07 xong (codex dở → agy T07b), T07c bổ sung theo D-016/D-017. [ĐÃ CHẠY] orchestrator: pytest 21 passed; `measure.py` trên smoke có `--mutation` → 121 mutant, by_operator: relational 28, arithmetic 19, conditional 31, boolean_constant 2, statement_deletion 41 (đủ 5 toán tử); P1 trên reference exit 0. Gộp vào `main`. |
 | 23/11 | T09 xong (codex dở → agy T09b, T09c). agy hai lần dừng sớm vì quyền/lệnh nền (D-018, D-019). [ĐÃ CHẠY] orchestrator: pytest 35 passed; test Maven thật của bộ lọc 4 khối PASSED; spike S3 qua `agy-cli` exit 0 (15566 token vào, 64 ra). S3 qua `codex-cli` chờ quota. Trên `main` sau gộp: pytest 55 passed. |
+| 23/11 | T10 xong (agy): `prompts/direct/` (system + generate, oracle theo đặc tả, định dạng khối), `generate_p3.py`. [ĐÃ CHẠY] orchestrator: pytest 64 passed; worker báo `--dry-run` → prompt 59.804 ký tự. Chưa chạy LLM thật (D-018). Gộp vào `main`. |
+| 23/11 | T14 xong (agy): `run_experiment.py`, `analyze.py`, `tools/svv/stats.py`. [ĐÃ CHẠY] orchestrator: pytest 99 passed; `--dry-run` 81 bước theo thứ tự ghép cặp. Gộp vào `main`. |
+| 23/11 | T15a xong (agy): báo cáo chương 1–4 bản nháp, 3 sơ đồ Mermaid; còn các mốc `[CHỜ]` cho P4 và kết quả. Orchestrator kiểm ngẫu nhiên: phiên bản công cụ và số 235/174/55 khớp repo; số liệu % ở chương 2 truy được về `docs/literature/`. Gộp vào `main`. |
+| 23/11 15:02 | **agy hết quota** model `gemini-4-neon-high` (T11 lần 1 thất bại); T11 lần 2 bằng `claude-opus-5-5-high` bị từ chối quyền (D-022). T11 chờ codex 16:31. Orchestrator bắt đầu đo chính thức P1 (run-01) và P2 (run-01..10) trên nhánh `experiment/run-20261123`. |
