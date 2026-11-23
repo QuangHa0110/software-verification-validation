@@ -91,6 +91,22 @@ def test_build_prompt_missing_placeholder_raises(tmp_path):
         generate_p3.build_prompt(root=tmp_path)
 
 
+def test_spec_only_uses_the_same_spec_without_subject_implementations():
+    full = generate_p3.build_prompt()
+    reduced = generate_p3.build_prompt(variant="spec-only")
+    assert reduced.spec_files == full.spec_files
+    assert reduced.source_files == ()
+    assert reduced.chars < full.chars
+    for rel in full.source_files:
+        implementation = (generate_p3.ROOT / rel).read_text(encoding="utf-8").strip()
+        assert implementation not in reduced.text
+    for line in ('throw new IllegalArgumentException("Invalid shipping request");',
+                 "case PROVINCE -> 35_000;", "fee += 2_000;",
+                 "return List.copyOf(items.values());", "return product.getPrice() * quantity;",
+                 "item.getProduct().restoreStock(item.getQuantity());"):
+        assert line in full.text and line not in reduced.text
+
+
 def test_dry_run_prints_prompt_and_char_count_without_calling_llm(monkeypatch, capsys):
     def fail_if_called(*args, **kwargs):
         raise AssertionError("LLM must not be called during --dry-run")
@@ -113,7 +129,8 @@ def test_generate_rejects_invalid_run(bad_run):
         generate_p3.generate(bad_run)
 
 
-def test_generate_applies_p3_timeout_override_and_writes_generation_json(workspace, monkeypatch):
+@pytest.mark.parametrize("variant, method", [("full", "p3-direct-llm"), ("spec-only", "p3r-spec-only")])
+def test_generate_applies_p3_timeout_override_and_writes_generation_json(workspace, monkeypatch, variant, method):
     raw_codex = (FIXTURES / "codex_ok.jsonl").read_text(encoding="utf-8")
     monkeypatch.setattr(llm_client, "ROOT", workspace)
 
@@ -157,6 +174,7 @@ def test_generate_applies_p3_timeout_override_and_writes_generation_json(workspa
 
     record = generate_p3.generate(
         2,
+        variant=variant,
         provider="codex-cli",
         model="gpt-override",
         effort="high",
@@ -178,7 +196,8 @@ def test_generate_applies_p3_timeout_override_and_writes_generation_json(workspa
     assert meta_path.is_file()
     meta = json.loads(meta_path.read_text(encoding="utf-8"))
     assert meta == record
-    assert meta["method"] == "p3-direct-llm"
+    assert meta["method"] == method
+    assert (workspace / "results/llm-logs" / method / "run-02/calls.jsonl").is_file()
     assert meta["run"] == 2
     assert meta["iterations"] == []
     assert meta["llm"]["calls"] == 1
@@ -205,7 +224,7 @@ def test_generate_applies_p3_timeout_override_and_writes_generation_json(workspa
     }
 
     # Compatible with measure.py helpers.
-    assert measure.read_generation(out_dir, "p3-direct-llm", 2) == meta
+    assert measure.read_generation(out_dir, method, 2) == meta
     llm_m = measure.llm_metrics(
         meta,
         {"model": "default", "effort": "medium", "price_per_mtok_input": 2.0, "price_per_mtok_output": 10.0},
@@ -228,7 +247,8 @@ def test_generate_applies_p3_timeout_override_and_writes_generation_json(workspa
 def test_cli_propagates_overrides_and_error_exit_codes(monkeypatch, capsys):
     seen = {}
 
-    def fake_generate(run, *, provider=None, model=None, effort=None):
+    def fake_generate(run, *, variant, provider=None, model=None, effort=None):
+        assert variant == "full"
         seen.update(run=run, provider=provider, model=model, effort=effort)
         return {
             "generation_s": 1.25,

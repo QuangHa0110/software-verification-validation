@@ -293,6 +293,38 @@ def test_analyze_generates_all_tables_and_figures(workspace):
         assert fig_path.read_bytes().startswith(PNG_SIGNATURE)
 
 
+def test_reduced_reports_join_same_run_and_restore_generated_iterations(workspace):
+    raw = workspace / "results/comparison/raw"
+    out = workspace / "out"
+    p3r, p4r, p4br = analyze.REDUCED_CHAIN
+    for method, run, pct in ((p3r, 1, 70), (p4r, 1, 80), (p4br, 1, 95), (p3r, 2, 72),
+                             ("p3-direct-llm", 1, 100)):
+        rec = _make_run(method, run, stmt_pct=pct, branch_pct=pct, func_pct=pct, mut_score=pct,
+                        generated=3, compiled=3, valid=3)
+        _write_raw(raw, rec)
+        if method in (p4r, p4br):
+            trace = workspace / "test-suites" / method / "run-01/generation.json"
+            trace.parent.mkdir(parents=True)
+            iteration = {"i": 1, "statement_pct": pct, "branch_pct": pct, "kept_tests": 1, "tokens": 100}
+            if method == p4br:
+                iteration["mutation_score"] = pct
+            trace.write_text(json.dumps({"method": method, "run": run, "generation_s": rec["time"]["generation_s"],
+                                         "baseline": {"branch_pct": 70, "statement_pct": 70, "mutation_score": 80},
+                                         "iterations": [iteration]}), encoding="utf-8")
+    outputs = analyze.analyze(raw_dir=raw, out_dir=out)
+    rows = _read_csv(outputs["reduced_before_after_csv"])
+    assert float(rows[0]["delta_p4r_p3r_branch_pct"]) == 10
+    assert float(rows[0]["delta_p4br_p4r_mutation_score"]) == 15
+    assert rows[1]["run"] == "run-02" and rows[1]["delta_p4r_p3r_branch_pct"] == ""
+    pairs = {(r["method_a"], r["method_b"]) for r in _read_csv(outputs["pairwise_csv"])}
+    assert {(p4r, p3r), (p4br, p4r), (p3r, "p3-direct-llm")} <= pairs
+    iterations = _read_csv(outputs["iterations_csv"])
+    assert [r["method"] for r in iterations] == [p4r, p4br]
+    assert iterations[0]["mutation_score"] == "" and float(iterations[1]["mutation_score"]) == 95
+    for figure in ("p4r_iterations_coverage", "p4br_iterations_mutation"):
+        assert outputs[figure].read_bytes().startswith(PNG_SIGNATURE)
+
+
 def test_analyze_handles_single_method_missing_data_without_fabricating(workspace):
     raw_dir = workspace / "raw"
     out_dir = workspace / "out"
