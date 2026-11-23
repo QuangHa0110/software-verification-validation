@@ -1,19 +1,26 @@
 package shop;
 
 public final class CartItem {
+    private final Product product;
+    private final int quantity;
+
     public CartItem(Product product, int quantity) {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        if (product == null || quantity <= 0) {
+            throw new IllegalArgumentException("Expected a product and a positive quantity");
+        }
+        this.product = product;
+        this.quantity = quantity;
     }
 
     public Product getProduct() {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        return product;
     }
 
     public int getQuantity() {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        return quantity;
     }
 
     public long getLineTotal() {
-        throw new UnsupportedOperationException("chưa cài đặt");
+        return product.getPrice() * quantity;
     }
 }
