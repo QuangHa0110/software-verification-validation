@@ -1,0 +1,131 @@
+pair,method_a,method_b,rq,metric,n_a,n_b,mean_a,mean_b,median_a,median_b,u_statistic,p_value,a12,effect_size
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",statement_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",branch_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",function_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",mutation_score,10,10,100,100,100,100,50,1,0.5,negligible
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",tests_valid,10,10,27.6,27.6,28,28,50,1,0.5,negligible
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",tests_generated,10,10,27.6,27.6,28,28,50,1,0.5,negligible
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",execution_s,10,10,94.911735,100.074793,91.696469,98.269965,35,0.273036,0.35,medium
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",generation_s,10,10,226.301424,221.268546,224.296774,219.52445,64,0.307489,0.64,medium
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",input_tokens,10,10,40086.4,40086.4,40086,40086,50,1,0.5,negligible
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",output_tokens,10,10,9793.2,9793.2,9766.5,9766.5,50,1,0.5,negligible
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",cost_usd,0,0,,,,,,,,
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",compile_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p4-coverage-guided vs p3-direct-llm,p4-coverage-guided,p3-direct-llm,"RQ2, RQ4",oracle_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,statement_pct,10,10,100,91.489362,100,91.702128,100,0.000063,1,large
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,branch_pct,10,10,100,76.781609,100,77.011494,100,0.000062,1,large
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,function_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,mutation_score,10,10,100,64.333333,100,62.5,100,0.000063,1,large
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,tests_valid,10,10,27.6,100,28,100,0,0.000062,0,large
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,tests_generated,10,10,27.6,100,28,100,0,0.000062,0,large
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,execution_s,10,10,100.074793,90.591017,98.269965,90.313868,75,0.064022,0.75,large
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,generation_s,10,10,221.268546,0.152434,219.52445,0.150716,100,0.000183,1,large
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,input_tokens,10,10,40086.4,0,40086,0,100,0.000062,1,large
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,output_tokens,10,10,9793.2,0,9766.5,0,100,0.000064,1,large
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,cost_usd,0,10,,0,,0,,,,
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,compile_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p3-direct-llm vs p2-random,p3-direct-llm,p2-random,RQ3,oracle_rate,10,0,1,,1,,,,,
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,statement_pct,10,10,100,91.489362,100,91.702128,100,0.000063,1,large
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,branch_pct,10,10,100,76.781609,100,77.011494,100,0.000062,1,large
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,function_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,mutation_score,10,10,100,64.333333,100,62.5,100,0.000063,1,large
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,tests_valid,10,10,27.6,100,28,100,0,0.000062,0,large
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,tests_generated,10,10,27.6,100,28,100,0,0.000062,0,large
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,execution_s,10,10,94.911735,90.591017,91.696469,90.313868,66,0.241322,0.66,medium
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,generation_s,10,10,226.301424,0.152434,224.296774,0.150716,100,0.000183,1,large
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,input_tokens,10,10,40086.4,0,40086,0,100,0.000062,1,large
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,output_tokens,10,10,9793.2,0,9766.5,0,100,0.000064,1,large
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,cost_usd,0,10,,0,,0,,,,
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,compile_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p4-coverage-guided vs p2-random,p4-coverage-guided,p2-random,RQ3,oracle_rate,10,0,1,,1,,,,,
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,statement_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,branch_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,function_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,mutation_score,10,10,100,100,100,100,50,1,0.5,negligible
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,tests_valid,10,10,27.6,27.6,28,28,50,1,0.5,negligible
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,tests_generated,10,10,27.6,27.6,28,28,50,1,0.5,negligible
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,execution_s,10,10,93.976564,94.911735,90.899744,91.696469,44,0.677585,0.44,small
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,generation_s,10,10,318.977854,226.301424,315.432302,224.296774,100,0.000183,1,large
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,input_tokens,10,10,40086.4,40086.4,40086,40086,50,1,0.5,negligible
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,output_tokens,10,10,9793.2,9793.2,9766.5,9766.5,50,1,0.5,negligible
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,cost_usd,0,0,,,,,,,,
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,compile_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p4b-mutation-feedback vs p4-coverage-guided,p4b-mutation-feedback,p4-coverage-guided,P4b vs P4,oracle_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,statement_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,branch_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,function_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,mutation_score,10,10,100,100,100,100,50,1,0.5,negligible
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,tests_valid,10,10,31.3,31.3,31,31,50,1,0.5,negligible
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,tests_generated,10,10,31.3,31.3,31,31,50,1,0.5,negligible
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,execution_s,10,10,94.726251,94.642431,92.312732,92.876229,46,0.791337,0.46,negligible
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,generation_s,10,10,236.50788,231.425399,237.5025,232.280254,69,0.161972,0.69,medium
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,input_tokens,10,10,36657.4,36657.4,36658,36658,50,1,0.5,negligible
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,output_tokens,10,10,10553.7,10553.7,10615.5,10615.5,50,1,0.5,negligible
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,cost_usd,0,0,,,,,,,,
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,compile_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p4r-coverage-guided vs p3r-spec-only,p4r-coverage-guided,p3r-spec-only,P4r vs P3r,oracle_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,statement_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,branch_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,function_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,mutation_score,10,10,100,100,100,100,50,1,0.5,negligible
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,tests_valid,10,10,31.3,31.3,31,31,50,1,0.5,negligible
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,tests_generated,10,10,31.3,31.3,31,31,50,1,0.5,negligible
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,execution_s,10,10,96.019246,94.726251,92.456186,92.312732,59,0.520523,0.59,small
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,generation_s,10,10,330.776972,236.50788,332.29544,237.5025,100,0.000183,1,large
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,input_tokens,10,10,36657.4,36657.4,36658,36658,50,1,0.5,negligible
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,output_tokens,10,10,10553.7,10553.7,10615.5,10615.5,50,1,0.5,negligible
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,cost_usd,0,0,,,,,,,,
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,compile_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p4br-mutation-feedback vs p4r-coverage-guided,p4br-mutation-feedback,p4r-coverage-guided,P4br vs P4r,oracle_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,statement_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,branch_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,function_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,mutation_score,10,10,100,100,100,100,50,1,0.5,negligible
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,tests_valid,10,10,31.3,27.6,31,28,84.5,0.009332,0.845,large
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,tests_generated,10,10,31.3,27.6,31,28,84.5,0.009332,0.845,large
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,execution_s,10,10,94.642431,100.074793,92.876229,98.269965,37,0.344704,0.37,small
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,generation_s,10,10,231.425399,221.268546,232.280254,219.52445,79,0.031209,0.79,large
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,input_tokens,10,10,36657.4,40086.4,36658,40086,0,0.000166,0,large
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,output_tokens,10,10,10553.7,9793.2,10615.5,9766.5,93,0.001315,0.93,large
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,cost_usd,0,0,,,,,,,,
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,compile_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p3r-spec-only vs p3-direct-llm,p3r-spec-only,p3-direct-llm,P3r vs P3,oracle_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,statement_pct,10,10,100,99.957447,100,100,55,0.36812,0.55,negligible
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,branch_pct,10,10,99.942529,99.655172,100,100,55.5,0.542802,0.555,negligible
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,function_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,mutation_score,10,10,95,95,96.25,96.25,50,1,0.5,negligible
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,tests_valid,10,10,63.2,62.3,53,53,51,0.969759,0.51,negligible
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,tests_generated,10,10,63.3,62.4,53,53,51,0.969759,0.51,negligible
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,execution_s,10,10,93.953576,93.321001,91.518628,90.412614,57,0.623176,0.57,small
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,generation_s,10,10,304.088468,197.382138,213.738411,194.70788,67,0.212294,0.67,medium
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,input_tokens,10,10,69811.3,45102.3,40758.5,40742.5,64,0.30603,0.64,medium
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,output_tokens,10,10,11819.6,11563.4,11710,11377.5,59,0.519264,0.59,small
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,cost_usd,0,0,,,,,,,,
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,compile_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p4w-coverage-guided vs p3w-weak-llm,p4w-coverage-guided,p3w-weak-llm,P4w vs P3w,oracle_rate,10,10,0.998413,0.998387,1,1,50.5,1,0.505,negligible
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,statement_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,branch_pct,10,10,99.942529,99.942529,100,100,50,1,0.5,negligible
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,function_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,mutation_score,10,10,98.5,95,98.333333,96.25,100,0.000107,1,large
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,tests_valid,10,10,83.5,63.2,74.5,53,73,0.088973,0.73,large
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,tests_generated,10,10,83.8,63.3,75,53,72.5,0.096179,0.725,large
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,execution_s,10,10,95.414064,93.953576,92.630903,91.518628,61,0.427355,0.61,small
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,generation_s,10,10,1097.855479,304.088468,978.938303,213.738411,92,0.001706,0.92,large
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,input_tokens,10,10,181762.7,69811.3,151247,40758.5,92,0.001706,0.92,large
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,output_tokens,10,10,15820.6,11819.6,14877.5,11710,93,0.001315,0.93,large
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,cost_usd,0,0,,,,,,,,
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,compile_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p4bw-mutation-feedback vs p4w-coverage-guided,p4bw-mutation-feedback,p4w-coverage-guided,P4bw vs P4w,oracle_rate,10,10,0.99697,0.998413,1,1,41.5,0.387013,0.415,small
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,statement_pct,10,10,99.957447,100,100,100,45,0.36812,0.45,negligible
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,branch_pct,10,10,99.655172,100,100,100,40,0.168078,0.4,small
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,function_pct,10,10,100,100,100,100,50,1,0.5,negligible
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,mutation_score,10,10,95,100,96.25,100,0,0.000062,0,large
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,tests_valid,10,10,62.3,27.6,53,28,100,0.000178,1,large
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,tests_generated,10,10,62.4,27.6,53,28,100,0.000178,1,large
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,execution_s,10,10,93.321001,100.074793,90.412614,98.269965,34,0.241322,0.34,medium
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,generation_s,10,10,197.382138,221.268546,194.70788,219.52445,32,0.185877,0.32,medium
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,input_tokens,10,10,45102.3,40086.4,40742.5,40086,70,0.139719,0.7,medium
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,output_tokens,10,10,11563.4,9793.2,11377.5,9766.5,91,0.002202,0.91,large
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,cost_usd,0,0,,,,,,,,
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,compile_rate,10,10,1,1,1,1,50,1,0.5,negligible
+p3w-weak-llm vs p3-direct-llm,p3w-weak-llm,p3-direct-llm,P3w vs P3,oracle_rate,10,10,0.998387,1,1,1,45,0.36812,0.45,negligible
