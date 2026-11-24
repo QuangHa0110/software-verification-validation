@@ -15,6 +15,8 @@ style: |
 
 Thực nghiệm trên chương trình giỏ hàng và thanh toán Java 17
 
+Nhóm: Đặng Văn Quang Hà · Nguyễn Đình Hiếu · Nguyễn Thị Huê · Lê Quỳnh Lan · Trần Phúc Sơn
+
 ---
 
 ## Đi qua điều kiện chưa đủ để phát hiện lỗi
