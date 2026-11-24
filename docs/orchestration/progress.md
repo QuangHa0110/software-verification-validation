@@ -32,7 +32,7 @@ Agy: `agy -p "<prompt>" --model <model> --print-timeout <t>` chạy trong thư m
 | G2 Cài đặt | T02 subject (codex) · T03 reference (agy, `gemini-4-neon-high`) · T05 bộ P1 (codex) | Xong. [ĐÃ CHẠY] P1 181/181 xanh trên subject và reference |
 | G3 Đo lường | T06 measure.py · T07 mutation | Xong. [ĐÃ CHẠY] đủ 5 toán tử đột biến |
 | G4 Phương pháp | T08 P2 · T09 llm_client + bộ lọc · T10 P3 · T11 P4 · T12 P4b · ~~T13 EvoSuite~~ (D-013) | T08–T12 xong. T18 (bóc tách ngữ cảnh hạn chế, D-024) đang làm |
-| G5 Thực nghiệm | T14 run_experiment + analyze, chạy 10 lần | P1, P2 ×10, P3/P4/P4b run-01..05 đã đo; đang chạy run-06..10 |
+| G5 Thực nghiệm | T14 run_experiment + analyze, chạy 10 lần | Xong. Tag `m5-data-frozen`. [ĐÃ CHẠY] 11 phương pháp, 101 lần đo |
 | G6 Báo cáo | T16 tổng quan tài liệu · T15a chương 1–4 · T15b chương 5–6 | T16, T15a xong |
 
 ## Nhật ký
@@ -77,3 +77,5 @@ Agy: `agy -p "<prompt>" --model <model> --print-timeout <t>` chạy trong thư m
 | 24/11 04:15 | T21 xong (codex `high`): chọn theo ma trận diệt từng test, một lượt đo mỗi vòng; `subject/pom.xml` chỉ thêm property `pit.fullMutationMatrix` (mặc định `false`, không đổi phép đo chính thức). [ĐÃ CHẠY] orchestrator: pytest 144 passed. Gộp vào `main`. |
 | 24/11 04:20–09:10 | [ĐÃ CHẠY] **P4bw run-01..10**: mutation killed tăng ở **10/10 lần** (P4w 108–117 → P4bw 118–119 trên 120 mutant không tương đương), 3 vòng mỗi lần, ≈ 106–122k token và 700–905 s phần phát sinh mỗi lần. Commit. Người dùng báo hết quota và đã nạp thêm (09:15). |
 | 24/11 09:17 | Chạy tiếp chuỗi ngữ cảnh hạn chế run-07..10 (codex). |
+| 24/11 09:45 | [ĐÃ CHẠY] Chuỗi ngữ cảnh hạn chế run-07..10 xong (đều trần). **Đủ số liệu**: 11 phương pháp, 101 lần đo (P1 ×1, còn lại ×10). Gộp `experiment/run-20261123` vào `main`. |
+| 24/11 09:50 | [ĐÃ CHẠY] `analyze.py` chính thức → `results/comparison/` (summary, pairwise, trước/sau, iterations, RQ5, 8 hình). Mutation score TB: P1 99,17 (n=1); P2 64,33 ± 4,41; P3/P4/P4b/P3r/P4r/P4br 100,00 ± 0; P3w 95,00 ± 2,66; P4w 95,00 ± 2,66; P4bw 98,50 ± 0,35. P4bw vs P4w (mutation): U = 100, p = 0,0001, Â12 = 1,0. **Tag `m5-data-frozen` (mốc M5).** Giao T15b (báo cáo ch. 5–6) và T20 (demo, slide) cho codex. |
