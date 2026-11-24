@@ -147,6 +147,23 @@ def test_missing_paired_input_fails_early_for_both_methods(repo, capsys):
     assert not (repo / "test-suites").exists()
 
 
+def test_arbitrary_demo_seed_without_metadata(repo, monkeypatch, capsys):
+    suite = repo / "test-suites/smoke"
+    shutil.copytree(ROOT / "test-suites/smoke", suite)
+    args = ["--run", "1", "--start-suite", "test-suites/smoke"]
+    assert p4.main(args) == 1
+    assert "--start-suite requires --demo" in capsys.readouterr().err
+    monkeypatch.setattr(p4, "measure_suite", lambda *a, **kw: observed(100))
+    assert p4.main([*args, "--demo"]) == 0
+    output = repo / ".work/demo" / p4.P4 / "run-01"
+    record = read_record(output)
+    assert record["inherited"]["start_suite"] == suite.as_posix()
+    assert record["suite_files"] == sorted(path.name for path in suite.glob("*.java"))
+    assert not (suite / "generation.json").exists()
+    assert not (repo / "test-suites" / p4.P4).exists()
+    assert p4.main([*args, "--demo", "--output", str(repo / "test-suites/new")]) == 1
+
+
 @pytest.mark.parametrize("override, branch, reason, calls", [
     ("{}", 100, "target_branch_coverage", 0),
     ("{demo_max_iterations: 1}", 25, "max_iterations", 1),
@@ -177,7 +194,7 @@ def test_stops_accounting_demo_and_cli_overrides(repo, monkeypatch, capsys, over
     if calls:
         assert "branch_pct=25.00 -> 25.00, kept_tests=0" in capsys.readouterr().out
         assert rec["llm"]["model"] == "mock" and rec["llm"]["effort"] == "high"
-        logs = (repo / "results/llm-logs" / p4.P4 / "run-01/calls.jsonl").read_text(encoding="utf-8")
+        logs = (repo / ".work/demo/results/llm-logs" / p4.P4 / "run-01/calls.jsonl").read_text(encoding="utf-8")
         assert [json.loads(line)["prompt"] for line in logs.splitlines()] == prompts
         names = prompts[0].split("## Tên phương thức test hiện có\n\n")[1].split("\n\n##")[0]
         assert names.splitlines()[0] == "productKeepsItsFieldsAndAdjustsCurrentStock"
@@ -188,7 +205,7 @@ def test_demo_limit_output_override_replay_and_quota_preserve_previous_suite(rep
     seed(repo)
     (repo / "experiments/config/check.local.yaml").write_text("p4: {demo_max_iterations: 1}", encoding="utf-8")
     monkeypatch.setattr(p4, "measure_suite", lambda *args, **kwargs: observed())
-    dest = repo / ".work/custom-output"
+    dest = repo / ".work/demo/custom-output"
     cmd = ["--run", "1", "--output", str(dest), "--demo"]
     assert p4.main([*cmd, "--dry-run"]) == 0
     assert "[dry-run] method=p4-coverage-guided run-01" in capsys.readouterr().out

@@ -5,6 +5,7 @@ from collections import Counter
 from datetime import datetime, timezone
 from hashlib import sha256
 import json
+import os
 from pathlib import Path
 import re
 import shutil
@@ -167,11 +168,47 @@ def _publish(stage, target, scratch, record):
         lock.unlink()
 
 
+def demo_complete(prompt, **kwargs):
+    # The CLI runs serially. Keep its provider scratch space and call log beside the demo.
+    original = llm_client.ROOT
+    provider = kwargs.get("provider") or llm_client.load_config()["llm"]["provider"]
+    use_repo_key = provider == "anthropic" and not os.environ.get("ANTHROPIC_API_KEY")
+    if use_repo_key:
+        os.environ["ANTHROPIC_API_KEY"] = llm_client._anthropic_key()
+    try:
+        llm_client.ROOT = original / ".work/demo"
+        return llm_client.complete(prompt, **kwargs)
+    finally:
+        llm_client.ROOT = original
+        if use_repo_key:
+            del os.environ["ANTHROPIC_API_KEY"]
+
+
+def replay_coverage_log(root):
+    path = root / "results/llm-logs" / P4W / "run-01/calls.jsonl"
+    print(f"Offline: {path} (P4w run-01)", flush=True)
+    calls = iter(path.read_text(encoding="utf-8").splitlines())
+
+    def replay(prompt, **kwargs):
+        line = next(calls, None)
+        if line is None:
+            raise ValueError(f"Replay exhausted: {path}")
+        call = json.loads(line)
+        if call["error"] or not call["response"]:
+            raise ValueError(f"Unusable archived response: {path}")
+        print(f"Replay {call['purpose']} ({call['model']})", flush=True)
+        return llm_client.LlmResult("offline", call["model"], call["effort"], text=call["response"])
+
+    return replay
+
+
 def generate(run, *, variant="full", mutation_feedback=False, demo=False, output=None, dry_run=False,
-             provider=None, model=None, effort=None, root=ROOT):
+             provider=None, model=None, effort=None, root=ROOT, start_suite=None, offline=False):
     if type(run) is not int or run < 1:
         raise ValueError("run must be a positive integer")
     root = root.resolve()
+    if offline and (not demo or mutation_feedback):
+        raise ValueError("--offline requires a coverage --demo")
     mutation = mutation_feedback
     if variant not in CHAINS:
         raise ValueError(f"Unknown P4 variant: {variant}")
@@ -179,7 +216,17 @@ def generate(run, *, variant="full", mutation_feedback=False, demo=False, output
     parent, method = (coverage, mutants) if mutation else (direct, coverage)
     label = f"run-{run:02d}"
     parent_dir = root / "test-suites" / parent / label
-    inherited = paired_generation(parent_dir, parent, run)
+    if start_suite is None:
+        inherited = paired_generation(parent_dir, parent, run)
+    else:
+        if not demo:
+            raise ValueError("--start-suite requires --demo")
+        parent_dir = (root / start_suite).resolve()
+        if not parent_dir.is_dir() or not any(parent_dir.rglob("*.java")):
+            raise ValueError(f"No Java tests in start suite: {parent_dir}")
+        parent = parent_dir.as_posix()
+        # No generation history is known for an arbitrary seed. Count new candidates only.
+        inherited = {"tests": dict.fromkeys(TEST_COUNTS, 0), "llm": {}, "generation_s": 0}
     cfg_dir = root / "experiments/config"
     config = load_config(cfg_dir)
     llm = _generation_llm(config, "p4", variant, provider=provider, model=model, effort=effort)
@@ -189,6 +236,8 @@ def generate(run, *, variant="full", mutation_feedback=False, demo=False, output
     if demo:
         settings["max_iterations"] = p4["demo_max_iterations"]
     target = (output or root / (".work/demo" if demo else "test-suites") / method / label).resolve()
+    if demo and not target.is_relative_to((root / ".work/demo").resolve()):
+        raise ValueError("--demo requires output under .work/demo")
     if target.is_relative_to(parent_dir) or parent_dir.is_relative_to(target):
         raise ValueError(f"Output overlaps paired input: {target}")
 
@@ -235,6 +284,14 @@ def generate(run, *, variant="full", mutation_feedback=False, demo=False, output
         selection_drops = []
         no_gain = 0
         next_index = 1
+        prefix = "P4b" if mutation else "P4"
+        if start_suite is not None:
+            indices = [int(m[1]) for path in suite.rglob("*.java")
+                       if (m := re.fullmatch(rf"{prefix}_(\d+)Test", path.stem, re.I))]
+            next_index += max(indices, default=0)
+        complete = demo_complete if demo else llm_client.complete
+        if offline:
+            complete = replay_coverage_log(root)
         while True:
             reason = stopping_reason(settings, current.metrics(), mutation=mutation, iterations=len(iterations),
                                      tokens=incremental["total_tokens"],
@@ -245,10 +302,11 @@ def generate(run, *, variant="full", mutation_feedback=False, demo=False, output
             before = current.metrics()
             prompt = render_prompt(root, mutation, existing, current, variant=variant)
             with _llm_timeout_override(timeout_s, config_dir=cfg_dir):
-                response = llm_client.complete(prompt, method=method, run=run,
+                response = complete(prompt, method=method, run=run,
                                                purpose=f"{'demo-' if demo else ''}{method}-iteration-{i}",
                                                **llm)
-            incremental = _combined_usage(incremental, {**vars(response), "calls": 1})
+            if not offline:
+                incremental = _combined_usage(incremental, {**vars(response), "calls": 1})
             candidates = extract_blocks(response.text)
             filtered = filter_tests(candidates, existing=existing, class_prefix="P4b" if mutation else "P4",
                                     start_index=next_index, root=root)
@@ -302,6 +360,10 @@ def generate(run, *, variant="full", mutation_feedback=False, demo=False, output
             "baseline": baseline, "final": current.metrics(), "iterations": iterations, "tests": tests,
             "suite_files": sorted(p.relative_to(suite).as_posix() for p in suite.rglob("*.java")),
         }
+        if start_suite is not None:
+            record["inherited"] = {"start_suite": parent, "test_methods": len(suite_blocks(parent_dir))}
+        if offline:
+            record["replay_log"] = f"results/llm-logs/{P4W}/run-01/calls.jsonl"
         (suite / "generation.json").write_text(json.dumps(record, ensure_ascii=False, indent=2,
                                                          allow_nan=False) + "\n", encoding="utf-8")
         _publish(suite, target, scratch, record)
@@ -314,6 +376,8 @@ def main(argv=None):
     parser.add_argument("--variant", choices=CHAINS, default="full")
     parser.add_argument("--mutation-feedback", action="store_true")
     parser.add_argument("--demo", action="store_true", help="Use the demo iteration limit and print progress")
+    parser.add_argument("--start-suite", type=Path, help="Seed Java directory for --demo")
+    parser.add_argument("--offline", action="store_true", help="Replay archived P4w coverage responses")
     parser.add_argument("--output", type=Path, help="Destination directory of the final Java files and metadata")
     parser.add_argument("--dry-run", action="store_true", help="Measure the seed and print the first prompt")
     parser.add_argument("--provider", choices=("codex-cli", "agy-cli", "anthropic"))
