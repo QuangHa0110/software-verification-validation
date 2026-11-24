@@ -1,0 +1,58 @@
+{
+  "method": "p3r-spec-only",
+  "run": 10,
+  "started_at": "2026-11-24T02:47:28.457429+00:00",
+  "ended_at": "2026-11-24T02:51:27.029189+00:00",
+  "generation_s": 238.57117730000027,
+  "llm": {
+    "provider": "codex-cli",
+    "calls": 1,
+    "input_tokens": 36659,
+    "cached_input_tokens": 15232,
+    "output_tokens": 10772,
+    "reasoning_output_tokens": 0,
+    "tool_events": 0,
+    "duration_s": 228.61411569999473,
+    "cost_usd": null,
+    "model": "gpt-6.2-astra",
+    "effort": "medium"
+  },
+  "prompt": {
+    "version": "1.0",
+    "system_sha256": "61ddc511c045702a8bf0847ecb55d7dc2c25e0f1ab4a254a8f853bf2400652cc",
+    "generate_sha256": "f83ee4e1039326c7349a1ff08aac78c92dab7da7ef369885510ff8a8b87b5de6",
+    "template_sha256": "1cb1f424ec899e46aa184932fcc29c7370188f46a433ccbbed924038ab4cbea0",
+    "rendered_sha256": "22ef5e721ae0354ba8150cc2349c6809b29d305c0877a100bb757edc2231a905",
+    "chars": 43972,
+    "spec_files": [
+      "docs/spec/api.md",
+      "docs/spec/README.md",
+      "docs/spec/domain.md",
+      "docs/spec/cart.md",
+      "docs/spec/pricing.md",
+      "docs/spec/shipping.md",
+      "docs/spec/order.md",
+      "docs/spec/branches.md"
+    ],
+    "source_files": []
+  },
+  "filter": {
+    "generated": 30,
+    "compiled": 30,
+    "passed_reference": 30,
+    "valid": 30,
+    "compile_rate": 1.0,
+    "oracle_correct_rate": 1.0,
+    "dropped": []
+  },
+  "tests": {
+    "generated": 30,
+    "compiled": 30,
+    "passed_reference": 30,
+    "valid": 30,
+    "compile_rate": 1.0,
+    "oracle_rate": 1.0,
+    "dropped": []
+  },
+  "iterations": []
+}
