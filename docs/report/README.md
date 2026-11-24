@@ -2,6 +2,7 @@
 
 **Tên đề tài:** *LLM-based Test Generation: Sinh kiểm thử tự động bằng mô hình ngôn ngữ nhằm tối ưu hóa độ bao phủ mã nguồn*  
 **Hệ thống áp dụng:** Module giỏ hàng và thanh toán của hệ thống bán hàng trực tuyến (Java 17, package `shop`)  
+**Nhóm thực hiện:** Đặng Văn Quang Hà (20252578M) · Nguyễn Đình Hiếu (20261223M) · Nguyễn Thị Huê (20252584M) · Lê Quỳnh Lan (20252577M) · Trần Phúc Sơn (20262430M)  
 **Tài liệu nguồn:** [Đề xuất đề tài](../de-xuat-de-tai-1.md) · [Kế hoạch thực hiện](../ke-hoach-thuc-hien.md) · [Thiết kế kỹ thuật](../thiet-ke-ky-thuat.md) · [Nhật ký quyết định](../orchestration/decisions.md) · [Tổng quan tài liệu](../literature/README.md)
 
 ---

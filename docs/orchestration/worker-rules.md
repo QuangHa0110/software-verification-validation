@@ -6,7 +6,7 @@
 
 - **Không** chạy `git commit`, `git push`, `git checkout`, `git switch`, `git branch`, `git reset`, `git stash`, `git merge`, `git rebase`, `git clean`, `git worktree`. Chỉ orchestrator được commit. Được phép `git status`, `git diff`.
 - Chỉ tạo hoặc sửa các file nằm trong **Phạm vi** của brief. Cần sửa file ngoài phạm vi thì không sửa, ghi vào báo cáo.
-- Không xóa file ngoài thư mục làm việc. Không sửa gì trong `<USER_HOME>` ngoài thư mục làm việc, local Maven repository và môi trường Python được chỉ định.
+- Không xóa file ngoài thư mục làm việc. Không sửa gì trong thư mục người dùng ngoài thư mục làm việc, local Maven repository và môi trường Python được chỉ định.
 
 ## 2. Mã hóa
 
@@ -19,7 +19,7 @@
 
 | Thành phần | Dùng |
 |---|---|
-| Python | `python` (không dùng Python khác, không tạo venv) |
+| Python | `python.exe` của môi trường conda `svv` do orchestrator chỉ định (không dùng Python khác, không tạo venv) |
 | Java | JDK 17 có sẵn (`java`, `javac` trên PATH), `maven.compiler.release=17` |
 | Maven | `mvn -B` (3.9.15). Local repository đã đặt qua biến `MAVEN_OPTS`, không sửa |
 

@@ -2,7 +2,17 @@
 
 **Học phần:** Kiểm chứng và Thẩm định Phần mềm (Software Verification and Validation)
 **Định hướng:** Số 1 – LLM-based Test Generation
-**Học viên:** [Họ và tên] – **Mã học viên:** [……] – **Lớp:** [……]
+**Nhóm thực hiện (5 học viên):**
+
+| STT | Họ và tên | Mã học viên |
+|---:|---|---|
+| 1 | Đặng Văn Quang Hà | 20252578M |
+| 2 | Nguyễn Đình Hiếu | 20261223M |
+| 3 | Nguyễn Thị Huê | 20252584M |
+| 4 | Lê Quỳnh Lan | 20252577M |
+| 5 | Trần Phúc Sơn | 20262430M |
+
+**Lớp:** [……]
 **Hạn nộp bài tập lớn:** 31/12/2026
 
 ---

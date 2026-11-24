@@ -196,7 +196,7 @@ Tuân thủ hướng dẫn của Arcuri và Briand `[arcuri-2011]`, script `expe
 
 ### Lệnh tái lập thực nghiệm
 
-Toàn bộ lệnh chạy từ thư mục gốc của kho lưu trữ bằng môi trường Python đã chỉ định (`python`).
+Toàn bộ lệnh chạy từ thư mục gốc của kho lưu trữ bằng môi trường Python đã chỉ định (môi trường conda `svv` đã cài `requirements.txt`; trong các lệnh dưới đây `python` là trình thông dịch của môi trường đó).
 
 ```powershell
 # 1. Liệt kê tập mutant mã nguồn (D-012) trên subject/

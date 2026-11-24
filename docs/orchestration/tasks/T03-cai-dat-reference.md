@@ -9,7 +9,7 @@
 `reference/` là bản cài đặt thứ hai, dùng làm chuẩn "đúng theo đặc tả" để kiểm tra oracle của test. Nó chỉ có giá trị khi được viết **độc lập**:
 
 - **Chỉ** đọc `docs/` và khung chữ ký trong `subject/src/main/java/shop/` của worktree này (thân hàm toàn là `UnsupportedOperationException`).
-- **Không** đọc bất kỳ thư mục nào ngoài worktree của bạn, đặc biệt các thư mục `<WT_ROOT>\*` khác và `<REPO_ROOT>`. Không chạy `git log -p`, `git show` hay xem nhánh khác.
+- **Không** đọc bất kỳ thư mục nào ngoài worktree của bạn, đặc biệt các thư mục `<WT_ROOT>\*` (thư mục chứa các worktree) khác và `<REPO_ROOT>` (bản checkout chính). Không chạy `git log -p`, `git show` hay xem nhánh khác.
 
 ## Phạm vi
 

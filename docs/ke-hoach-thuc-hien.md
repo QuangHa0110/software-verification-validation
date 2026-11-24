@@ -8,6 +8,18 @@ Kế hoạch chia đề tài thành **5 gói việc (G1–G5)** cộng một s�
 
 ## 1. Phân công
 
+**Thành viên nhóm:**
+
+| STT | Họ và tên | Mã học viên |
+|---:|---|---|
+| 1 | Đặng Văn Quang Hà | 20252578M |
+| 2 | Nguyễn Đình Hiếu | 20261223M |
+| 3 | Nguyễn Thị Huê | 20252584M |
+| 4 | Lê Quỳnh Lan | 20252577M |
+| 5 | Trần Phúc Sơn | 20262430M |
+
+Giao gói cho từng người (nhóm điền):
+
 | Gói | Nội dung | Người phụ trách | Người review chéo |
 |---|---|---|---|
 | G1 | Chương trình đối tượng & đặc tả | | |

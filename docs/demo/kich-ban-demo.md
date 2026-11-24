@@ -3,7 +3,7 @@
 Chạy PowerShell từ gốc worktree bằng JDK 17, Maven và môi trường Python của dự án. Chuẩn bị sẵn các phụ thuộc Maven trong local repository khi trình diễn không có mạng.
 
 ```powershell
-$py = 'python'
+$py = 'python'  # hoặc đường dẫn tới python.exe của môi trường đã cài requirements.txt
 & $py experiments/scripts/demo.py --no-pause --dry-run
 & $py experiments/scripts/demo.py --offline
 ```
