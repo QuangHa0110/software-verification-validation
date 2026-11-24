@@ -9,3 +9,263 @@
 {"timestamp": "2026-11-23T08:20:32.503617+00:00", "method": "p2-random", "run": 8, "step": "measure", "status": "ok", "duration_s": 89.621, "returncode": 0, "message": ""}
 {"timestamp": "2026-11-23T08:22:03.538340+00:00", "method": "p2-random", "run": 9, "step": "measure", "status": "ok", "duration_s": 91.0349, "returncode": 0, "message": ""}
 {"timestamp": "2026-11-23T08:23:35.961322+00:00", "method": "p2-random", "run": 10, "step": "measure", "status": "ok", "duration_s": 92.4226, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:04:25.662678+00:00", "method": "p3-direct-llm", "run": 2, "step": "generate", "status": "ok", "duration_s": 224.7962, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:06:24.509126+00:00", "method": "p3-direct-llm", "run": 2, "step": "measure", "status": "ok", "duration_s": 118.8446, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:10:07.061636+00:00", "method": "p3-direct-llm", "run": 3, "step": "generate", "status": "ok", "duration_s": 222.5521, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:11:49.477096+00:00", "method": "p3-direct-llm", "run": 3, "step": "measure", "status": "ok", "duration_s": 102.4144, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:15:21.777578+00:00", "method": "p3-direct-llm", "run": 4, "step": "generate", "status": "ok", "duration_s": 212.2999, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:16:57.164814+00:00", "method": "p3-direct-llm", "run": 4, "step": "measure", "status": "ok", "duration_s": 95.3874, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:20:36.465535+00:00", "method": "p3-direct-llm", "run": 5, "step": "generate", "status": "ok", "duration_s": 219.2996, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:22:36.714132+00:00", "method": "p3-direct-llm", "run": 5, "step": "measure", "status": "ok", "duration_s": 120.248, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:26:20.134707+00:00", "method": "p3-direct-llm", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:26:20.134707+00:00", "method": "p3-direct-llm", "run": 1, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:26:20.134707+00:00", "method": "p4-coverage-guided", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:27:58.090993+00:00", "method": "p4-coverage-guided", "run": 1, "step": "measure", "status": "ok", "duration_s": 97.9554, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:27:58.090993+00:00", "method": "p4b-mutation-feedback", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:29:33.701784+00:00", "method": "p4b-mutation-feedback", "run": 1, "step": "measure", "status": "ok", "duration_s": 95.593, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:29:33.702785+00:00", "method": "p3-direct-llm", "run": 2, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:29:33.702785+00:00", "method": "p3-direct-llm", "run": 2, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:29:38.589017+00:00", "method": "p4-coverage-guided", "run": 2, "step": "generate", "status": "ok", "duration_s": 4.8857, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:31:11.558466+00:00", "method": "p4-coverage-guided", "run": 2, "step": "measure", "status": "ok", "duration_s": 92.9691, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:32:43.575667+00:00", "method": "p4b-mutation-feedback", "run": 2, "step": "generate", "status": "ok", "duration_s": 92.0166, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:34:12.039969+00:00", "method": "p4b-mutation-feedback", "run": 2, "step": "measure", "status": "ok", "duration_s": 88.4641, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:34:12.040972+00:00", "method": "p3-direct-llm", "run": 3, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:34:12.040972+00:00", "method": "p3-direct-llm", "run": 3, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:34:16.968977+00:00", "method": "p4-coverage-guided", "run": 3, "step": "generate", "status": "ok", "duration_s": 4.9279, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:35:48.188680+00:00", "method": "p4-coverage-guided", "run": 3, "step": "measure", "status": "ok", "duration_s": 91.2189, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:37:22.459473+00:00", "method": "p4b-mutation-feedback", "run": 3, "step": "generate", "status": "ok", "duration_s": 94.2702, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:38:55.822585+00:00", "method": "p4b-mutation-feedback", "run": 3, "step": "measure", "status": "ok", "duration_s": 93.3628, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:38:55.822585+00:00", "method": "p3-direct-llm", "run": 4, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:38:55.823590+00:00", "method": "p3-direct-llm", "run": 4, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:39:00.762960+00:00", "method": "p4-coverage-guided", "run": 4, "step": "generate", "status": "ok", "duration_s": 4.9391, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:40:32.200535+00:00", "method": "p4-coverage-guided", "run": 4, "step": "measure", "status": "ok", "duration_s": 91.4378, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:42:02.546651+00:00", "method": "p4b-mutation-feedback", "run": 4, "step": "generate", "status": "ok", "duration_s": 90.3454, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:43:35.036224+00:00", "method": "p4b-mutation-feedback", "run": 4, "step": "measure", "status": "ok", "duration_s": 92.4889, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:43:35.036224+00:00", "method": "p3-direct-llm", "run": 5, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:43:35.036224+00:00", "method": "p3-direct-llm", "run": 5, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:43:39.894776+00:00", "method": "p4-coverage-guided", "run": 5, "step": "generate", "status": "ok", "duration_s": 4.8571, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:45:09.803754+00:00", "method": "p4-coverage-guided", "run": 5, "step": "measure", "status": "ok", "duration_s": 89.9084, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:46:38.492139+00:00", "method": "p4b-mutation-feedback", "run": 5, "step": "generate", "status": "ok", "duration_s": 88.6878, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:48:09.300005+00:00", "method": "p4b-mutation-feedback", "run": 5, "step": "measure", "status": "ok", "duration_s": 90.8076, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T15:48:15.809170+00:00", "method": "p3-direct-llm", "run": 6, "step": "generate", "status": "quota_exceeded", "duration_s": 6.5087, "returncode": 2, "message": "Quota exceeded: Codex quota or usage limit: \"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 10:56 PM.\"\n{\"message\": \"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 10:56 PM.\"}"}
+{"timestamp": "2026-11-23T15:57:24.826910+00:00", "method": "p3-direct-llm", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.827910+00:00", "method": "p3-direct-llm", "run": 1, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.827910+00:00", "method": "p4-coverage-guided", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.827910+00:00", "method": "p4-coverage-guided", "run": 1, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.828910+00:00", "method": "p4b-mutation-feedback", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.828910+00:00", "method": "p4b-mutation-feedback", "run": 1, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.828910+00:00", "method": "p3-direct-llm", "run": 2, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.829911+00:00", "method": "p3-direct-llm", "run": 2, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.829911+00:00", "method": "p4-coverage-guided", "run": 2, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.829911+00:00", "method": "p4-coverage-guided", "run": 2, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.829911+00:00", "method": "p4b-mutation-feedback", "run": 2, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.830911+00:00", "method": "p4b-mutation-feedback", "run": 2, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.830911+00:00", "method": "p3-direct-llm", "run": 3, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.830911+00:00", "method": "p3-direct-llm", "run": 3, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.830911+00:00", "method": "p4-coverage-guided", "run": 3, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.831923+00:00", "method": "p4-coverage-guided", "run": 3, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.831923+00:00", "method": "p4b-mutation-feedback", "run": 3, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.831923+00:00", "method": "p4b-mutation-feedback", "run": 3, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.831923+00:00", "method": "p3-direct-llm", "run": 4, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.832911+00:00", "method": "p3-direct-llm", "run": 4, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.832911+00:00", "method": "p4-coverage-guided", "run": 4, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.832911+00:00", "method": "p4-coverage-guided", "run": 4, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.832911+00:00", "method": "p4b-mutation-feedback", "run": 4, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.832911+00:00", "method": "p4b-mutation-feedback", "run": 4, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.834416+00:00", "method": "p3-direct-llm", "run": 5, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.834416+00:00", "method": "p3-direct-llm", "run": 5, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.834416+00:00", "method": "p4-coverage-guided", "run": 5, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.834416+00:00", "method": "p4-coverage-guided", "run": 5, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T15:57:24.834416+00:00", "method": "p4b-mutation-feedback", "run": 5, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T15:57:24.834416+00:00", "method": "p4b-mutation-feedback", "run": 5, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T16:01:21.890963+00:00", "method": "p3-direct-llm", "run": 6, "step": "generate", "status": "ok", "duration_s": 237.0547, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:03:04.730709+00:00", "method": "p3-direct-llm", "run": 6, "step": "measure", "status": "ok", "duration_s": 102.8394, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:03:11.415283+00:00", "method": "p4-coverage-guided", "run": 6, "step": "generate", "status": "ok", "duration_s": 6.6842, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:05:18.315049+00:00", "method": "p4-coverage-guided", "run": 6, "step": "measure", "status": "ok", "duration_s": 126.8993, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:07:03.778845+00:00", "method": "p4b-mutation-feedback", "run": 6, "step": "generate", "status": "ok", "duration_s": 105.4626, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:09:07.774439+00:00", "method": "p4b-mutation-feedback", "run": 6, "step": "measure", "status": "ok", "duration_s": 123.9958, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:12:47.837562+00:00", "method": "p3-direct-llm", "run": 7, "step": "generate", "status": "ok", "duration_s": 220.0617, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:14:33.473976+00:00", "method": "p3-direct-llm", "run": 7, "step": "measure", "status": "ok", "duration_s": 105.6358, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:14:38.409729+00:00", "method": "p4-coverage-guided", "run": 7, "step": "generate", "status": "ok", "duration_s": 4.9358, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:16:11.334457+00:00", "method": "p4-coverage-guided", "run": 7, "step": "measure", "status": "ok", "duration_s": 92.9241, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:17:42.754320+00:00", "method": "p4b-mutation-feedback", "run": 7, "step": "generate", "status": "ok", "duration_s": 91.4196, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:19:14.597814+00:00", "method": "p4b-mutation-feedback", "run": 7, "step": "measure", "status": "ok", "duration_s": 91.8428, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:22:43.316357+00:00", "method": "p3-direct-llm", "run": 8, "step": "generate", "status": "ok", "duration_s": 208.7177, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:24:11.689158+00:00", "method": "p3-direct-llm", "run": 8, "step": "measure", "status": "ok", "duration_s": 88.3724, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:24:17.087767+00:00", "method": "p4-coverage-guided", "run": 8, "step": "generate", "status": "ok", "duration_s": 5.3981, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:25:47.146107+00:00", "method": "p4-coverage-guided", "run": 8, "step": "measure", "status": "ok", "duration_s": 90.0572, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:27:15.952423+00:00", "method": "p4b-mutation-feedback", "run": 8, "step": "generate", "status": "ok", "duration_s": 88.8057, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:28:45.808349+00:00", "method": "p4b-mutation-feedback", "run": 8, "step": "measure", "status": "ok", "duration_s": 89.8558, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:32:06.665392+00:00", "method": "p3-direct-llm", "run": 9, "step": "generate", "status": "ok", "duration_s": 200.8563, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:33:33.687747+00:00", "method": "p3-direct-llm", "run": 9, "step": "measure", "status": "ok", "duration_s": 87.0225, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:33:38.406330+00:00", "method": "p4-coverage-guided", "run": 9, "step": "generate", "status": "ok", "duration_s": 4.7175, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:35:06.230608+00:00", "method": "p4-coverage-guided", "run": 9, "step": "measure", "status": "ok", "duration_s": 87.8235, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:36:36.132141+00:00", "method": "p4b-mutation-feedback", "run": 9, "step": "generate", "status": "ok", "duration_s": 89.9016, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:38:03.424443+00:00", "method": "p4b-mutation-feedback", "run": 9, "step": "measure", "status": "ok", "duration_s": 87.2919, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:41:41.449677+00:00", "method": "p3-direct-llm", "run": 10, "step": "generate", "status": "ok", "duration_s": 218.0243, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:43:12.188319+00:00", "method": "p3-direct-llm", "run": 10, "step": "measure", "status": "ok", "duration_s": 90.7383, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:43:17.161473+00:00", "method": "p4-coverage-guided", "run": 10, "step": "generate", "status": "ok", "duration_s": 4.9731, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:44:50.369167+00:00", "method": "p4-coverage-guided", "run": 10, "step": "measure", "status": "ok", "duration_s": 93.2064, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:46:22.611292+00:00", "method": "p4b-mutation-feedback", "run": 10, "step": "generate", "status": "ok", "duration_s": 92.2416, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:47:53.624103+00:00", "method": "p4b-mutation-feedback", "run": 10, "step": "measure", "status": "ok", "duration_s": 91.0122, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:52:22.540316+00:00", "method": "p3r-spec-only", "run": 1, "step": "generate", "status": "ok", "duration_s": 231.476, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:53:54.068380+00:00", "method": "p3r-spec-only", "run": 1, "step": "measure", "status": "ok", "duration_s": 91.527, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:53:59.533964+00:00", "method": "p4r-coverage-guided", "run": 1, "step": "generate", "status": "ok", "duration_s": 5.4656, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:55:32.495213+00:00", "method": "p4r-coverage-guided", "run": 1, "step": "measure", "status": "ok", "duration_s": 92.9608, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:57:05.522056+00:00", "method": "p4br-mutation-feedback", "run": 1, "step": "generate", "status": "ok", "duration_s": 93.0258, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T16:58:38.274898+00:00", "method": "p4br-mutation-feedback", "run": 1, "step": "measure", "status": "ok", "duration_s": 92.7519, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:02:31.596791+00:00", "method": "p3r-spec-only", "run": 2, "step": "generate", "status": "ok", "duration_s": 233.3221, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:04:07.702348+00:00", "method": "p3r-spec-only", "run": 2, "step": "measure", "status": "ok", "duration_s": 96.105, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:04:12.933280+00:00", "method": "p4r-coverage-guided", "run": 2, "step": "generate", "status": "ok", "duration_s": 5.2296, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:05:50.062807+00:00", "method": "p4r-coverage-guided", "run": 2, "step": "measure", "status": "ok", "duration_s": 97.1294, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:07:27.125975+00:00", "method": "p4br-mutation-feedback", "run": 2, "step": "generate", "status": "ok", "duration_s": 97.0626, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:09:02.382099+00:00", "method": "p4br-mutation-feedback", "run": 2, "step": "measure", "status": "ok", "duration_s": 95.2562, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:13:03.354931+00:00", "method": "p3r-spec-only", "run": 3, "step": "generate", "status": "ok", "duration_s": 240.9722, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:15:01.314917+00:00", "method": "p3r-spec-only", "run": 3, "step": "measure", "status": "ok", "duration_s": 117.9596, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:15:07.578469+00:00", "method": "p4r-coverage-guided", "run": 3, "step": "generate", "status": "ok", "duration_s": 6.2625, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:17:07.525687+00:00", "method": "p4r-coverage-guided", "run": 3, "step": "measure", "status": "ok", "duration_s": 119.9466, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:18:50.964742+00:00", "method": "p4br-mutation-feedback", "run": 3, "step": "generate", "status": "ok", "duration_s": 103.4386, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:20:55.015128+00:00", "method": "p4br-mutation-feedback", "run": 3, "step": "measure", "status": "ok", "duration_s": 124.0497, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:24:34.627467+00:00", "method": "p3r-spec-only", "run": 4, "step": "generate", "status": "ok", "duration_s": 219.6116, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:26:06.604829+00:00", "method": "p3r-spec-only", "run": 4, "step": "measure", "status": "ok", "duration_s": 91.9763, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:26:11.504983+00:00", "method": "p4r-coverage-guided", "run": 4, "step": "generate", "status": "ok", "duration_s": 4.8996, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:27:42.006370+00:00", "method": "p4r-coverage-guided", "run": 4, "step": "measure", "status": "ok", "duration_s": 90.5017, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:29:11.135482+00:00", "method": "p4br-mutation-feedback", "run": 4, "step": "generate", "status": "ok", "duration_s": 89.1278, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:30:40.874132+00:00", "method": "p4br-mutation-feedback", "run": 4, "step": "measure", "status": "ok", "duration_s": 89.7388, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:34:36.254828+00:00", "method": "p3r-spec-only", "run": 5, "step": "generate", "status": "ok", "duration_s": 235.38, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:36:11.358393+00:00", "method": "p3r-spec-only", "run": 5, "step": "measure", "status": "ok", "duration_s": 95.103, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:36:16.622917+00:00", "method": "p4r-coverage-guided", "run": 5, "step": "generate", "status": "ok", "duration_s": 5.2637, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:37:49.209594+00:00", "method": "p4r-coverage-guided", "run": 5, "step": "measure", "status": "ok", "duration_s": 92.5863, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:39:25.884369+00:00", "method": "p4br-mutation-feedback", "run": 5, "step": "generate", "status": "ok", "duration_s": 96.6749, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:40:58.718702+00:00", "method": "p4br-mutation-feedback", "run": 5, "step": "measure", "status": "ok", "duration_s": 92.8334, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:44:45.174662+00:00", "method": "p3r-spec-only", "run": 6, "step": "generate", "status": "ok", "duration_s": 226.4557, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:46:13.665599+00:00", "method": "p3r-spec-only", "run": 6, "step": "measure", "status": "ok", "duration_s": 88.4895, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:46:18.530482+00:00", "method": "p4r-coverage-guided", "run": 6, "step": "generate", "status": "ok", "duration_s": 4.8647, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:47:47.331115+00:00", "method": "p4r-coverage-guided", "run": 6, "step": "measure", "status": "ok", "duration_s": 88.8003, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:49:18.408259+00:00", "method": "p4br-mutation-feedback", "run": 6, "step": "generate", "status": "ok", "duration_s": 91.0763, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:50:49.543615+00:00", "method": "p4br-mutation-feedback", "run": 6, "step": "measure", "status": "ok", "duration_s": 91.1349, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T17:50:55.471096+00:00", "method": "p3r-spec-only", "run": 7, "step": "generate", "status": "quota_exceeded", "duration_s": 5.9276, "returncode": 2, "message": "Quota exceeded: Codex quota or usage limit: \"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 3:57 AM.\"\n{\"message\": \"You’ve hit your usage limit. Upgrade to Pro (https://chatgpt.com/explore/pro), visit https://chatgpt.com/settings/usage to purchase more credits or try again at 3:57 AM.\"}"}
+{"timestamp": "2026-11-23T17:51:27.559782+00:00", "method": "p3w-weak-llm", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T17:53:04.736447+00:00", "method": "p3w-weak-llm", "run": 1, "step": "measure", "status": "ok", "duration_s": 97.1767, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T18:08:32.313845+00:00", "method": "p4w-coverage-guided", "run": 1, "step": "generate", "status": "ok", "duration_s": 927.5762, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T18:10:09.171536+00:00", "method": "p4w-coverage-guided", "run": 1, "step": "measure", "status": "ok", "duration_s": 96.8569, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:02:28.719525+00:00", "method": "p3w-weak-llm", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T19:02:28.719525+00:00", "method": "p3w-weak-llm", "run": 1, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T19:02:28.719525+00:00", "method": "p4w-coverage-guided", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-23T19:02:28.720528+00:00", "method": "p4w-coverage-guided", "run": 1, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-23T19:05:15.662613+00:00", "method": "p3w-weak-llm", "run": 2, "step": "generate", "status": "ok", "duration_s": 166.9423, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:06:43.870206+00:00", "method": "p3w-weak-llm", "run": 2, "step": "measure", "status": "ok", "duration_s": 88.2069, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:06:48.792661+00:00", "method": "p4w-coverage-guided", "run": 2, "step": "generate", "status": "ok", "duration_s": 4.922, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:08:17.327021+00:00", "method": "p4w-coverage-guided", "run": 2, "step": "measure", "status": "ok", "duration_s": 88.5332, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:14:03.764126+00:00", "method": "p3w-weak-llm", "run": 3, "step": "generate", "status": "ok", "duration_s": 346.4375, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:15:49.497021+00:00", "method": "p3w-weak-llm", "run": 3, "step": "measure", "status": "ok", "duration_s": 105.7322, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:15:55.507298+00:00", "method": "p4w-coverage-guided", "run": 3, "step": "generate", "status": "ok", "duration_s": 6.0096, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:17:41.342990+00:00", "method": "p4w-coverage-guided", "run": 3, "step": "measure", "status": "ok", "duration_s": 105.8353, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:21:24.126144+00:00", "method": "p3w-weak-llm", "run": 4, "step": "generate", "status": "ok", "duration_s": 222.7823, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:22:54.647890+00:00", "method": "p3w-weak-llm", "run": 4, "step": "measure", "status": "ok", "duration_s": 90.5212, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:22:59.709285+00:00", "method": "p4w-coverage-guided", "run": 4, "step": "generate", "status": "ok", "duration_s": 5.0607, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:24:30.217067+00:00", "method": "p4w-coverage-guided", "run": 4, "step": "measure", "status": "ok", "duration_s": 90.5079, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:26:26.337554+00:00", "method": "p3w-weak-llm", "run": 5, "step": "generate", "status": "ok", "duration_s": 116.1196, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:27:55.893162+00:00", "method": "p3w-weak-llm", "run": 5, "step": "measure", "status": "ok", "duration_s": 89.5552, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:28:00.844181+00:00", "method": "p4w-coverage-guided", "run": 5, "step": "generate", "status": "ok", "duration_s": 4.9503, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:29:30.213345+00:00", "method": "p4w-coverage-guided", "run": 5, "step": "measure", "status": "ok", "duration_s": 89.3693, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:32:45.521739+00:00", "method": "p3w-weak-llm", "run": 6, "step": "generate", "status": "ok", "duration_s": 195.3075, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:34:15.905084+00:00", "method": "p3w-weak-llm", "run": 6, "step": "measure", "status": "ok", "duration_s": 90.3833, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:34:20.961157+00:00", "method": "p4w-coverage-guided", "run": 6, "step": "generate", "status": "ok", "duration_s": 5.0552, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:35:53.595561+00:00", "method": "p4w-coverage-guided", "run": 6, "step": "measure", "status": "ok", "duration_s": 92.6343, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:38:18.624247+00:00", "method": "p3w-weak-llm", "run": 7, "step": "generate", "status": "ok", "duration_s": 145.0273, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:40:03.350238+00:00", "method": "p3w-weak-llm", "run": 7, "step": "measure", "status": "ok", "duration_s": 104.7255, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:40:09.273794+00:00", "method": "p4w-coverage-guided", "run": 7, "step": "generate", "status": "ok", "duration_s": 5.9231, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:41:56.059166+00:00", "method": "p4w-coverage-guided", "run": 7, "step": "measure", "status": "ok", "duration_s": 106.785, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:45:10.410667+00:00", "method": "p3w-weak-llm", "run": 8, "step": "generate", "status": "ok", "duration_s": 194.3512, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:46:41.900295+00:00", "method": "p3w-weak-llm", "run": 8, "step": "measure", "status": "ok", "duration_s": 91.4887, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:46:47.007673+00:00", "method": "p4w-coverage-guided", "run": 8, "step": "generate", "status": "ok", "duration_s": 5.107, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:48:18.606395+00:00", "method": "p4w-coverage-guided", "run": 8, "step": "measure", "status": "ok", "duration_s": 91.5991, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:52:01.622948+00:00", "method": "p3w-weak-llm", "run": 9, "step": "generate", "status": "ok", "duration_s": 223.0152, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:53:28.659033+00:00", "method": "p3w-weak-llm", "run": 9, "step": "measure", "status": "ok", "duration_s": 87.0364, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:53:33.241793+00:00", "method": "p4w-coverage-guided", "run": 9, "step": "generate", "status": "ok", "duration_s": 4.5813, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:55:00.847331+00:00", "method": "p4w-coverage-guided", "run": 9, "step": "measure", "status": "ok", "duration_s": 87.6055, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:57:19.898753+00:00", "method": "p3w-weak-llm", "run": 10, "step": "generate", "status": "ok", "duration_s": 139.051, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T19:58:55.575783+00:00", "method": "p3w-weak-llm", "run": 10, "step": "measure", "status": "ok", "duration_s": 95.6764, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T20:00:34.683959+00:00", "method": "p4w-coverage-guided", "run": 10, "step": "generate", "status": "ok", "duration_s": 99.1079, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T20:02:11.299765+00:00", "method": "p4w-coverage-guided", "run": 10, "step": "measure", "status": "ok", "duration_s": 96.6149, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T21:30:53.493580+00:00", "method": "p4bw-mutation-feedback", "run": 1, "step": "generate", "status": "ok", "duration_s": 905.5578, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T21:32:33.645393+00:00", "method": "p4bw-mutation-feedback", "run": 1, "step": "measure", "status": "ok", "duration_s": 100.1511, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T21:45:44.119597+00:00", "method": "p4bw-mutation-feedback", "run": 2, "step": "generate", "status": "ok", "duration_s": 790.4738, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T21:47:15.043742+00:00", "method": "p4bw-mutation-feedback", "run": 2, "step": "measure", "status": "ok", "duration_s": 90.9234, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T22:01:18.952267+00:00", "method": "p4bw-mutation-feedback", "run": 3, "step": "generate", "status": "ok", "duration_s": 843.9082, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T22:03:05.738712+00:00", "method": "p4bw-mutation-feedback", "run": 3, "step": "measure", "status": "ok", "duration_s": 106.7858, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T22:15:54.162967+00:00", "method": "p4bw-mutation-feedback", "run": 4, "step": "generate", "status": "ok", "duration_s": 768.4234, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T22:17:26.075894+00:00", "method": "p4bw-mutation-feedback", "run": 4, "step": "measure", "status": "ok", "duration_s": 91.9127, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T22:29:50.272664+00:00", "method": "p4bw-mutation-feedback", "run": 5, "step": "generate", "status": "ok", "duration_s": 744.1966, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T22:31:23.199636+00:00", "method": "p4bw-mutation-feedback", "run": 5, "step": "measure", "status": "ok", "duration_s": 92.9261, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T22:43:43.979827+00:00", "method": "p4bw-mutation-feedback", "run": 6, "step": "generate", "status": "ok", "duration_s": 740.7798, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T22:45:16.424490+00:00", "method": "p4bw-mutation-feedback", "run": 6, "step": "measure", "status": "ok", "duration_s": 92.4445, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T23:00:08.184383+00:00", "method": "p4bw-mutation-feedback", "run": 7, "step": "generate", "status": "ok", "duration_s": 891.7592, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T23:01:56.496179+00:00", "method": "p4bw-mutation-feedback", "run": 7, "step": "measure", "status": "ok", "duration_s": 108.3117, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T23:14:22.972037+00:00", "method": "p4bw-mutation-feedback", "run": 8, "step": "generate", "status": "ok", "duration_s": 746.4752, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T23:15:56.637494+00:00", "method": "p4bw-mutation-feedback", "run": 8, "step": "measure", "status": "ok", "duration_s": 93.665, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T23:27:39.011821+00:00", "method": "p4bw-mutation-feedback", "run": 9, "step": "generate", "status": "ok", "duration_s": 702.3737, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T23:29:05.532367+00:00", "method": "p4bw-mutation-feedback", "run": 9, "step": "measure", "status": "ok", "duration_s": 86.5197, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T23:42:30.521486+00:00", "method": "p4bw-mutation-feedback", "run": 10, "step": "generate", "status": "ok", "duration_s": 804.9887, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-23T23:44:08.198314+00:00", "method": "p4bw-mutation-feedback", "run": 10, "step": "measure", "status": "ok", "duration_s": 97.6765, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:17:04.213716+00:00", "method": "p3r-spec-only", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.213716+00:00", "method": "p3r-spec-only", "run": 1, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.213716+00:00", "method": "p4r-coverage-guided", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.213716+00:00", "method": "p4r-coverage-guided", "run": 1, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.213716+00:00", "method": "p4br-mutation-feedback", "run": 1, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.215258+00:00", "method": "p4br-mutation-feedback", "run": 1, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.215258+00:00", "method": "p3r-spec-only", "run": 2, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.215258+00:00", "method": "p3r-spec-only", "run": 2, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.215258+00:00", "method": "p4r-coverage-guided", "run": 2, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.218468+00:00", "method": "p4r-coverage-guided", "run": 2, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.218468+00:00", "method": "p4br-mutation-feedback", "run": 2, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.218468+00:00", "method": "p4br-mutation-feedback", "run": 2, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.218468+00:00", "method": "p3r-spec-only", "run": 3, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.219473+00:00", "method": "p3r-spec-only", "run": 3, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.219473+00:00", "method": "p4r-coverage-guided", "run": 3, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.219473+00:00", "method": "p4r-coverage-guided", "run": 3, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.220473+00:00", "method": "p4br-mutation-feedback", "run": 3, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.220473+00:00", "method": "p4br-mutation-feedback", "run": 3, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.220473+00:00", "method": "p3r-spec-only", "run": 4, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.220473+00:00", "method": "p3r-spec-only", "run": 4, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.220473+00:00", "method": "p4r-coverage-guided", "run": 4, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.221473+00:00", "method": "p4r-coverage-guided", "run": 4, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.221473+00:00", "method": "p4br-mutation-feedback", "run": 4, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.221473+00:00", "method": "p4br-mutation-feedback", "run": 4, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.221473+00:00", "method": "p3r-spec-only", "run": 5, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.222473+00:00", "method": "p3r-spec-only", "run": 5, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.222473+00:00", "method": "p4r-coverage-guided", "run": 5, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.222473+00:00", "method": "p4r-coverage-guided", "run": 5, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.222473+00:00", "method": "p4br-mutation-feedback", "run": 5, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.223473+00:00", "method": "p4br-mutation-feedback", "run": 5, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.223473+00:00", "method": "p3r-spec-only", "run": 6, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.223979+00:00", "method": "p3r-spec-only", "run": 6, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.223979+00:00", "method": "p4r-coverage-guided", "run": 6, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.223979+00:00", "method": "p4r-coverage-guided", "run": 6, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:17:04.223979+00:00", "method": "p4br-mutation-feedback", "run": 6, "step": "generate", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "generation.json already exists"}
+{"timestamp": "2026-11-24T02:17:04.223979+00:00", "method": "p4br-mutation-feedback", "run": 6, "step": "measure", "status": "skipped_existing", "duration_s": 0.0, "returncode": null, "message": "raw result already exists"}
+{"timestamp": "2026-11-24T02:20:53.072939+00:00", "method": "p3r-spec-only", "run": 7, "step": "generate", "status": "ok", "duration_s": 228.848, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:22:28.154277+00:00", "method": "p3r-spec-only", "run": 7, "step": "measure", "status": "ok", "duration_s": 95.0807, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:22:33.166645+00:00", "method": "p4r-coverage-guided", "run": 7, "step": "generate", "status": "ok", "duration_s": 5.0125, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:24:07.308379+00:00", "method": "p4r-coverage-guided", "run": 7, "step": "measure", "status": "ok", "duration_s": 94.1408, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:25:42.062215+00:00", "method": "p4br-mutation-feedback", "run": 7, "step": "generate", "status": "ok", "duration_s": 94.7535, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:27:15.097742+00:00", "method": "p4br-mutation-feedback", "run": 7, "step": "measure", "status": "ok", "duration_s": 93.0348, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:31:12.741397+00:00", "method": "p3r-spec-only", "run": 8, "step": "generate", "status": "ok", "duration_s": 237.6428, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:32:47.509651+00:00", "method": "p3r-spec-only", "run": 8, "step": "measure", "status": "ok", "duration_s": 94.7685, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:32:52.670324+00:00", "method": "p4r-coverage-guided", "run": 8, "step": "generate", "status": "ok", "duration_s": 5.1598, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:34:27.186971+00:00", "method": "p4r-coverage-guided", "run": 8, "step": "measure", "status": "ok", "duration_s": 94.5161, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:36:02.406824+00:00", "method": "p4br-mutation-feedback", "run": 8, "step": "generate", "status": "ok", "duration_s": 95.2191, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:37:36.508576+00:00", "method": "p4br-mutation-feedback", "run": 8, "step": "measure", "status": "ok", "duration_s": 94.1017, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:41:19.709402+00:00", "method": "p3r-spec-only", "run": 9, "step": "generate", "status": "ok", "duration_s": 223.2005, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:42:48.770115+00:00", "method": "p3r-spec-only", "run": 9, "step": "measure", "status": "ok", "duration_s": 89.06, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:42:53.962440+00:00", "method": "p4r-coverage-guided", "run": 9, "step": "generate", "status": "ok", "duration_s": 5.1915, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:44:24.881015+00:00", "method": "p4r-coverage-guided", "run": 9, "step": "measure", "status": "ok", "duration_s": 90.9183, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:45:56.602384+00:00", "method": "p4br-mutation-feedback", "run": 9, "step": "generate", "status": "ok", "duration_s": 91.7205, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:47:28.364007+00:00", "method": "p4br-mutation-feedback", "run": 9, "step": "measure", "status": "ok", "duration_s": 91.7611, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:51:27.050196+00:00", "method": "p3r-spec-only", "run": 10, "step": "generate", "status": "ok", "duration_s": 238.6859, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:52:58.398133+00:00", "method": "p3r-spec-only", "run": 10, "step": "measure", "status": "ok", "duration_s": 91.3473, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:53:03.226394+00:00", "method": "p4r-coverage-guided", "run": 10, "step": "generate", "status": "ok", "duration_s": 4.8284, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:54:33.990559+00:00", "method": "p4r-coverage-guided", "run": 10, "step": "measure", "status": "ok", "duration_s": 90.7634, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:56:05.830147+00:00", "method": "p4br-mutation-feedback", "run": 10, "step": "generate", "status": "ok", "duration_s": 91.8392, "returncode": 0, "message": ""}
+{"timestamp": "2026-11-24T02:57:46.192692+00:00", "method": "p4br-mutation-feedback", "run": 10, "step": "measure", "status": "ok", "duration_s": 100.3621, "returncode": 0, "message": ""}

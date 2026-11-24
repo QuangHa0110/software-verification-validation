@@ -1,0 +1,372 @@
+{
+  "method": "p4bw-mutation-feedback",
+  "run": 10,
+  "started_at": "2026-11-23T23:29:05.646120+00:00",
+  "ended_at": "2026-11-23T23:42:30.508487+00:00",
+  "stop_reason": "max_iterations",
+  "generation_s": 1042.7751397999964,
+  "llm": {
+    "calls": 5,
+    "input_tokens": 190312,
+    "output_tokens": 18231,
+    "cached_input_tokens": 339367,
+    "reasoning_output_tokens": 0,
+    "tool_events": 0,
+    "duration_s": 271.61333129999997,
+    "total_tokens": 208543,
+    "cost_usd": null,
+    "provider": "agy-cli",
+    "model": "gemini-3.8-flash-low",
+    "effort": "low"
+  },
+  "inherited": {
+    "method": "p4w-coverage-guided",
+    "run": 10,
+    "generation_s": 237.9134825000001,
+    "llm": {
+      "calls": 2,
+      "input_tokens": 80265,
+      "output_tokens": 11877,
+      "cached_input_tokens": 162407,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 204.08687709999998,
+      "total_tokens": 92142,
+      "cost_usd": null,
+      "provider": "agy-cli",
+      "model": "gemini-3.8-flash-low",
+      "effort": "low"
+    }
+  },
+  "incremental": {
+    "generation_s": 804.8616572999963,
+    "llm": {
+      "calls": 3,
+      "input_tokens": 110047,
+      "output_tokens": 6354,
+      "cached_input_tokens": 176960,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 67.5264542,
+      "total_tokens": 116401,
+      "cost_usd": null,
+      "provider": "agy-cli",
+      "model": "gemini-3.8-flash-low",
+      "effort": "low"
+    },
+    "dropped_by_selection": [
+      {
+        "i": 1,
+        "name": "testProductPriceZeroThrowsException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testProductWeightZeroThrowsException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testProductNegativeStockThrowsException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testReduceStockExactStockLeavesZero",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testReduceStockGreaterThanStockThrowsInsufficientStockException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testReduceStockZeroThrowsIllegalArgumentException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testRestoreStockZeroThrowsIllegalArgumentException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCouponPercentOver100ThrowsException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCouponFixedOver100Allowed",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCouponNegativeMaxDiscountThrowsException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCartAddItemExceedingMaxQtyThrowsIllegalArgumentExceptionBeforeCheckingStock",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCartAddItemExceedingStockThrowsInsufficientStockException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCartUpdateQuantityNegativeThrowsIllegalArgumentExceptionBeforeIdCheck",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCartUpdateQuantityZeroRemovesItem",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCartUpdateQuantityExceedingMaxQtyThrowsIllegalArgumentException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCartUpdateQuantityExceedingStockThrowsInsufficientStockException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCartItemsSnapshotCannotBeModified",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCalculateDiscountExpiredCouponThrowsExpiredExceptionBeforeNotApplicable",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCalculateDiscountNotApplicableWhenSubtotalBelowMinOrder",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCalculateDiscountPercentRespectsMaxDiscountCap",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCalculateDiscountPercentZeroMaxDiscountMeansNoCap",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCalculateDiscountFixedIgnoresMaxDiscount",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testShippingCalculatorOverMaxWeightThrowsExceptionEvenIfOrderValueOverThreshold",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testShippingCalculatorWeightSurchargeInnerCity",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testShippingCalculatorFreeShippingThresholdAppliesOnlyToInnerCityAndSuburb",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testPlaceOrderFailsDueToShippingExceptionRestoresOrDoesNotDeductStock",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testPlaceOrderEmptyCartThrowsIllegalStateException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testPlaceOrderSuccessDeductsStock",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testPayOrderNonPendingThrowsIllegalStateException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testShipOrderNonPaidThrowsIllegalStateException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCancelShippedOrderThrowsIllegalStateExceptionEvenIfCancelTimeIsBeforeCreatedAt",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCancelPendingOrderReturnsZeroRefundAndRestoresStock",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCancelPaidOrderWithin24HoursRefundsFullTotal",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testCancelPaidOrderAfter24HoursRefundsEightyPercentGoodsWithoutShipping",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 2,
+        "name": "testCartAddItemQuantityZeroBoundary",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testCartAddItemZeroQuantityThrowsIllegalArgumentException",
+        "reason": "no_mutation_gain"
+      }
+    ]
+  },
+  "baseline": {
+    "statement_pct": 100.0,
+    "branch_pct": 100.0,
+    "mutation_score": 96.66666666666667
+  },
+  "final": {
+    "statement_pct": 100.0,
+    "branch_pct": 100.0,
+    "mutation_score": 99.16666666666667
+  },
+  "iterations": [
+    {
+      "i": 1,
+      "statement_pct": 100.0,
+      "branch_pct": 100.0,
+      "mutation_score": 96.66666666666667,
+      "kept_tests": 0,
+      "measure_runs": 2,
+      "tokens": 35822,
+      "generated": 34,
+      "valid": 34,
+      "dropped_by_reason": {
+        "no_mutation_gain": 34
+      }
+    },
+    {
+      "i": 2,
+      "statement_pct": 100.0,
+      "branch_pct": 100.0,
+      "mutation_score": 99.16666666666667,
+      "kept_tests": 2,
+      "measure_runs": 2,
+      "tokens": 40670,
+      "generated": 3,
+      "valid": 3,
+      "dropped_by_reason": {
+        "no_mutation_gain": 1
+      }
+    },
+    {
+      "i": 3,
+      "statement_pct": 100.0,
+      "branch_pct": 100.0,
+      "mutation_score": 99.16666666666667,
+      "kept_tests": 0,
+      "measure_runs": 2,
+      "tokens": 39909,
+      "generated": 1,
+      "valid": 1,
+      "dropped_by_reason": {
+        "no_mutation_gain": 1
+      }
+    }
+  ],
+  "tests": {
+    "generated": 101,
+    "compiled": 101,
+    "passed_reference": 100,
+    "valid": 100,
+    "dropped": [
+      {
+        "name": "testCancelPendingOrderRefundsZeroAndRestoresStock",
+        "reason": "fails_on_reference"
+      }
+    ]
+  },
+  "suite_files": [
+    "P3_001Test.java",
+    "P3_002Test.java",
+    "P3_003Test.java",
+    "P3_004Test.java",
+    "P3_005Test.java",
+    "P3_006Test.java",
+    "P3_007Test.java",
+    "P3_008Test.java",
+    "P3_009Test.java",
+    "P3_010Test.java",
+    "P3_011Test.java",
+    "P3_012Test.java",
+    "P3_013Test.java",
+    "P3_014Test.java",
+    "P3_015Test.java",
+    "P3_016Test.java",
+    "P3_017Test.java",
+    "P3_018Test.java",
+    "P3_019Test.java",
+    "P3_020Test.java",
+    "P3_021Test.java",
+    "P3_022Test.java",
+    "P3_023Test.java",
+    "P3_024Test.java",
+    "P3_025Test.java",
+    "P3_026Test.java",
+    "P3_027Test.java",
+    "P3_028Test.java",
+    "P3_029Test.java",
+    "P3_030Test.java",
+    "P3_031Test.java",
+    "P3_032Test.java",
+    "P3_033Test.java",
+    "P3_034Test.java",
+    "P3_035Test.java",
+    "P3_036Test.java",
+    "P3_037Test.java",
+    "P3_038Test.java",
+    "P3_039Test.java",
+    "P3_040Test.java",
+    "P3_041Test.java",
+    "P3_042Test.java",
+    "P3_043Test.java",
+    "P3_044Test.java",
+    "P3_045Test.java",
+    "P3_046Test.java",
+    "P3_047Test.java",
+    "P3_048Test.java",
+    "P3_049Test.java",
+    "P3_050Test.java",
+    "P3_051Test.java",
+    "P3_052Test.java",
+    "P3_053Test.java",
+    "P3_054Test.java",
+    "P3_055Test.java",
+    "P3_056Test.java",
+    "P3_057Test.java",
+    "P3_058Test.java",
+    "P3_059Test.java",
+    "P3_061Test.java",
+    "P3_062Test.java",
+    "P4_001Test.java",
+    "P4b_036Test.java",
+    "P4b_037Test.java"
+  ]
+}

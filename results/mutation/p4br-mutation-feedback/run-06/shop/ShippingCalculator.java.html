@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="../style.css">
+</head>
+<body>
+
+
+<h1>ShippingCalculator.java</h1>
+
+<table class="src">
+
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_1'/>
+1
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_1'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>package shop;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_2'/>
+2
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_2'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_3'/>
+3
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_3'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>public class ShippingCalculator {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_4'/>
+4
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_4'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    public ShippingCalculator() {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_5'/>
+5
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_5'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_6'/>
+6
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_6'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''></span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_7'/>
+7
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_7'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    public long calculate(Region region, int weightGrams, long orderValue) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_8'/>
+8
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_8'>2</a>
+<span>
+
+1. calculate : changed conditional boundary &rarr; KILLED<br/>
+
+2. calculate : changed conditional boundary &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (region == null || weightGrams &#60;= 0 || orderValue &#60; 0) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_9'/>
+9
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_9'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new IllegalArgumentException(&#34;Invalid shipping request&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_10'/>
+10
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_10'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_11'/>
+11
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_11'>1</a>
+<span>
+
+1. calculate : changed conditional boundary &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (weightGrams &#62; 20_000) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_12'/>
+12
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_12'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            throw new IllegalArgumentException(&#34;Shipping weight exceeds 20000 g&#34;);</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_13'/>
+13
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_13'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_14'/>
+14
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_14'>1</a>
+<span>
+
+1. calculate : changed conditional boundary &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        if (orderValue &#62;= 500_000 &#38;&#38; (region == Region.INNER_CITY || region == Region.SUBURB)) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_15'/>
+15
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_15'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            return 0;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_16'/>
+16
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_16'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_17'/>
+17
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_17'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        long fee = switch (region) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_18'/>
+18
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_18'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            case INNER_CITY -&#62; 15_000;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_19'/>
+19
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_19'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            case SUBURB -&#62; 25_000;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_20'/>
+20
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_20'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            case PROVINCE -&#62; 35_000;</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_21'/>
+21
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_21'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>            case REMOTE -&#62; 55_000;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_22'/>
+22
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_22'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        };</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_23'/>
+23
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_23'>2</a>
+<span>
+
+1. calculate : Replaced integer subtraction with addition &rarr; KILLED<br/>
+
+2. calculate : changed conditional boundary &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>        for (int excess = weightGrams - 1_000; excess &#62; 0; excess -= 500) {</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_24'/>
+24
+</td>
+<td class='killed'>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_24'>1</a>
+<span>
+
+1. calculate : Replaced long addition with subtraction &rarr; KILLED<br/>
+
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class='killed'>            fee += 2_000;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_25'/>
+25
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_25'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>        }</span></pre></td></tr>
+
+
+<tr>
+<td class='covered'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_26'/>
+26
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_26'></a>
+<span>
+</span>
+</span>
+</td>
+<td class='covered'><pre><span  class=''>        return fee;</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_27'/>
+27
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_27'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>    }</span></pre></td></tr>
+
+
+<tr>
+<td class='na'>
+<a name='org.pitest.mutationtest.report.html.SourceFile@62faf77_28'/>
+28
+</td>
+<td class=''>
+<span class='pop'>
+<a href='#grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_28'></a>
+<span>
+</span>
+</span>
+</td>
+<td class=''><pre><span  class=''>}</span></pre></td></tr>
+
+
+
+<tr><td></td><td></td><td><h2>Mutations</h2></td></tr>
+
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@62faf77_8'>8</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_8'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculate<br/><b>Killed by : </b>shop.P3_014Test.[engine:junit-jupiter]/[class:shop.P3_014Test]/[method:shippingRejectsInvalidInputsEvenWhenFreeShippingWouldApply()]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>calculate<br/><b>Killed by : </b>shop.P3_016Test.[engine:junit-jupiter]/[class:shop.P3_016Test]/[test-template:shippingChargesEachStartedBlockAboveOneKilogram(int, long)]/[test-template-invocation:#1]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@62faf77_11'>11</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_11'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculate<br/><b>Killed by : </b>shop.P3_015Test.[engine:junit-jupiter]/[class:shop.P3_015Test]/[test-template:shippingThresholdDependsOnRegionAndWaivesTheEntireEligibleFee(shop.Region, long, long, long)]/[test-template-invocation:#3]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@62faf77_14'>14</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_14'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculate<br/><b>Killed by : </b>shop.P3_015Test.[engine:junit-jupiter]/[class:shop.P3_015Test]/[test-template:shippingThresholdDependsOnRegionAndWaivesTheEntireEligibleFee(shop.Region, long, long, long)]/[test-template-invocation:#2]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@62faf77_23'>23</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_23'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculate<br/><b>Killed by : </b>shop.P3_016Test.[engine:junit-jupiter]/[class:shop.P3_016Test]/[test-template:shippingChargesEachStartedBlockAboveOneKilogram(int, long)]/[test-template-invocation:#1]</span></span> Replaced integer subtraction with addition &rarr; KILLED</span>
+</div> <p class='KILLED'><span class='pop'>2.<span><b>2</b><br/><b>Location : </b>calculate<br/><b>Killed by : </b>shop.P3_016Test.[engine:junit-jupiter]/[class:shop.P3_016Test]/[test-template:shippingChargesEachStartedBlockAboveOneKilogram(int, long)]/[test-template-invocation:#2]</span></span> changed conditional boundary &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+<tr>
+<td><a href='#org.pitest.mutationtest.report.html.SourceFile@62faf77_24'>24</a></td> 
+<td></td>
+<td>
+
+<a name='grouporg.pitest.mutationtest.report.html.SourceFile@62faf77_24'/> 
+
+<p class='KILLED'><span class='pop'>1.<span><b>1</b><br/><b>Location : </b>calculate<br/><b>Killed by : </b>shop.P3_015Test.[engine:junit-jupiter]/[class:shop.P3_015Test]/[test-template:shippingThresholdDependsOnRegionAndWaivesTheEntireEligibleFee(shop.Region, long, long, long)]/[test-template-invocation:#3]</span></span> Replaced long addition with subtraction &rarr; KILLED</span>
+</div> 
+</td>
+</tr>
+
+</table>
+
+
+<h2>Active mutators</h2>
+<ul>
+
+<li class='mutator'>CONDITIONALS_BOUNDARY</li>
+
+<li class='mutator'>EXPERIMENTAL_MEMBER_VARIABLE</li>
+
+<li class='mutator'>FALSE_RETURNS</li>
+
+<li class='mutator'>MATH</li>
+
+<li class='mutator'>TRUE_RETURNS</li>
+
+<li class='mutator'>VOID_METHOD_CALLS</li>
+
+</ul>
+
+<h2>Tests examined</h2>
+<ul>
+<li>shop.P3_016Test.[engine:junit-jupiter]/[class:shop.P3_016Test]/[test-template:shippingChargesEachStartedBlockAboveOneKilogram(int, long)]/[test-template-invocation:#1] (0 ms)</li><li>shop.P3_016Test.[engine:junit-jupiter]/[class:shop.P3_016Test]/[test-template:shippingChargesEachStartedBlockAboveOneKilogram(int, long)]/[test-template-invocation:#2] (0 ms)</li><li>shop.P3_015Test.[engine:junit-jupiter]/[class:shop.P3_015Test]/[test-template:shippingThresholdDependsOnRegionAndWaivesTheEntireEligibleFee(shop.Region, long, long, long)]/[test-template-invocation:#3] (0 ms)</li><li>shop.P3_015Test.[engine:junit-jupiter]/[class:shop.P3_015Test]/[test-template:shippingThresholdDependsOnRegionAndWaivesTheEntireEligibleFee(shop.Region, long, long, long)]/[test-template-invocation:#4] (0 ms)</li><li>shop.P3_015Test.[engine:junit-jupiter]/[class:shop.P3_015Test]/[test-template:shippingThresholdDependsOnRegionAndWaivesTheEntireEligibleFee(shop.Region, long, long, long)]/[test-template-invocation:#2] (0 ms)</li><li>shop.P3_016Test.[engine:junit-jupiter]/[class:shop.P3_016Test]/[test-template:shippingChargesEachStartedBlockAboveOneKilogram(int, long)]/[test-template-invocation:#3] (0 ms)</li><li>shop.P3_016Test.[engine:junit-jupiter]/[class:shop.P3_016Test]/[test-template:shippingChargesEachStartedBlockAboveOneKilogram(int, long)]/[test-template-invocation:#5] (0 ms)</li><li>shop.P3_016Test.[engine:junit-jupiter]/[class:shop.P3_016Test]/[test-template:shippingChargesEachStartedBlockAboveOneKilogram(int, long)]/[test-template-invocation:#4] (0 ms)</li><li>shop.P3_016Test.[engine:junit-jupiter]/[class:shop.P3_016Test]/[test-template:shippingChargesEachStartedBlockAboveOneKilogram(int, long)]/[test-template-invocation:#6] (0 ms)</li><li>shop.P3_014Test.[engine:junit-jupiter]/[class:shop.P3_014Test]/[method:shippingRejectsInvalidInputsEvenWhenFreeShippingWouldApply()] (0 ms)</li><li>shop.P3_015Test.[engine:junit-jupiter]/[class:shop.P3_015Test]/[test-template:shippingThresholdDependsOnRegionAndWaivesTheEntireEligibleFee(shop.Region, long, long, long)]/[test-template-invocation:#1] (0 ms)</li><li>shop.P3_023Test.[engine:junit-jupiter]/[class:shop.P3_023Test]/[test-template:standardPricingAndShippingFailuresLeaveAllStockAndCartLinesIntact(java.lang.String)]/[test-template-invocation:#3] (0 ms)</li><li>shop.P3_024Test.[engine:junit-jupiter]/[class:shop.P3_024Test]/[test-template:defaultOrderServiceUsesDiscountedGoodsForFreeShipping(boolean, long, long, long)]/[test-template-invocation:#1] (0 ms)</li><li>shop.P3_026Test.[engine:junit-jupiter]/[class:shop.P3_026Test]/[test-template:cancellationChecksNullTimeThenStatusThenCreationTimeWithoutSideEffects(shop.OrderStatus)]/[test-template-invocation:#2] (0 ms)</li><li>shop.P3_026Test.[engine:junit-jupiter]/[class:shop.P3_026Test]/[test-template:cancellationChecksNullTimeThenStatusThenCreationTimeWithoutSideEffects(shop.OrderStatus)]/[test-template-invocation:#1] (0 ms)</li><li>shop.P3_026Test.[engine:junit-jupiter]/[class:shop.P3_026Test]/[test-template:cancellationChecksNullTimeThenStatusThenCreationTimeWithoutSideEffects(shop.OrderStatus)]/[test-template-invocation:#4] (0 ms)</li><li>shop.P3_024Test.[engine:junit-jupiter]/[class:shop.P3_024Test]/[test-template:defaultOrderServiceUsesDiscountedGoodsForFreeShipping(boolean, long, long, long)]/[test-template-invocation:#2] (0 ms)</li><li>shop.P3_025Test.[engine:junit-jupiter]/[class:shop.P3_025Test]/[method:payAndShipPermitOnlyTheirSpecifiedTransitionsAndNeverChangeInventory()] (2 ms)</li><li>shop.P3_027Test.[engine:junit-jupiter]/[class:shop.P3_027Test]/[test-template:cancellationUsesExactTimeAndRefundsInventoryOnlyOnce(boolean, int, long, long)]/[test-template-invocation:#2] (0 ms)</li><li>shop.P3_027Test.[engine:junit-jupiter]/[class:shop.P3_027Test]/[test-template:cancellationUsesExactTimeAndRefundsInventoryOnlyOnce(boolean, int, long, long)]/[test-template-invocation:#1] (0 ms)</li><li>shop.P3_026Test.[engine:junit-jupiter]/[class:shop.P3_026Test]/[test-template:cancellationChecksNullTimeThenStatusThenCreationTimeWithoutSideEffects(shop.OrderStatus)]/[test-template-invocation:#3] (3 ms)</li><li>shop.P3_027Test.[engine:junit-jupiter]/[class:shop.P3_027Test]/[test-template:cancellationUsesExactTimeAndRefundsInventoryOnlyOnce(boolean, int, long, long)]/[test-template-invocation:#3] (0 ms)</li><li>shop.P3_027Test.[engine:junit-jupiter]/[class:shop.P3_027Test]/[test-template:cancellationUsesExactTimeAndRefundsInventoryOnlyOnce(boolean, int, long, long)]/[test-template-invocation:#4] (0 ms)</li><li>shop.P3_027Test.[engine:junit-jupiter]/[class:shop.P3_027Test]/[test-template:cancellationUsesExactTimeAndRefundsInventoryOnlyOnce(boolean, int, long, long)]/[test-template-invocation:#5] (0 ms)</li><li>shop.P3_027Test.[engine:junit-jupiter]/[class:shop.P3_027Test]/[test-template:cancellationUsesExactTimeAndRefundsInventoryOnlyOnce(boolean, int, long, long)]/[test-template-invocation:#6] (0 ms)</li><li>shop.P3_027Test.[engine:junit-jupiter]/[class:shop.P3_027Test]/[test-template:cancellationUsesExactTimeAndRefundsInventoryOnlyOnce(boolean, int, long, long)]/[test-template-invocation:#7] (0 ms)</li><li>shop.P3_028Test.[engine:junit-jupiter]/[class:shop.P3_028Test]/[method:lateCancellationUsesLongArithmeticAndRestoresOriginalProductsFromOrderSnapshot()] (0 ms)</li>
+</ul>
+
+<br/>
+
+Report generated by <a href='https://pitest.org'>PIT</a> 1.20.3
+
+</body>
+</html>

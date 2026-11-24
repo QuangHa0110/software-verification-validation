@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Coupon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">subject</a> &gt; <a href="index.source.html" class="el_package">shop</a> &gt; <span class="el_source">Coupon.java</span></div><h1>Coupon.java</h1><pre class="source lang-java linenums">package shop;
+
+import java.time.LocalDate;
+
+public final class Coupon {
+    private final String code;
+    private final CouponType type;
+    private final long value;
+    private final long minOrder;
+    private final long maxDiscount;
+    private final LocalDate expiry;
+
+<span class="fc" id="L13">    public Coupon(String code, CouponType type, long value, long minOrder, long maxDiscount, LocalDate expiry) {</span>
+<span class="fc bfc" id="L14" title="All 4 branches covered.">        if (code == null || code.trim().isEmpty()) {</span>
+<span class="fc" id="L15">            throw new IllegalArgumentException(&quot;Missing coupon code&quot;);</span>
+        }
+<span class="fc bfc" id="L17" title="All 8 branches covered.">        if (type == null || value &lt;= 0 || (type == CouponType.PERCENT &amp;&amp; value &gt; 100)) {</span>
+<span class="fc" id="L18">            throw new IllegalArgumentException(&quot;Invalid coupon type or value&quot;);</span>
+        }
+<span class="fc bfc" id="L20" title="All 6 branches covered.">        if (minOrder &lt; 0 || maxDiscount &lt; 0 || expiry == null) {</span>
+<span class="fc" id="L21">            throw new IllegalArgumentException(&quot;Invalid coupon terms&quot;);</span>
+        }
+<span class="fc" id="L23">        this.code = code;</span>
+<span class="fc" id="L24">        this.type = type;</span>
+<span class="fc" id="L25">        this.value = value;</span>
+<span class="fc" id="L26">        this.minOrder = minOrder;</span>
+<span class="fc" id="L27">        this.maxDiscount = maxDiscount;</span>
+<span class="fc" id="L28">        this.expiry = expiry;</span>
+<span class="fc" id="L29">    }</span>
+
+    public String getCode() {
+<span class="fc" id="L32">        return code;</span>
+    }
+
+    public CouponType getType() {
+<span class="fc" id="L36">        return type;</span>
+    }
+
+    public long getValue() {
+<span class="fc" id="L40">        return value;</span>
+    }
+
+    public long getMinOrder() {
+<span class="fc" id="L44">        return minOrder;</span>
+    }
+
+    public long getMaxDiscount() {
+<span class="fc" id="L48">        return maxDiscount;</span>
+    }
+
+    public LocalDate getExpiry() {
+<span class="fc" id="L52">        return expiry;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.14.202510111229</span></div></body></html>

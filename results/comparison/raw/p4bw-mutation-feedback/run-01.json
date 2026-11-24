@@ -1,0 +1,129 @@
+{
+  "method": "p4bw-mutation-feedback",
+  "run": 1,
+  "tests": {
+    "generated": 114,
+    "compiled": 114,
+    "valid": 113,
+    "passed": 109,
+    "failed": 0,
+    "skipped": 0,
+    "dropped": [
+      {
+        "name": "killOrderServicePlaceOrderGoodsCalculationDiscountSubtraction",
+        "reason": "fails_on_reference"
+      }
+    ],
+    "compile_rate": 1.0,
+    "passed_reference": 113,
+    "oracle_rate": 0.9912280701754386
+  },
+  "coverage": {
+    "statement": {
+      "covered": 235,
+      "total": 235,
+      "pct": 100.0
+    },
+    "branch": {
+      "covered": 173,
+      "total": 174,
+      "pct": 99.42528735632185
+    },
+    "function": {
+      "covered": 55,
+      "total": 55,
+      "pct": 100.0
+    }
+  },
+  "uncovered": {
+    "lines": [],
+    "branches": [
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 21,
+        "missed": 1,
+        "covered": 3
+      }
+    ]
+  },
+  "mutation": {
+    "total": 121,
+    "killed": 119,
+    "survived": 2,
+    "no_coverage": 0,
+    "timed_out": 0,
+    "equivalent": 1,
+    "score": 99.16666666666667,
+    "by_operator": {
+      "relational": {
+        "source": "pit",
+        "total": 28,
+        "killed": 26
+      },
+      "arithmetic": {
+        "source": "pit",
+        "total": 19,
+        "killed": 19
+      },
+      "conditional": {
+        "source": "custom",
+        "total": 31,
+        "killed": 31
+      },
+      "boolean_constant": {
+        "source": "pit",
+        "total": 2,
+        "killed": 2
+      },
+      "statement_deletion": {
+        "source": [
+          "pit",
+          "custom"
+        ],
+        "total": 41,
+        "killed": 41
+      }
+    },
+    "status_counts": {
+      "KILLED": 119,
+      "SURVIVED": 2
+    },
+    "alive": [
+      {
+        "source": "pit",
+        "class": "shop.Cart",
+        "method": "addItem",
+        "line": 17,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "6",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      },
+      {
+        "source": "pit",
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 24,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "85",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      }
+    ]
+  },
+  "time": {
+    "generation_s": 2058.7714873999976,
+    "execution_s": 99.32094230000075
+  },
+  "llm": {
+    "calls": 8,
+    "input_tokens": 335894,
+    "output_tokens": 19050,
+    "cost_usd": null,
+    "model": "gemini-3.8-flash-low",
+    "effort": "low"
+  }
+}

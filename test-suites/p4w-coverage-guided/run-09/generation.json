@@ -1,0 +1,113 @@
+{
+  "method": "p4w-coverage-guided",
+  "run": 9,
+  "started_at": "2026-11-23T19:53:28.772213+00:00",
+  "ended_at": "2026-11-23T19:53:33.229776+00:00",
+  "stop_reason": "target_branch_coverage",
+  "generation_s": 227.35464619999766,
+  "llm": {
+    "calls": 1,
+    "input_tokens": 40743,
+    "output_tokens": 11242,
+    "cached_input_tokens": 81737,
+    "reasoning_output_tokens": 0,
+    "tool_events": 0,
+    "duration_s": 210.2983182,
+    "total_tokens": 51985,
+    "cost_usd": null,
+    "provider": "agy-cli",
+    "model": "gemini-3.8-flash-low",
+    "effort": "low"
+  },
+  "inherited": {
+    "method": "p3w-weak-llm",
+    "run": 9,
+    "generation_s": 222.89739389999886,
+    "llm": {
+      "provider": "agy-cli",
+      "calls": 1,
+      "input_tokens": 40743,
+      "cached_input_tokens": 81737,
+      "output_tokens": 11242,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 210.2983182,
+      "cost_usd": null,
+      "model": "gemini-3.8-flash-low",
+      "effort": "low"
+    }
+  },
+  "incremental": {
+    "generation_s": 4.4572522999988,
+    "llm": {
+      "calls": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cached_input_tokens": 0,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 0,
+      "total_tokens": 0,
+      "cost_usd": 0,
+      "provider": "",
+      "model": "",
+      "effort": ""
+    },
+    "dropped_by_selection": []
+  },
+  "baseline": {
+    "statement_pct": 100.0,
+    "branch_pct": 100.0
+  },
+  "final": {
+    "statement_pct": 100.0,
+    "branch_pct": 100.0
+  },
+  "iterations": [],
+  "tests": {
+    "generated": 37,
+    "compiled": 37,
+    "passed_reference": 37,
+    "valid": 37,
+    "dropped": []
+  },
+  "suite_files": [
+    "P3_001Test.java",
+    "P3_002Test.java",
+    "P3_003Test.java",
+    "P3_004Test.java",
+    "P3_005Test.java",
+    "P3_006Test.java",
+    "P3_007Test.java",
+    "P3_008Test.java",
+    "P3_009Test.java",
+    "P3_010Test.java",
+    "P3_011Test.java",
+    "P3_012Test.java",
+    "P3_013Test.java",
+    "P3_014Test.java",
+    "P3_015Test.java",
+    "P3_016Test.java",
+    "P3_017Test.java",
+    "P3_018Test.java",
+    "P3_019Test.java",
+    "P3_020Test.java",
+    "P3_021Test.java",
+    "P3_022Test.java",
+    "P3_023Test.java",
+    "P3_024Test.java",
+    "P3_025Test.java",
+    "P3_026Test.java",
+    "P3_027Test.java",
+    "P3_028Test.java",
+    "P3_029Test.java",
+    "P3_030Test.java",
+    "P3_031Test.java",
+    "P3_032Test.java",
+    "P3_033Test.java",
+    "P3_034Test.java",
+    "P3_035Test.java",
+    "P3_036Test.java",
+    "P3_037Test.java"
+  ]
+}

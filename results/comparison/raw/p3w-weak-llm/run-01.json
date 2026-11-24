@@ -1,0 +1,279 @@
+{
+  "method": "p3w-weak-llm",
+  "run": 1,
+  "tests": {
+    "generated": 74,
+    "compiled": 74,
+    "valid": 74,
+    "passed": 95,
+    "failed": 0,
+    "skipped": 0,
+    "dropped": [],
+    "compile_rate": 1.0,
+    "passed_reference": 74,
+    "oracle_rate": 1.0
+  },
+  "coverage": {
+    "statement": {
+      "covered": 234,
+      "total": 235,
+      "pct": 99.57446808510639
+    },
+    "branch": {
+      "covered": 169,
+      "total": 174,
+      "pct": 97.1264367816092
+    },
+    "function": {
+      "covered": 55,
+      "total": 55,
+      "pct": 100.0
+    }
+  },
+  "uncovered": {
+    "lines": [
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 27
+      }
+    ],
+    "branches": [
+      {
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 24,
+        "missed": 1,
+        "covered": 3
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 21,
+        "missed": 1,
+        "covered": 3
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 26,
+        "missed": 1,
+        "covered": 1
+      },
+      {
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 34,
+        "missed": 1,
+        "covered": 3
+      },
+      {
+        "class": "shop.OrderService",
+        "method": "cancelOrder",
+        "line": 72,
+        "missed": 1,
+        "covered": 3
+      }
+    ]
+  },
+  "mutation": {
+    "total": 121,
+    "killed": 108,
+    "survived": 13,
+    "no_coverage": 0,
+    "timed_out": 0,
+    "equivalent": 1,
+    "score": 90.0,
+    "by_operator": {
+      "relational": {
+        "source": "pit",
+        "total": 28,
+        "killed": 17
+      },
+      "arithmetic": {
+        "source": "pit",
+        "total": 19,
+        "killed": 17
+      },
+      "conditional": {
+        "source": "custom",
+        "total": 31,
+        "killed": 31
+      },
+      "boolean_constant": {
+        "source": "pit",
+        "total": 2,
+        "killed": 2
+      },
+      "statement_deletion": {
+        "source": [
+          "pit",
+          "custom"
+        ],
+        "total": 41,
+        "killed": 41
+      }
+    },
+    "status_counts": {
+      "KILLED": 108,
+      "SURVIVED": 13
+    },
+    "alive": [
+      {
+        "source": "pit",
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 31,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "92",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      },
+      {
+        "source": "pit",
+        "class": "shop.Order",
+        "method": "<init>",
+        "line": 34,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "107",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      },
+      {
+        "source": "pit",
+        "class": "shop.OrderService",
+        "method": "cancelOrder",
+        "line": 81,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.MathMutator",
+        "index": "78",
+        "description": "Replaced long subtraction with addition",
+        "status": "SURVIVED",
+        "operator": "arithmetic"
+      },
+      {
+        "source": "pit",
+        "class": "shop.OrderService",
+        "method": "placeOrder",
+        "line": 31,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "64",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      },
+      {
+        "source": "pit",
+        "class": "shop.OrderService",
+        "method": "placeOrder",
+        "line": 37,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.MathMutator",
+        "index": "98",
+        "description": "Replaced long subtraction with addition",
+        "status": "SURVIVED",
+        "operator": "arithmetic"
+      },
+      {
+        "source": "pit",
+        "class": "shop.Cart",
+        "method": "addItem",
+        "line": 17,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "6",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      },
+      {
+        "source": "pit",
+        "class": "shop.Cart",
+        "method": "putItem",
+        "line": 41,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "6",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      },
+      {
+        "source": "pit",
+        "class": "shop.Coupon",
+        "method": "<init>",
+        "line": 17,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "36",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      },
+      {
+        "source": "pit",
+        "class": "shop.ShippingCalculator",
+        "method": "calculate",
+        "line": 8,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "10",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      },
+      {
+        "source": "pit",
+        "class": "shop.ShippingCalculator",
+        "method": "calculate",
+        "line": 11,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "24",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      },
+      {
+        "source": "pit",
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 10,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "6",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      },
+      {
+        "source": "pit",
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 19,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "49",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      },
+      {
+        "source": "pit",
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 24,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "85",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      }
+    ]
+  },
+  "time": {
+    "generation_s": 225.90995010000006,
+    "execution_s": 95.8600189000008
+  },
+  "llm": {
+    "calls": 1,
+    "input_tokens": 17182,
+    "output_tokens": 10381,
+    "cost_usd": null,
+    "model": "gemini-3.8-flash-low",
+    "effort": "low"
+  }
+}

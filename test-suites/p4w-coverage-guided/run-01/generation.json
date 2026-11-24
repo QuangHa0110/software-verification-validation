@@ -1,0 +1,224 @@
+{
+  "method": "p4w-coverage-guided",
+  "run": 1,
+  "started_at": "2026-11-23T17:53:04.847889+00:00",
+  "ended_at": "2026-11-23T18:08:32.299841+00:00",
+  "stop_reason": "stop_if_no_gain_iterations",
+  "generation_s": 1153.3620130999989,
+  "llm": {
+    "calls": 5,
+    "input_tokens": 224749,
+    "output_tokens": 12452,
+    "cached_input_tokens": 300693,
+    "reasoning_output_tokens": 0,
+    "tool_events": 0,
+    "duration_s": 1035.6021799,
+    "total_tokens": 237201,
+    "cost_usd": null,
+    "provider": "agy-cli",
+    "model": "gemini-3.8-flash-low",
+    "effort": "low"
+  },
+  "inherited": {
+    "method": "p3w-weak-llm",
+    "run": 1,
+    "generation_s": 225.90995010000006,
+    "llm": {
+      "provider": "agy-cli",
+      "calls": 1,
+      "input_tokens": 17182,
+      "cached_input_tokens": 29115,
+      "output_tokens": 10381,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 201.9144185,
+      "cost_usd": null,
+      "model": "gemini-3.8-flash-low",
+      "effort": "low"
+    }
+  },
+  "incremental": {
+    "generation_s": 927.4520629999988,
+    "llm": {
+      "calls": 4,
+      "input_tokens": 207567,
+      "output_tokens": 2071,
+      "cached_input_tokens": 271578,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 833.6877614,
+      "total_tokens": 209638,
+      "cost_usd": null,
+      "provider": "agy-cli",
+      "model": "gemini-3.8-flash-low",
+      "effort": "low"
+    },
+    "dropped_by_selection": [
+      {
+        "i": 1,
+        "name": "pricingServiceCalculateDiscountPercentWithMaxDiscountZeroAndExceedingDiscount",
+        "reason": "no_coverage_gain"
+      },
+      {
+        "i": 2,
+        "name": "orderConstructorEmptyItemsListThrows",
+        "reason": "no_coverage_gain"
+      },
+      {
+        "i": 3,
+        "name": "orderConstructorEmptyItemsListThrows",
+        "reason": "no_coverage_gain"
+      },
+      {
+        "i": 4,
+        "name": "orderConstructorEmptyItemsListThrows",
+        "reason": "no_coverage_gain"
+      }
+    ]
+  },
+  "baseline": {
+    "statement_pct": 99.57446808510639,
+    "branch_pct": 97.1264367816092
+  },
+  "final": {
+    "statement_pct": 100.0,
+    "branch_pct": 99.42528735632185
+  },
+  "iterations": [
+    {
+      "i": 1,
+      "statement_pct": 100.0,
+      "branch_pct": 98.85057471264368,
+      "kept_tests": 3,
+      "tokens": 71823,
+      "generated": 4,
+      "valid": 4,
+      "dropped_by_reason": {
+        "no_coverage_gain": 1
+      }
+    },
+    {
+      "i": 2,
+      "statement_pct": 100.0,
+      "branch_pct": 99.42528735632185,
+      "kept_tests": 1,
+      "tokens": 40314,
+      "generated": 2,
+      "valid": 2,
+      "dropped_by_reason": {
+        "no_coverage_gain": 1
+      }
+    },
+    {
+      "i": 3,
+      "statement_pct": 100.0,
+      "branch_pct": 99.42528735632185,
+      "kept_tests": 0,
+      "tokens": 40080,
+      "generated": 1,
+      "valid": 1,
+      "dropped_by_reason": {
+        "no_coverage_gain": 1
+      }
+    },
+    {
+      "i": 4,
+      "statement_pct": 100.0,
+      "branch_pct": 99.42528735632185,
+      "kept_tests": 0,
+      "tokens": 57421,
+      "generated": 1,
+      "valid": 1,
+      "dropped_by_reason": {
+        "no_coverage_gain": 1
+      }
+    }
+  ],
+  "tests": {
+    "generated": 82,
+    "compiled": 82,
+    "passed_reference": 82,
+    "valid": 82,
+    "dropped": []
+  },
+  "suite_files": [
+    "P3_001Test.java",
+    "P3_002Test.java",
+    "P3_003Test.java",
+    "P3_004Test.java",
+    "P3_005Test.java",
+    "P3_006Test.java",
+    "P3_007Test.java",
+    "P3_008Test.java",
+    "P3_009Test.java",
+    "P3_010Test.java",
+    "P3_011Test.java",
+    "P3_012Test.java",
+    "P3_013Test.java",
+    "P3_014Test.java",
+    "P3_015Test.java",
+    "P3_016Test.java",
+    "P3_017Test.java",
+    "P3_018Test.java",
+    "P3_019Test.java",
+    "P3_020Test.java",
+    "P3_021Test.java",
+    "P3_022Test.java",
+    "P3_023Test.java",
+    "P3_024Test.java",
+    "P3_025Test.java",
+    "P3_026Test.java",
+    "P3_027Test.java",
+    "P3_028Test.java",
+    "P3_029Test.java",
+    "P3_030Test.java",
+    "P3_031Test.java",
+    "P3_032Test.java",
+    "P3_033Test.java",
+    "P3_034Test.java",
+    "P3_035Test.java",
+    "P3_036Test.java",
+    "P3_037Test.java",
+    "P3_038Test.java",
+    "P3_039Test.java",
+    "P3_040Test.java",
+    "P3_041Test.java",
+    "P3_042Test.java",
+    "P3_043Test.java",
+    "P3_044Test.java",
+    "P3_045Test.java",
+    "P3_046Test.java",
+    "P3_047Test.java",
+    "P3_048Test.java",
+    "P3_049Test.java",
+    "P3_050Test.java",
+    "P3_051Test.java",
+    "P3_052Test.java",
+    "P3_053Test.java",
+    "P3_054Test.java",
+    "P3_055Test.java",
+    "P3_056Test.java",
+    "P3_057Test.java",
+    "P3_058Test.java",
+    "P3_059Test.java",
+    "P3_060Test.java",
+    "P3_061Test.java",
+    "P3_062Test.java",
+    "P3_063Test.java",
+    "P3_064Test.java",
+    "P3_065Test.java",
+    "P3_066Test.java",
+    "P3_067Test.java",
+    "P3_068Test.java",
+    "P3_069Test.java",
+    "P3_070Test.java",
+    "P3_071Test.java",
+    "P3_072Test.java",
+    "P3_073Test.java",
+    "P3_074Test.java",
+    "P4_001Test.java",
+    "P4_002Test.java",
+    "P4_003Test.java",
+    "P4_006Test.java"
+  ]
+}

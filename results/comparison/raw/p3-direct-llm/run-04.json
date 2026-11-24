@@ -1,0 +1,105 @@
+{
+  "method": "p3-direct-llm",
+  "run": 4,
+  "tests": {
+    "generated": 28,
+    "compiled": 28,
+    "valid": 28,
+    "passed": 73,
+    "failed": 0,
+    "skipped": 0,
+    "dropped": [],
+    "compile_rate": 1.0,
+    "passed_reference": 28,
+    "oracle_rate": 1.0
+  },
+  "coverage": {
+    "statement": {
+      "covered": 235,
+      "total": 235,
+      "pct": 100.0
+    },
+    "branch": {
+      "covered": 174,
+      "total": 174,
+      "pct": 100.0
+    },
+    "function": {
+      "covered": 55,
+      "total": 55,
+      "pct": 100.0
+    }
+  },
+  "uncovered": {
+    "lines": [],
+    "branches": []
+  },
+  "mutation": {
+    "total": 121,
+    "killed": 120,
+    "survived": 1,
+    "no_coverage": 0,
+    "timed_out": 0,
+    "equivalent": 1,
+    "score": 100.0,
+    "by_operator": {
+      "relational": {
+        "source": "pit",
+        "total": 28,
+        "killed": 27
+      },
+      "arithmetic": {
+        "source": "pit",
+        "total": 19,
+        "killed": 19
+      },
+      "conditional": {
+        "source": "custom",
+        "total": 31,
+        "killed": 31
+      },
+      "boolean_constant": {
+        "source": "pit",
+        "total": 2,
+        "killed": 2
+      },
+      "statement_deletion": {
+        "source": [
+          "pit",
+          "custom"
+        ],
+        "total": 41,
+        "killed": 41
+      }
+    },
+    "status_counts": {
+      "KILLED": 120,
+      "SURVIVED": 1
+    },
+    "alive": [
+      {
+        "source": "pit",
+        "class": "shop.PricingService",
+        "method": "calculateDiscount",
+        "line": 24,
+        "mutator": "org.pitest.mutationtest.engine.gregor.mutators.ConditionalsBoundaryMutator",
+        "index": "85",
+        "description": "changed conditional boundary",
+        "status": "SURVIVED",
+        "operator": "relational"
+      }
+    ]
+  },
+  "time": {
+    "generation_s": 212.16587219999974,
+    "execution_s": 94.88655719999952
+  },
+  "llm": {
+    "calls": 1,
+    "input_tokens": 40086,
+    "output_tokens": 9649,
+    "cost_usd": null,
+    "model": "gpt-6.2-astra",
+    "effort": "medium"
+  }
+}

@@ -1,0 +1,218 @@
+{
+  "method": "p4bw-mutation-feedback",
+  "run": 5,
+  "started_at": "2026-11-23T22:17:26.187667+00:00",
+  "ended_at": "2026-11-23T22:29:50.259155+00:00",
+  "stop_reason": "max_iterations",
+  "generation_s": 864.896122099999,
+  "llm": {
+    "calls": 4,
+    "input_tokens": 151822,
+    "output_tokens": 12328,
+    "cached_input_tokens": 255556,
+    "reasoning_output_tokens": 0,
+    "tool_events": 0,
+    "duration_s": 149.457646,
+    "total_tokens": 164150,
+    "cost_usd": null,
+    "provider": "agy-cli",
+    "model": "gemini-3.8-flash-low",
+    "effort": "low"
+  },
+  "inherited": {
+    "method": "p4w-coverage-guided",
+    "run": 5,
+    "generation_s": 120.82389109999713,
+    "llm": {
+      "calls": 1,
+      "input_tokens": 46294,
+      "output_tokens": 9413,
+      "cached_input_tokens": 0,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 102.8531533,
+      "total_tokens": 55707,
+      "cost_usd": null,
+      "provider": "agy-cli",
+      "model": "gemini-3.8-flash-low",
+      "effort": "low"
+    }
+  },
+  "incremental": {
+    "generation_s": 744.0722310000019,
+    "llm": {
+      "calls": 3,
+      "input_tokens": 105528,
+      "output_tokens": 2915,
+      "cached_input_tokens": 255556,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 46.6044927,
+      "total_tokens": 108443,
+      "cost_usd": null,
+      "provider": "agy-cli",
+      "model": "gemini-3.8-flash-low",
+      "effort": "low"
+    },
+    "dropped_by_selection": [
+      {
+        "i": 1,
+        "name": "testKillCartAddItemQtyZeroBoundary",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testKillOrderConstructorDiscountExceedsSubtotalBoundary",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testKillOrderConstructorShippingNegativeBoundary",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 1,
+        "name": "testKillOrderServicePlaceOrderNullRegionWithValidIdAndNow",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 2,
+        "name": "testKillCartAddItemQtyZeroThrowsIllegalArgumentException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 2,
+        "name": "testKillOrderServicePlaceOrderNullRegionWithValidOrderIdAndNowThrows",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testKillCartAddItemQuantityZeroBoundary",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testKillOrderServicePlaceOrderNullRegionWithValidTimeThrows",
+        "reason": "no_mutation_gain"
+      }
+    ]
+  },
+  "baseline": {
+    "statement_pct": 100.0,
+    "branch_pct": 100.0,
+    "mutation_score": 91.66666666666667
+  },
+  "final": {
+    "statement_pct": 100.0,
+    "branch_pct": 100.0,
+    "mutation_score": 98.33333333333333
+  },
+  "iterations": [
+    {
+      "i": 1,
+      "statement_pct": 100.0,
+      "branch_pct": 100.0,
+      "mutation_score": 96.66666666666667,
+      "kept_tests": 5,
+      "measure_runs": 2,
+      "tokens": 41486,
+      "generated": 9,
+      "valid": 9,
+      "dropped_by_reason": {
+        "no_mutation_gain": 4
+      }
+    },
+    {
+      "i": 2,
+      "statement_pct": 100.0,
+      "branch_pct": 100.0,
+      "mutation_score": 98.33333333333333,
+      "kept_tests": 2,
+      "measure_runs": 2,
+      "tokens": 40498,
+      "generated": 4,
+      "valid": 4,
+      "dropped_by_reason": {
+        "no_mutation_gain": 2
+      }
+    },
+    {
+      "i": 3,
+      "statement_pct": 100.0,
+      "branch_pct": 100.0,
+      "mutation_score": 98.33333333333333,
+      "kept_tests": 0,
+      "measure_runs": 2,
+      "tokens": 26459,
+      "generated": 2,
+      "valid": 2,
+      "dropped_by_reason": {
+        "no_mutation_gain": 2
+      }
+    }
+  ],
+  "tests": {
+    "generated": 63,
+    "compiled": 63,
+    "passed_reference": 63,
+    "valid": 63,
+    "dropped": []
+  },
+  "suite_files": [
+    "P3_001Test.java",
+    "P3_002Test.java",
+    "P3_003Test.java",
+    "P3_004Test.java",
+    "P3_005Test.java",
+    "P3_006Test.java",
+    "P3_007Test.java",
+    "P3_008Test.java",
+    "P3_009Test.java",
+    "P3_010Test.java",
+    "P3_011Test.java",
+    "P3_012Test.java",
+    "P3_013Test.java",
+    "P3_014Test.java",
+    "P3_015Test.java",
+    "P3_016Test.java",
+    "P3_017Test.java",
+    "P3_018Test.java",
+    "P3_019Test.java",
+    "P3_020Test.java",
+    "P3_021Test.java",
+    "P3_022Test.java",
+    "P3_023Test.java",
+    "P3_024Test.java",
+    "P3_025Test.java",
+    "P3_026Test.java",
+    "P3_027Test.java",
+    "P3_028Test.java",
+    "P3_029Test.java",
+    "P3_030Test.java",
+    "P3_031Test.java",
+    "P3_032Test.java",
+    "P3_033Test.java",
+    "P3_034Test.java",
+    "P3_035Test.java",
+    "P3_036Test.java",
+    "P3_037Test.java",
+    "P3_038Test.java",
+    "P3_039Test.java",
+    "P3_040Test.java",
+    "P3_041Test.java",
+    "P3_042Test.java",
+    "P3_043Test.java",
+    "P3_044Test.java",
+    "P3_045Test.java",
+    "P3_046Test.java",
+    "P3_047Test.java",
+    "P3_048Test.java",
+    "P4b_002Test.java",
+    "P4b_003Test.java",
+    "P4b_007Test.java",
+    "P4b_008Test.java",
+    "P4b_009Test.java",
+    "P4b_011Test.java",
+    "P4b_012Test.java"
+  ]
+}
