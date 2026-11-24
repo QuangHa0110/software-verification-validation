@@ -1,0 +1,322 @@
+{
+  "method": "p4bw-mutation-feedback",
+  "run": 1,
+  "started_at": "2026-11-23T21:15:48.069167+00:00",
+  "ended_at": "2026-11-23T21:30:53.478581+00:00",
+  "stop_reason": "stop_if_no_gain_iterations",
+  "generation_s": 2058.7714873999976,
+  "llm": {
+    "calls": 8,
+    "input_tokens": 335894,
+    "output_tokens": 19050,
+    "cached_input_tokens": 477693,
+    "reasoning_output_tokens": 0,
+    "tool_events": 0,
+    "duration_s": 1192.5058501,
+    "total_tokens": 354944,
+    "cost_usd": null,
+    "provider": "agy-cli",
+    "model": "gemini-3.8-flash-low",
+    "effort": "low"
+  },
+  "inherited": {
+    "method": "p4w-coverage-guided",
+    "run": 1,
+    "generation_s": 1153.3620130999989,
+    "llm": {
+      "calls": 5,
+      "input_tokens": 224749,
+      "output_tokens": 12452,
+      "cached_input_tokens": 300693,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 1035.6021799,
+      "total_tokens": 237201,
+      "cost_usd": null,
+      "provider": "agy-cli",
+      "model": "gemini-3.8-flash-low",
+      "effort": "low"
+    }
+  },
+  "incremental": {
+    "generation_s": 905.4094742999987,
+    "llm": {
+      "calls": 3,
+      "input_tokens": 111145,
+      "output_tokens": 6598,
+      "cached_input_tokens": 177000,
+      "reasoning_output_tokens": 0,
+      "tool_events": 0,
+      "duration_s": 156.9036702,
+      "total_tokens": 117743,
+      "cost_usd": null,
+      "provider": "agy-cli",
+      "model": "gemini-3.8-flash-low",
+      "effort": "low"
+    },
+    "dropped_by_selection": [
+      {
+        "i": 1,
+        "name": "killCartAddItemQtyZeroBoundary",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 2,
+        "name": "killCartAddItemQtyZeroBoundary",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testOrderConstructorRejectsEmptyItems",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testOrderConstructorRejectsNullItemInList",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testOrderConstructorRejectsSubtotalMismatch",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testOrderConstructorRejectsNegativeDiscount",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testOrderConstructorRejectsDiscountExceedingSubtotal",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testOrderConstructorRejectsNegativeShipping",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testOrderConstructorRejectsTotalMismatch",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testOrderConstructorDefensiveCopyAndUnmodifiableItems",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testOrderSetStatusNullThrowsIllegalArgumentException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testCartGetItemsThrowsUnsupportedOperationExceptionOnModification",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testPlaceOrderFailsWhenSubsequentItemHasInsufficientStockAndDoesNotDeductPriorItem",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testPlaceOrderFailsWhenShippingThrowsWeightExceededAndDoesNotDeductStock",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testCancelOrderBeforeCreatedAtThrowsIllegalArgumentException",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testCancelPaidOrderExactlyAt24HoursRefundsFullTotal",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testCancelPaidOrderAfter24HoursRefunds80PercentOfGoodsOnly",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testCancelShippedOrCancelledOrderThrowsIllegalStateExceptionPriorToTimeCheck",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testProductReduceStockRejectsNonPositiveQuantities",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testProductRestoreStockRejectsNonPositiveQuantities",
+        "reason": "no_mutation_gain"
+      },
+      {
+        "i": 3,
+        "name": "testShippingCalculatorRemoteRegionSubtotal500kDoesNotGetFreeShipping",
+        "reason": "no_mutation_gain"
+      }
+    ]
+  },
+  "baseline": {
+    "statement_pct": 100.0,
+    "branch_pct": 99.42528735632185,
+    "mutation_score": 90.0
+  },
+  "final": {
+    "statement_pct": 100.0,
+    "branch_pct": 99.42528735632185,
+    "mutation_score": 99.16666666666667
+  },
+  "iterations": [
+    {
+      "i": 1,
+      "statement_pct": 100.0,
+      "branch_pct": 99.42528735632185,
+      "mutation_score": 99.16666666666667,
+      "kept_tests": 10,
+      "measure_runs": 2,
+      "tokens": 42955,
+      "generated": 12,
+      "valid": 11,
+      "dropped_by_reason": {
+        "fails_on_reference": 1,
+        "no_mutation_gain": 1
+      }
+    },
+    {
+      "i": 2,
+      "statement_pct": 100.0,
+      "branch_pct": 99.42528735632185,
+      "mutation_score": 99.16666666666667,
+      "kept_tests": 0,
+      "measure_runs": 2,
+      "tokens": 40148,
+      "generated": 1,
+      "valid": 1,
+      "dropped_by_reason": {
+        "no_mutation_gain": 1
+      }
+    },
+    {
+      "i": 3,
+      "statement_pct": 100.0,
+      "branch_pct": 99.42528735632185,
+      "mutation_score": 99.16666666666667,
+      "kept_tests": 0,
+      "measure_runs": 2,
+      "tokens": 34640,
+      "generated": 19,
+      "valid": 19,
+      "dropped_by_reason": {
+        "no_mutation_gain": 19
+      }
+    }
+  ],
+  "tests": {
+    "generated": 114,
+    "compiled": 114,
+    "passed_reference": 113,
+    "valid": 113,
+    "dropped": [
+      {
+        "name": "killOrderServicePlaceOrderGoodsCalculationDiscountSubtraction",
+        "reason": "fails_on_reference"
+      }
+    ]
+  },
+  "suite_files": [
+    "P3_001Test.java",
+    "P3_002Test.java",
+    "P3_003Test.java",
+    "P3_004Test.java",
+    "P3_005Test.java",
+    "P3_006Test.java",
+    "P3_007Test.java",
+    "P3_008Test.java",
+    "P3_009Test.java",
+    "P3_010Test.java",
+    "P3_011Test.java",
+    "P3_012Test.java",
+    "P3_013Test.java",
+    "P3_014Test.java",
+    "P3_015Test.java",
+    "P3_016Test.java",
+    "P3_017Test.java",
+    "P3_018Test.java",
+    "P3_019Test.java",
+    "P3_020Test.java",
+    "P3_021Test.java",
+    "P3_022Test.java",
+    "P3_023Test.java",
+    "P3_024Test.java",
+    "P3_025Test.java",
+    "P3_026Test.java",
+    "P3_027Test.java",
+    "P3_028Test.java",
+    "P3_029Test.java",
+    "P3_030Test.java",
+    "P3_031Test.java",
+    "P3_032Test.java",
+    "P3_033Test.java",
+    "P3_034Test.java",
+    "P3_035Test.java",
+    "P3_036Test.java",
+    "P3_037Test.java",
+    "P3_038Test.java",
+    "P3_039Test.java",
+    "P3_040Test.java",
+    "P3_041Test.java",
+    "P3_042Test.java",
+    "P3_043Test.java",
+    "P3_044Test.java",
+    "P3_045Test.java",
+    "P3_046Test.java",
+    "P3_047Test.java",
+    "P3_048Test.java",
+    "P3_049Test.java",
+    "P3_050Test.java",
+    "P3_051Test.java",
+    "P3_052Test.java",
+    "P3_053Test.java",
+    "P3_054Test.java",
+    "P3_055Test.java",
+    "P3_056Test.java",
+    "P3_057Test.java",
+    "P3_058Test.java",
+    "P3_059Test.java",
+    "P3_060Test.java",
+    "P3_061Test.java",
+    "P3_062Test.java",
+    "P3_063Test.java",
+    "P3_064Test.java",
+    "P3_065Test.java",
+    "P3_066Test.java",
+    "P3_067Test.java",
+    "P3_068Test.java",
+    "P3_069Test.java",
+    "P3_070Test.java",
+    "P3_071Test.java",
+    "P3_072Test.java",
+    "P3_073Test.java",
+    "P3_074Test.java",
+    "P4_001Test.java",
+    "P4_002Test.java",
+    "P4_003Test.java",
+    "P4_006Test.java",
+    "P4b_002Test.java",
+    "P4b_003Test.java",
+    "P4b_004Test.java",
+    "P4b_005Test.java",
+    "P4b_006Test.java",
+    "P4b_007Test.java",
+    "P4b_009Test.java",
+    "P4b_010Test.java",
+    "P4b_011Test.java",
+    "P4b_012Test.java"
+  ]
+}
