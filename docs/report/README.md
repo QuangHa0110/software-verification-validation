@@ -12,20 +12,21 @@
 |---|---|---|---|---|
 | **Chương 1.** Giới thiệu | [chuong-1-gioi-thieu.md](chuong-1-gioi-thieu.md) | 1.1 Bối cảnh; 1.2 Vấn đề nghiên cứu; 1.3 Mục tiêu; 1.4 Câu hỏi nghiên cứu (RQ1–RQ6); 1.5 Đóng góp và cấu trúc báo cáo | Trưởng nhóm | Hoàn thành bản nháp (T15a) |
 | **Chương 2.** Cơ sở lý thuyết và công trình liên quan | [chuong-2-co-so-ly-thuyet.md](chuong-2-co-so-ly-thuyet.md) | 2.1 Tiêu chí bao phủ (JaCoCo); 2.2 Kiểm thử đột biến; 2.3 Sinh test tự động truyền thống; 2.4 Sinh test bằng LLM; 2.5 Bài toán oracle; 2.6 Khoảng trống nghiên cứu | Tổng quan (Chung) | Hoàn thành bản nháp (T15a), đối chiếu 17/17 khóa `references.bib` |
-| **Chương 3.** Phương pháp đề xuất | [chuong-3-phuong-phap.md](chuong-3-phuong-phap.md) | 3.1 Kiến trúc tổng thể; 3.2 P3/P3r Direct LLM; 3.3 P4/P4r Coverage-guided, P4b/P4br Mutation-feedback & bóc tách D-024; 3.4 Thiết kế prompt (6 bộ mẫu); 3.5 Thực thi & phản hồi (`feedback.py`); 3.6 Lọc bốn tầng & chọn tham lam lười (`selection.py`) | G4, G5 | Hoàn thành đồng bộ mã nguồn & prompt (T15a-2); không còn mốc `[CHỜ]` |
-| **Chương 4.** Thiết kế thực nghiệm | [chuong-4-thiet-ke-thuc-nghiem.md](chuong-4-thiet-ke-thuc-nghiem.md) | 4.1 Chương trình đối tượng; 4.2 Môi trường; 4.3 Phương pháp đối chứng (gồm nhánh ngữ cảnh hạn chế D-024); 4.4 Chỉ số đánh giá; 4.5 Quy trình thực nghiệm & lệnh tái lập | G1, G2, G3 | Hoàn thành đồng bộ cấu hình & script T14 (T15a-2); còn 3 mốc `[CHỜ]` (đơn giá USD nếu áp dụng, cấu hình phần cứng T14, bản chốt `equivalent-mutants.csv` sau T14) |
-| **Chương 5.** Kết quả và thảo luận | `[CHỜ: T15b — chuong-5-ket-qua-va-thao-luan.md]` | 5.1 Kết quả sinh test; 5.2 Coverage; 5.3 Mutation; 5.4 So sánh phương pháp (chính & bóc tách D-024); 5.5 Trả lời RQ1–RQ6; 5.6 Threats to Validity | G1, G2, G4, G5 | Chưa viết (chờ số liệu thực nghiệm chính thức từ T14) |
-| **Chương 6.** Kết luận và hướng phát triển | `[CHỜ: T15b — chuong-6-ket-luan.md]` | 6.1 Kết luận; 6.2 Hạn chế; 6.3 Hướng phát triển | Trưởng nhóm | Chưa viết (chờ kết quả Chương 5) |
+| **Chương 3.** Phương pháp đề xuất | [chuong-3-phuong-phap.md](chuong-3-phuong-phap.md) | 3.1 Kiến trúc tổng thể; 3.2 P3/P3r Direct LLM; 3.3 P4/P4r Coverage-guided, P4b/P4br Mutation-feedback & bóc tách D-024; 3.4 Thiết kế prompt (6 bộ mẫu); 3.5 Thực thi & phản hồi (`feedback.py`); 3.6 Lọc bốn tầng & chọn tham lam lười (`selection.py`) | G4, G5 | Hoàn thành đồng bộ mã nguồn & prompt (T15a-2) |
+| **Chương 4.** Thiết kế thực nghiệm | [chuong-4-thiet-ke-thuc-nghiem.md](chuong-4-thiet-ke-thuc-nghiem.md) | 4.1 Chương trình đối tượng; 4.2 Môi trường; 4.3 Phương pháp đối chứng (gồm nhánh ngữ cảnh hạn chế D-024); 4.4 Chỉ số đánh giá; 4.5 Quy trình thực nghiệm & lệnh tái lập | G1, G2, G3 | Hoàn thành đồng bộ cấu hình & script T14 (T15a-2); còn ba ghi chú về đơn giá USD, CPU/RAM và danh sách mutant tương đương. Chương 5 đã dùng danh sách chốt |
+| **Chương 5.** Kết quả và thảo luận | [chuong-5-ket-qua-va-thao-luan.md](chuong-5-ket-qua-va-thao-luan.md) | 5.1 Sinh test, 5.2 Coverage, 5.3 Mutation, 5.4 So sánh phương pháp, 5.5 Trả lời RQ1–RQ6, 5.6 Các mối đe dọa đến độ giá trị | G1, G2, G4, G5 | Đã viết theo số liệu chốt ở `m5-data-frozen`, gồm cả ba chuỗi LLM |
+| **Chương 6.** Kết luận và hướng phát triển | [chuong-6-ket-luan.md](chuong-6-ket-luan.md) | 6.1 Kết luận, 6.2 Hạn chế, 6.3 Hướng phát triển | Trưởng nhóm | Đã viết, kết luận theo từng chuỗi và đối chứng |
 
 ---
 
-## Danh sách hình và sơ đồ (`figures/`)
+## Danh sách hình và sơ đồ
 
 | Hình | Tập tin | Nội dung |
 |---|---|---|
 | Hình 3.1 | [figures/kien-truc-tong-the.md](figures/kien-truc-tong-the.md) | Kiến trúc tổng thể hệ thống sinh, lọc, đo lường và phản hồi (nhánh đủ ngữ cảnh và ngữ cảnh hạn chế) |
 | Hình 3.2 | [figures/vong-lap-p4-p4b.md](figures/vong-lap-p4-p4b.md) | Thiết kế ghép cặp P3 → P4 → P4b (và P3r → P4r → P4br) cùng vòng lặp phản hồi theo `tools/generate_p4.py` |
 | Hình 3.3 | [figures/quy-trinh-loc-va-do.md](figures/quy-trinh-loc-va-do.md) | Quy trình lọc test bốn tầng (`test_filter.py`), kiểm chứng tính đúng oracle trên `reference/` và chọn tham lam lười (`selection.py`) |
+| Hình 5.1 | [p4bw_iterations_mutation.png](../../results/comparison/figures/p4bw_iterations_mutation.png) | Mutation score theo vòng phản hồi của P4bw, tính từ bộ nền P4w |
 
 ---
 
@@ -33,4 +34,4 @@
 
 - Danh mục tài liệu tham khảo chuẩn hóa nằm tại [docs/literature/references.bib](../literature/references.bib) (17 công trình đã xác minh DOI/ấn phẩm).
 - Trong toàn bộ báo cáo, trích dẫn sử dụng khóa trong ngoặc vuông theo đúng định danh BibTeX, ví dụ `[schafer-2024]`, `[pizzorno-2025]`.
-- Chương 1–4 **không chứa số liệu kết quả thực nghiệm**; các vị trí phụ thuộc thông tin chỉ chốt sau khi hoàn tất đợt chạy chính thức được đánh dấu tường minh bằng `[CHỜ: <nguồn>]` để cập nhật ở đợt T15b.
+- Số liệu thực nghiệm ở Chương 5–6 lấy từ bản chốt. Mỗi bảng ở Chương 5 dẫn đến tệp tổng hợp hoặc bản ghi từng lần chạy dùng để lập bảng. [Kết quả thực nghiệm](../../results/comparison/summary.md)
