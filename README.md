@@ -26,9 +26,14 @@ Bài tập lớn học phần *Kiểm chứng và Thẩm định Phần mềm (S
 | Mã | Phương pháp | Thư mục bộ test |
 |---|---|---|
 | P1 | Manual Testing – viết tay theo đặc tả (đồng thời là bộ test chuẩn) | `test-suites/p1-manual/` |
-| P2 | Random Testing – đầu vào ngẫu nhiên, oracle lấy từ đặc tả | `test-suites/p2-random/` |
+| P2 | Random Testing – đầu vào ngẫu nhiên, oracle lấy từ chương trình tham chiếu | `test-suites/p2-random/` |
 | P3 | Direct LLM Generation – sinh một lần từ mã nguồn và đặc tả | `test-suites/p3-direct-llm/` |
-| P4 | Coverage-guided LLM Generation + mutation feedback | `test-suites/p4-coverage-guided/` |
+| P4 | Coverage-guided LLM Generation – khởi đầu từ P3 cùng lần chạy | `test-suites/p4-coverage-guided/` |
+| P4b | P4 + phản hồi mutation (cải tiến của đề tài) | `test-suites/p4b-mutation-feedback/` |
+| P3r → P4r → P4br | Thí nghiệm bóc tách ngữ cảnh hạn chế: P3r chỉ nhận đặc tả + API (D-024) | `test-suites/p3r-spec-only/`, `p4r-…`, `p4br-…` |
+| P3w → P4w → P4bw | Thí nghiệm bóc tách LLM yếu hơn: `gemini-3.8-flash-low` qua `agy-cli` (D-025) | `test-suites/p3w-weak-llm/`, `p4w-…`, `p4bw-…` |
+
+**Kết quả chính** (đã chốt, tag `m5-data-frozen`, nguồn [results/comparison/summary.md](results/comparison/summary.md)): P3/P4/P4b và chuỗi ngữ cảnh hạn chế đạt trần (100% nhánh, 100% mutation score sau khi loại 1 mutant tương đương) ở cả 10 lần; P2 đạt 76,78% nhánh, 64,33% mutation score; ở chuỗi LLM yếu hơn, phản hồi mutation nâng mutation score trung bình từ 95,00% (P4w) lên 98,50% (P4bw), Mann–Whitney p = 0,0001, Â12 = 1,0. Báo cáo đầy đủ: [docs/report/](docs/report/README.md).
 
 ## Cấu trúc thư mục
 
@@ -39,6 +44,7 @@ software-verification-validation/
 │   ├── spec/                   # Đặc tả chức năng, đầu vào/đầu ra (căn cứ cho oracle), chốt ở M1
 │   ├── orchestration/          # Quy trình phát triển bằng AI: quyết định, tiến độ, brief giao việc
 │   ├── literature/             # Ghi chú các công trình nghiên cứu liên quan
+│   ├── demo/                   # Kịch bản demo 10 bước và slide (Marp)
 │   └── report/                 # Báo cáo khoa học (6 chương)
 ├── subject/                    # Chương trình đối tượng kiểm thử (Maven project)
 │   └── src/
@@ -54,9 +60,12 @@ software-verification-validation/
 │   └── p4b-mutation-feedback/  # P4 cộng phản hồi mutation (thí nghiệm bóc tách)
 ├── tools/                      # Công cụ: sinh test ngẫu nhiên, gọi LLM, vòng lặp coverage-guided
 ├── prompts/                    # Bộ prompt (sản phẩm bắt buộc)
-│   ├── direct/
-│   ├── coverage-guided/
-│   └── mutation-feedback/
+│   ├── direct/                 # P3 (và P3w)
+│   ├── direct-spec-only/       # P3r: không có mã nguồn
+│   ├── coverage-guided/        # P4, P4w
+│   ├── coverage-guided-reduced/
+│   ├── mutation-feedback/      # P4b, P4bw
+│   └── mutation-feedback-reduced/
 ├── experiments/
 │   ├── config/                 # Cấu hình: model, nhiệt độ, số vòng lặp, ngân sách token, seed
 │   ├── scripts/                # Script chạy và tái lập toàn bộ thực nghiệm
@@ -78,11 +87,12 @@ Thư mục rỗng được giữ trong git bằng file `.gitkeep`; xóa file nà
 | JUnit 5 | Unit testing |
 | JaCoCo | Đo coverage (line, branch, method) |
 | PIT (Pitest) | Mutation testing |
-| LLM thương mại qua API | Sinh test (P3, P4) |
+| LLM thương mại qua CLI | Sinh test: Codex CLI `gpt-6.2-astra` (chuỗi chính, ngữ cảnh hạn chế), Antigravity CLI `gemini-3.8-flash-low` (chuỗi LLM yếu hơn) |
+| Python 3.12 (`scipy`, `matplotlib`, …) | Điều phối, đo, thống kê (Mann–Whitney U, Â12) |
 
 ## Cài đặt và chạy
 
-> Phần này sẽ được cập nhật khi các script trong `experiments/scripts/` hoàn thiện. Tiến độ phát triển và các quyết định kỹ thuật: [docs/orchestration/progress.md](docs/orchestration/progress.md), [docs/orchestration/decisions.md](docs/orchestration/decisions.md).
+> Tiến độ phát triển và các quyết định kỹ thuật: [docs/orchestration/progress.md](docs/orchestration/progress.md), [docs/orchestration/decisions.md](docs/orchestration/decisions.md). Báo cáo cuối của đợt phát triển tự động: [docs/orchestration/bao-cao-cuoi.md](docs/orchestration/bao-cao-cuoi.md).
 
 Môi trường đã dùng: JDK 17, Maven 3.9, Python 3.12 với các gói trong `requirements.txt`:
 
@@ -96,17 +106,19 @@ LLM mặc định của thực nghiệm là Codex CLI (`llm.provider: codex-cli`
 ANTHROPIC_API_KEY=...
 ```
 
-Chạy test và đo coverage của chương trình đối tượng:
+Các lệnh chính (chạy từ gốc repo; `python` là Python của môi trường đã cài `requirements.txt`):
 
-```bash
-cd subject && mvn test jacoco:report
-```
-
-Chạy mutation testing:
-
-```bash
-cd subject && mvn org.pitest:pitest-maven:mutationCoverage
-```
+| Việc | Lệnh |
+|---|---|
+| Test cho công cụ | `python -m pytest tools/tests -q` |
+| Chạy một bộ test trên subject (Maven) | `mvn -B -f subject/pom.xml clean test -Psuite -Dsuite.dir=<đường dẫn tuyệt đối tới bộ test>` |
+| Đo một bộ test (coverage + mutation) | `python experiments/scripts/measure.py --suite test-suites/p1-manual/run-01 --method p1-manual --run 1 --mutation` |
+| Kiểm tra bộ test trên chương trình tham chiếu | `python experiments/scripts/measure.py --suite <bộ test> --method <mã> --run <n> --program reference` |
+| Sinh P2 / P3 / P4 / P4b | `python tools/generate_p2.py --run N` · `python tools/generate_p3.py --run N [--variant spec-only\|weak-llm]` · `python tools/generate_p4.py --run N [--mutation-feedback] [--variant reduced\|weak-llm]` |
+| Chạy lại toàn bộ thực nghiệm (tiếp tục được sau khi hết quota) | `python experiments/scripts/run_experiment.py --runs 1-10 --skip-existing` (xem `--dry-run`) |
+| Thống kê, bảng, biểu đồ | `python experiments/scripts/analyze.py` → `results/comparison/` |
+| Liệt kê mutant còn sống để rà soát tương đương | `python tools/mutation_ids.py --suite-results results/mutation/<mã>/run-XX` |
+| Demo 10 bước | `python experiments/scripts/demo.py` (`--offline` không gọi LLM, `--no-pause` chạy liền) – kịch bản: [docs/demo/kich-ban-demo.md](docs/demo/kich-ban-demo.md) |
 
 ## Quản lý với git
 

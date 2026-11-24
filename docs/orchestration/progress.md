@@ -31,9 +31,9 @@ Agy: `agy -p "<prompt>" --model <model> --print-timeout <t>` chạy trong thư m
 | G1 Nền móng | T00 môi trường/pom/S1/S2 · T01 đặc tả + khung | Xong, tag `m1-spec-frozen`. [ĐÃ CHẠY] `mvn -B -q -f subject/pom.xml compile` exit 0 trên `main` |
 | G2 Cài đặt | T02 subject (codex) · T03 reference (agy, `gemini-4-neon-high`) · T05 bộ P1 (codex) | Xong. [ĐÃ CHẠY] P1 181/181 xanh trên subject và reference |
 | G3 Đo lường | T06 measure.py · T07 mutation | Xong. [ĐÃ CHẠY] đủ 5 toán tử đột biến |
-| G4 Phương pháp | T08 P2 · T09 llm_client + bộ lọc · T10 P3 · T11 P4 · T12 P4b · ~~T13 EvoSuite~~ (D-013) | T08–T12 xong. T18 (bóc tách ngữ cảnh hạn chế, D-024) đang làm |
+| G4 Phương pháp | T08 P2 · T09 · T10 P3 · T11/T12 P4, P4b · ~~T13 EvoSuite~~ · T17 · T18 · T19 · T21 | Xong |
 | G5 Thực nghiệm | T14 run_experiment + analyze, chạy 10 lần | Xong. Tag `m5-data-frozen`. [ĐÃ CHẠY] 11 phương pháp, 101 lần đo |
-| G6 Báo cáo | T16 tổng quan tài liệu · T15a chương 1–4 · T15b chương 5–6 | T16, T15a xong |
+| G6 Báo cáo | T16 · T15a · T15b · T20 demo, slide | Xong (bản nháp chờ nhóm duyệt) |
 
 ## Nhật ký
 
@@ -79,3 +79,6 @@ Agy: `agy -p "<prompt>" --model <model> --print-timeout <t>` chạy trong thư m
 | 24/11 09:17 | Chạy tiếp chuỗi ngữ cảnh hạn chế run-07..10 (codex). |
 | 24/11 09:45 | [ĐÃ CHẠY] Chuỗi ngữ cảnh hạn chế run-07..10 xong (đều trần). **Đủ số liệu**: 11 phương pháp, 101 lần đo (P1 ×1, còn lại ×10). Gộp `experiment/run-20261123` vào `main`. |
 | 24/11 09:50 | [ĐÃ CHẠY] `analyze.py` chính thức → `results/comparison/` (summary, pairwise, trước/sau, iterations, RQ5, 8 hình). Mutation score TB: P1 99,17 (n=1); P2 64,33 ± 4,41; P3/P4/P4b/P3r/P4r/P4br 100,00 ± 0; P3w 95,00 ± 2,66; P4w 95,00 ± 2,66; P4bw 98,50 ± 0,35. P4bw vs P4w (mutation): U = 100, p = 0,0001, Â12 = 1,0. **Tag `m5-data-frozen` (mốc M5).** Giao T15b (báo cáo ch. 5–6) và T20 (demo, slide) cho codex. |
+| 24/11 10:30 | T15b xong (codex): Chương 5–6. Worker đối chiếu 6/6 bảng với dữ liệu chốt; orchestrator kiểm tay các số chính (P2 70–85/120; P4bw +0,83–9,17 điểm). Orchestrator điền 3 mốc `[CHỜ]` cuối ở Chương 4 (phần cứng đọc bằng `Get-CimInstance`). Báo cáo không còn `[CHỜ]`. |
+| 24/11 11:00 | T20 xong (codex): `demo.py`, kịch bản demo, slide Marp. [ĐÃ CHẠY] demo `--offline`: 10 bước, 71 s, smoke BRANCH 129 → 135; demo với LLM thật: smoke BRANCH 129/174 → 174/174 sau 1 vòng, không ghi vào `test-suites/`. pytest trên `main`: 147 passed. |
+| 24/11 11:10 | **Kết thúc đợt phát triển tự động.** README cập nhật; báo cáo cuối: [bao-cao-cuoi.md](bao-cao-cuoi.md). Việc còn lại cần nhóm quyết định: mục 4 của báo cáo cuối. |
